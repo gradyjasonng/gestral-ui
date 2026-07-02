@@ -10,15 +10,18 @@
       "import": "./dist/index.mjs",
       "types": "./dist/index.d.ts"
     },
-    "./styles": "./dist/index.css"
+    "./styles": "./dist/index.css",
+    "./theme": "./dist/theme.css"
   },
-  "files": ["dist", "CHANGELOG.md"],
+  "files": [
+    "dist",
+    "CHANGELOG.md"
+  ],
   "publishConfig": {
     "access": "public"
   },
   "scripts": {
     "build": "vite build",
-    "generate:tokens": "node scripts/generate-tokens.mjs",
     "dev": "vite build --watch",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
@@ -67,6 +70,8 @@
     "@fontsource-variable/lora": "^5.2.8",
     "@fontsource-variable/plus-jakarta-sans": "^5.2.8",
     "@fontsource/noto-sans-tc": "^5.2.9",
-    "clsx": "^2.1.1"
+    "clsx": "^2.1.1",
+    "react-icons": "^5.6.0",
+    "tailwind-merge": "^3.6.0"
   }
 }

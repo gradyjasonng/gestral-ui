@@ -1,52 +1,271 @@
 @import "tailwindcss";
 
+/* ─── Light mode (default) ───────────────────────────────────────────────── */
 :root {
-  --color-background: var(--color-neutral-50);
-  --color-background-subtle: var(--color-neutral-200);
-  --color-foreground: var(--color-neutral-800);
-  --color-foreground-muted: var(--color-neutral-500);
-  --color-accent: var(--color-emerald-900);
-  --color-accent-hover: var(--color-emerald-700);
-  --color-border: var(--color-neutral-200);
-  --color-border-strong: var(--color-neutral-500);
-  --color-canvas: var(--color-white);
-  --color-ink: var(--color-black);
-  --font-sans: Plus Jakarta Sans;
-  --font-serif: Lora;
-  --font-mono: Menlo;
-  --font-display: Kombi;
+  /* Chrome: left rail, panel surfaces — lighter than canvas */
+  --color-chrome-surface:          var(--color-white);
+  --color-chrome-surface-hover:    var(--color-stone-50);
+  --color-chrome-active:           var(--color-stone-100);
+  --color-chrome-border:           var(--color-stone-200);
+  --color-chrome-border-emphasis:  var(--color-stone-300);
+  --color-chrome-text-primary:     var(--color-stone-900);
+  --color-chrome-text-secondary:   var(--color-stone-500);
+  --color-chrome-text-muted:       var(--color-stone-400);
 
-  @media (prefers-color-scheme: dark) {
-    --color-background: var(--color-neutral-800);
-    --color-background-subtle: var(--color-neutral-600);
-    --color-foreground: var(--color-neutral-50);
-    --color-foreground-muted: var(--color-neutral-300);
-    --color-accent: var(--color-emerald-500);
-    --color-accent-hover: var(--color-emerald-600);
-    --color-border: var(--color-neutral-700);
-    --color-border-strong: var(--color-neutral-500);
-    --color-canvas: var(--color-black);
-    --color-ink: var(--color-white);
-    --font-sans: Plus Jakarta Sans;
-    --font-serif: Lora;
-    --font-mono: Menlo;
-    --font-display: Kombi;
+  /* Canvas: page content area — neutral gray ground */
+  --color-canvas-surface:          var(--color-stone-100);
+  --color-canvas-border:           var(--color-stone-200);
+  --color-canvas-text-primary:     var(--color-stone-900);
+  --color-canvas-text-secondary:   var(--color-stone-600);
+  --color-canvas-text-muted:       var(--color-stone-500);
+
+  /* Editorial: longform prose */
+  --color-editorial-surface:       var(--color-stone-100);
+  --color-editorial-text-primary:  var(--color-stone-800);
+  --color-editorial-text-secondary: var(--color-stone-500);
+
+  /* Accent: emerald interactive states */
+  --color-accent-default:          var(--color-emerald-500);
+  --color-accent-active:           var(--color-emerald-50);
+  --color-accent-subtle:           var(--color-emerald-50);
+  --color-accent-border:           var(--color-emerald-200);
+  --color-accent-text:             var(--color-emerald-700);
+
+  /* Category: Work (violet) */
+  --color-category-work-default:   var(--color-violet-500);
+  --color-category-work-subtle:    var(--color-violet-50);
+  --color-category-work-border:    var(--color-violet-200);
+  --color-category-work-text:      var(--color-violet-700);
+
+  /* Typography */
+  --font-display:    Kombi, system-ui;
+  --font-ui:         'Plus Jakarta Sans', system-ui;
+  --font-editorial:  Lora, Georgia, serif;
+
+  /* Typography: size scale — one token per Text variant, mapped back to Tailwind's text-* scale */
+  --text-hero:                   var(--text-9xl);
+  --text-h1:                     var(--text-8xl);
+  --text-h2:                     var(--text-7xl);
+  --text-h3:                     var(--text-6xl);
+  --text-subheading-1:           var(--text-4xl);
+  --text-subheading-2:           var(--text-2xl);
+  --text-subheading-3:           var(--text-xl);
+  --text-display-sm:             var(--text-sm);
+  --text-overline:               var(--text-lg);
+  --text-eyebrow:                10px;
+  --text-body:                   var(--text-base);
+  --text-body-sm:                var(--text-sm);
+  --text-caption:                var(--text-xs);
+  --text-prose:                  var(--text-base);
+  --text-label-sm:               var(--text-sm);
+  --text-label-xs:               var(--text-xs);
+
+  /* Typography: line-height scale — one token per Text variant, mapped back to Tailwind's leading-* scale */
+  --leading-hero:                 1; /* leading-none */
+  --leading-h1:                   1; /* leading-none */
+  --leading-h2:                   1; /* leading-none */
+  --leading-h3:                   1; /* leading-none */
+  --leading-subheading-1:         calc(var(--spacing) * 10); /* leading-10 */
+  --leading-subheading-2:         calc(var(--spacing) * 8);  /* leading-8 */
+  --leading-subheading-3:         calc(var(--spacing) * 7);  /* leading-7 */
+  --leading-display-sm:           calc(var(--spacing) * 5);  /* leading-5 */
+  --leading-overline:             calc(var(--spacing) * 5);  /* leading-5 */
+  --leading-eyebrow:              var(--leading-normal);
+  --leading-body:                 calc(var(--spacing) * 6);  /* leading-6 */
+  --leading-body-sm:              calc(var(--spacing) * 5);  /* leading-5 */
+  --leading-caption:              calc(var(--spacing) * 4);  /* leading-4 */
+  --leading-prose:                calc(var(--spacing) * 8);  /* leading-8 */
+  --leading-label-sm:             calc(var(--spacing) * 4);  /* leading-4 */
+  --leading-label-xs:             calc(var(--spacing) * 4);  /* leading-4 */
+
+  --text-hero--line-height:          var(--leading-hero);
+  --text-h1--line-height:            var(--leading-h1);
+  --text-h2--line-height:            var(--leading-h2);
+  --text-h3--line-height:            var(--leading-h3);
+  --text-subheading-1--line-height:  var(--leading-subheading-1);
+  --text-subheading-2--line-height:  var(--leading-subheading-2);
+  --text-subheading-3--line-height:  var(--leading-subheading-3);
+  --text-display-sm--line-height:    var(--leading-display-sm);
+  --text-overline--line-height:      var(--leading-overline);
+  --text-eyebrow--line-height:       var(--leading-eyebrow);
+  --text-body--line-height:          var(--leading-body);
+  --text-body-sm--line-height:       var(--leading-body-sm);
+  --text-caption--line-height:       var(--leading-caption);
+  --text-prose--line-height:         var(--leading-prose);
+  --text-label-sm--line-height:      var(--leading-label-sm);
+  --text-label-xs--line-height:      var(--leading-label-xs);
+
+  /* Radius */
+  --radius-sm:   4px;
+  --radius-md:   6px;
+  --radius-lg:   8px;
+  --radius-pill: 9999px;
+
+  /* Spacing: inline (horizontal) — maps back to Tailwind's px-N utilities */
+  --spacing-inline-xs: calc(var(--spacing) * 1); /* 4px  — px-1 */
+  --spacing-inline-sm: calc(var(--spacing) * 2); /* 8px  — px-2 */
+  --spacing-inline-md: calc(var(--spacing) * 3); /* 12px — px-3 */
+  --spacing-inline-lg: calc(var(--spacing) * 4); /* 16px — px-4 */
+  --spacing-inline-xl: calc(var(--spacing) * 6); /* 24px — px-6 */
+
+  /* Spacing: stack (vertical) — maps back to Tailwind's py-N utilities */
+  --spacing-stack-xs: calc(var(--spacing) * 1); /* 4px  — py-1 */
+  --spacing-stack-sm: calc(var(--spacing) * 2); /* 8px  — py-2 */
+  --spacing-stack-md: calc(var(--spacing) * 3); /* 12px — py-3 */
+  --spacing-stack-lg: calc(var(--spacing) * 4); /* 16px — py-4 */
+  --spacing-stack-xl: calc(var(--spacing) * 6); /* 24px — py-6 */
+
+  /* Icon sizes — maps back to the Icon component's size prop */
+  --icon-size-xs: calc(var(--spacing) * 3);
+  --icon-size-sm: calc(var(--spacing) * 4);
+  --icon-size-md: calc(var(--spacing) * 5);
+  --icon-size-lg: calc(var(--spacing) * 6);
+  --icon-size-xl: calc(var(--spacing) * 8);
+}
+
+/* ─── Dark mode ──────────────────────────────────────────────────────────── */
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Chrome: lighter than canvas */
+    --color-chrome-surface:          var(--color-stone-900);
+    --color-chrome-surface-hover:    var(--color-stone-800);
+    --color-chrome-active:           var(--color-stone-800);
+    --color-chrome-border:           var(--color-stone-700);
+    --color-chrome-border-emphasis:  var(--color-stone-600);
+    --color-chrome-text-primary:     var(--color-stone-50);
+    --color-chrome-text-secondary:   var(--color-stone-400);
+    --color-chrome-text-muted:       var(--color-stone-500);
+
+    /* Canvas: darkest — the ground */
+    --color-canvas-surface:          var(--color-stone-950);
+    --color-canvas-border:           var(--color-stone-800);
+    --color-canvas-text-primary:     var(--color-stone-100);
+    --color-canvas-text-secondary:   var(--color-stone-400);
+    --color-canvas-text-muted:       var(--color-stone-500);
+
+    --color-editorial-surface:       var(--color-stone-950);
+    --color-editorial-text-primary:  var(--color-stone-200);
+    --color-editorial-text-secondary: var(--color-stone-400);
+
+    --color-accent-default:          var(--color-emerald-400);
+    --color-accent-active:           var(--color-emerald-950);
+    --color-accent-subtle:           var(--color-emerald-950);
+    --color-accent-border:           var(--color-emerald-800);
+    --color-accent-text:             var(--color-emerald-300);
+
+    --color-category-work-default:   var(--color-violet-400);
+    --color-category-work-subtle:    var(--color-violet-950);
+    --color-category-work-border:    var(--color-violet-800);
+    --color-category-work-text:      var(--color-violet-300);
   }
 }
 
+/* ─── Register with Tailwind ─────────────────────────────────────────────── */
 @theme inline {
-  --color-background: var(--color-background);
-  --color-background-subtle: var(--color-background-subtle);
-  --color-foreground: var(--color-foreground);
-  --color-foreground-muted: var(--color-foreground-muted);
-  --color-accent: var(--color-accent);
-  --color-accent-hover: var(--color-accent-hover);
-  --color-border: var(--color-border);
-  --color-border-strong: var(--color-border-strong);
-  --color-canvas: var(--color-canvas);
-  --color-ink: var(--color-ink);
-  --font-sans: var(--font-sans);
-  --font-serif: var(--font-serif);
-  --font-mono: var(--font-mono);
-  --font-display: var(--font-display);
+  --color-chrome-surface:           var(--color-chrome-surface);
+  --color-chrome-surface-hover:     var(--color-chrome-surface-hover);
+  --color-chrome-active:            var(--color-chrome-active);
+  --color-chrome-border:            var(--color-chrome-border);
+  --color-chrome-border-emphasis:   var(--color-chrome-border-emphasis);
+  --color-chrome-text-primary:      var(--color-chrome-text-primary);
+  --color-chrome-text-secondary:    var(--color-chrome-text-secondary);
+  --color-chrome-text-muted:        var(--color-chrome-text-muted);
+
+  --color-canvas-surface:           var(--color-canvas-surface);
+  --color-canvas-border:            var(--color-canvas-border);
+  --color-canvas-text-primary:      var(--color-canvas-text-primary);
+  --color-canvas-text-secondary:    var(--color-canvas-text-secondary);
+  --color-canvas-text-muted:        var(--color-canvas-text-muted);
+
+  --color-editorial-surface:        var(--color-editorial-surface);
+  --color-editorial-text-primary:   var(--color-editorial-text-primary);
+  --color-editorial-text-secondary: var(--color-editorial-text-secondary);
+
+  --color-accent-default:           var(--color-accent-default);
+  --color-accent-active:            var(--color-accent-active);
+  --color-accent-subtle:            var(--color-accent-subtle);
+  --color-accent-border:            var(--color-accent-border);
+  --color-accent-text:              var(--color-accent-text);
+
+  --color-category-work-default:    var(--color-category-work-default);
+  --color-category-work-subtle:     var(--color-category-work-subtle);
+  --color-category-work-border:     var(--color-category-work-border);
+  --color-category-work-text:       var(--color-category-work-text);
+
+  --font-display:    var(--font-display);
+  --font-ui:         var(--font-ui);
+  --font-editorial:  var(--font-editorial);
+
+  --text-hero:                       var(--text-hero);
+  --text-hero--line-height:          var(--text-hero--line-height);
+  --text-h1:                         var(--text-h1);
+  --text-h1--line-height:            var(--text-h1--line-height);
+  --text-h2:                         var(--text-h2);
+  --text-h2--line-height:            var(--text-h2--line-height);
+  --text-h3:                         var(--text-h3);
+  --text-h3--line-height:            var(--text-h3--line-height);
+  --text-subheading-1:               var(--text-subheading-1);
+  --text-subheading-1--line-height:  var(--text-subheading-1--line-height);
+  --text-subheading-2:               var(--text-subheading-2);
+  --text-subheading-2--line-height:  var(--text-subheading-2--line-height);
+  --text-subheading-3:               var(--text-subheading-3);
+  --text-subheading-3--line-height:  var(--text-subheading-3--line-height);
+  --text-display-sm:                 var(--text-display-sm);
+  --text-display-sm--line-height:    var(--text-display-sm--line-height);
+  --text-overline:                   var(--text-overline);
+  --text-overline--line-height:      var(--text-overline--line-height);
+  --text-eyebrow:                    var(--text-eyebrow);
+  --text-eyebrow--line-height:       var(--text-eyebrow--line-height);
+  --text-body:                       var(--text-body);
+  --text-body--line-height:          var(--text-body--line-height);
+  --text-body-sm:                    var(--text-body-sm);
+  --text-body-sm--line-height:       var(--text-body-sm--line-height);
+  --text-caption:                    var(--text-caption);
+  --text-caption--line-height:       var(--text-caption--line-height);
+  --text-prose:                      var(--text-prose);
+  --text-prose--line-height:         var(--text-prose--line-height);
+  --text-label-sm:                   var(--text-label-sm);
+  --text-label-sm--line-height:      var(--text-label-sm--line-height);
+  --text-label-xs:                   var(--text-label-xs);
+  --text-label-xs--line-height:      var(--text-label-xs--line-height);
+
+  --leading-hero:                    var(--leading-hero);
+  --leading-h1:                      var(--leading-h1);
+  --leading-h2:                      var(--leading-h2);
+  --leading-h3:                      var(--leading-h3);
+  --leading-subheading-1:            var(--leading-subheading-1);
+  --leading-subheading-2:            var(--leading-subheading-2);
+  --leading-subheading-3:            var(--leading-subheading-3);
+  --leading-display-sm:              var(--leading-display-sm);
+  --leading-overline:                var(--leading-overline);
+  --leading-eyebrow:                 var(--leading-eyebrow);
+  --leading-body:                    var(--leading-body);
+  --leading-body-sm:                 var(--leading-body-sm);
+  --leading-caption:                 var(--leading-caption);
+  --leading-prose:                   var(--leading-prose);
+  --leading-label-sm:                var(--leading-label-sm);
+  --leading-label-xs:                var(--leading-label-xs);
+
+  --radius-sm:   var(--radius-sm);
+  --radius-md:   var(--radius-md);
+  --radius-lg:   var(--radius-lg);
+  --radius-pill: var(--radius-pill);
+
+  --spacing-inline-xs: var(--spacing-inline-xs);
+  --spacing-inline-sm: var(--spacing-inline-sm);
+  --spacing-inline-md: var(--spacing-inline-md);
+  --spacing-inline-lg: var(--spacing-inline-lg);
+  --spacing-inline-xl: var(--spacing-inline-xl);
+
+  --spacing-stack-xs: var(--spacing-stack-xs);
+  --spacing-stack-sm: var(--spacing-stack-sm);
+  --spacing-stack-md: var(--spacing-stack-md);
+  --spacing-stack-lg: var(--spacing-stack-lg);
+  --spacing-stack-xl: var(--spacing-stack-xl);
+
+  --icon-size-xs: var(--icon-size-xs);
+  --icon-size-sm: var(--icon-size-sm);
+  --icon-size-md: var(--icon-size-md);
+  --icon-size-lg: var(--icon-size-lg);
+  --icon-size-xl: var(--icon-size-xl);
 }
