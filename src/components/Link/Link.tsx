@@ -1,6 +1,6 @@
 import type { AnchorHTMLAttributes } from 'react';
-import clsx from 'clsx';
-import { Text, type TextVariant } from '../Text/Text';
+import { cn } from '../../lib/cn';
+import { Text, type TextVariant } from '../../primitives/Text/Text';
 
 export type LinkVariant = 'underline' | 'subtle';
 
@@ -24,17 +24,17 @@ export function Link({ variant = 'underline', textVariant, className, children, 
 
   return (
     <a
-      className={clsx(
+      className={cn(
         'cursor-pointer transition-colors',
         // Force all descendants to inherit the link's color, overriding Text's own color class.
         '**:text-inherit!',
         variant === 'underline' && [
-          'text-foreground hover:text-accent-hover active:text-accent',
-          'underline decoration-2 decoration-foreground-muted',
-          'hover:decoration-accent-hover active:decoration-accent',
+          'text-canvas-text-primary hover:text-accent-default active:text-accent-text',
+          'underline decoration-2 decoration-accent-default',
+          'hover:decoration-accent-default active:decoration-accent-text',
         ],
         variant === 'subtle' && [
-          'text-foreground-muted hover:text-accent-hover active:text-accent',
+          'text-canvas-text-secondary hover:text-accent-default active:text-accent-text',
           'no-underline',
         ],
         className,
