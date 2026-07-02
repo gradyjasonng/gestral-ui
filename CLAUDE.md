@@ -2,58 +2,30 @@
 
 ## Design Philosophy
 
-Most design systems describe a hierarchy. Gestral describes a place.
+See `DESIGN.md` for the canonical v2 design philosophy.
 
-The place is a cutting mat — the self-healing green kind found on every craft desk, marked with a grid, measured along two axes. It is the surface things happen on. It is always there. Everything else is placed on it.
-
----
-
-### The World
-
-The mat is the ground plane. It is always emerald. It is never a component or a style applied to something — it is the environment itself. You cannot place a mat on top of another mat. This single constraint is the system's most important opinion: the emerald ground is inviolable, which means every other element has a clear answer to the question of what it sits on.
-
-Paper is laid on the mat. It is a physical work surface — flat, stackable, warm. Depth between sheets of paper is communicated through shadow and border, not through colour shifts. Paper reads as a material, not as an abstraction.
-
-Objects are placed on paper, or occasionally sit directly on the mat. Marks — text, lines, icons — are drawn onto whichever surface they live on.
+The short version: Gestral's visual language is a **deconstructed design tool UI**, borrowing structural vocabulary from Figma (left rail, frame labels, node tree, artboard containers) without mimicking it directly. The result should feel like a personal site built by someone who lives in design tools.
 
 ---
 
-### Physicality
+## Architecture
 
-Gestral uses light skeuomorphism: just enough to suggest real objects without tipping into pastiche.
-
-The lighting model is top-left. Objects that invite interaction catch light on their top and left edges. Hover states suggest being picked up; active states suggest being pressed. Paper itself stays flat — the physicality is reserved for things you can touch.
-
-Shadows communicate elevation honestly. A sheet of paper close to the mat casts a soft shadow. A sheet higher in the stack casts a stronger one. The shadow is doing real work, not decorating.
-
----
-
-### Marks and Surfaces
-
-There are two kinds of things in this system: surfaces and marks.
-
-Surfaces are filled areas — the mat, sheets of paper. Marks are drawn onto surfaces — text, borders, icons.
-
-The emerald colour family has a strict rule: it can be the mat (a surface), or it can be a drawn mark on paper. It cannot be a filled surface on top of another surface. A green button would mean laying a mat on top of paper, which breaks the metaphor. An emerald-coloured link on paper is a pen stroke, which doesn't.
-
-Marks come in three families, each evoking a different physical tool. There is a warm near-black for primary text — the pencil, the india ink. There is an amber for accent marks — the marker, the felt-tip left on the desk. And there is the emerald itself, used sparingly as a drawn mark on paper: the ruling pen, the stencil.
+- **Vite** library mode, **Tailwind v4**, **Storybook** Connect
+- Tokens are hand-authored in `src/styles/tokens.css` — no generation pipeline
+- `src/styles/theme.css` is the consumable stylesheet for downstream apps (exported as `./theme`)
+- Components live in `src/components/`, each with a `.tsx` and a `.stories.tsx`
+- No hex values in component code — all colours reference semantic tokens (`chrome.*`, `canvas.*`, `editorial.*`, `accent.*`, `category.work.*`)
 
 ---
 
-### Colour
-
-The palette is the mat. Everything else is on it.
-
-The emerald is specific and deliberate — the particular green of a professional cutting mat, not a brand colour applied to a neutral base. Amber is the complementary accent: warm, human, the colour of a common pen. Warm near-black is the ink. Stone — a warm gray with a slight brownish undertone — is the paper and text family. It reads as a material, not a screen default.
-
-Dark mode deepens the mat by one step and darkens the paper correspondingly. The world gets later in the day. The system doesn't have a separate dark identity; it has the same identity in lower light.
-
----
-
-### What This Is For
-
-Gestral is a portfolio system, not a general-purpose one. The cutting mat metaphor earns its place precisely because it has a point of view — it says something about the kind of work made here and the person making it. A system that evokes craft tools implies craftsmanship.
-
-The opinions are the feature. Most systems are cautious about opinions because they want broad adoption. Gestral has no such ambition, which means the constraints can be tighter, the metaphor can be taken further, and every design decision can be made in service of one coherent idea.
-
-The mat is always there. Everything else is placed on it carefully.
+When working on UI components, always use the `gestral-ui-storybook` MCP tools to access Storybook's component and documentation knowledge before answering or taking any action.
+ 
+- **CRITICAL: Never hallucinate component properties!** Before using ANY property on a component from a design system (including common-sounding ones like `shadow`, etc.), you MUST use the MCP tools to check if the property is actually documented for that component.
+- Query `list-all-documentation` to get a list of all components
+- Query `get-documentation` for that component to see all available properties and examples
+- Only use properties that are explicitly documented or shown in example stories
+- If a property isn't documented, do not assume properties based on naming conventions or common patterns from other libraries. Check back with the user in these cases.
+- Use the `get-storybook-story-instructions` tool to fetch the latest instructions for creating or updating stories. This will ensure you follow current conventions and recommendations.
+- Check your work by running `run-story-tests`.
+ 
+Remember: A story name might not reflect the property name correctly, so always verify properties through documentation or example stories before using them.

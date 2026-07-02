@@ -13,6 +13,7 @@ storybook-static
 # editor
 .vscode
 .idea
+.claude/
 *.suo
 *.ntvs*
 *.njsproj
