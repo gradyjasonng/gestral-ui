@@ -1,5 +1,5 @@
+import type { ReactNode } from 'react';
 import { cn } from '../../lib/cn';
-import { FrameLabel } from '../FrameLabel/FrameLabel';
 import { Text } from '../../primitives/Text/Text';
 import { Stack } from '../../primitives/Stack/Stack';
 
@@ -11,9 +11,8 @@ export interface CardProps {
   date: string;
   category: CardCategory;
   tags?: string[];
-  thumbnail?: string;
-  thumbnailAlt?: string;
-  layerName?: string;
+  /** Thumbnail content — any children, clipped to the aspect-video wrapper */
+  children?: ReactNode;
   href: string;
   className?: string;
 }
@@ -24,9 +23,7 @@ export function Card({
   date,
   category,
   tags,
-  thumbnail,
-  thumbnailAlt = '',
-  layerName,
+  children,
   href,
   className,
 }: CardProps) {
@@ -34,80 +31,45 @@ export function Card({
     <a
       href={href}
       className={cn(
-        'group flex flex-col gap-3 no-underline',
-        'transition-all duration-150',
+        'group flex flex-col overflow-hidden no-underline rounded-lg border border-chrome-border bg-chrome-surface max-w-lg',
+        'hover:border-selection-blue',
         className,
       )}
     >
       {/* Thumbnail */}
-      <div className="relative">
-        {layerName && (
-          <FrameLabel
-            label={layerName}
-            size="xs"
-            className="absolute -top-5 left-0"
-          />
-        )}
-        <div
-          className={cn(
-            'w-full aspect-video overflow-hidden rounded-sm',
-            'bg-chrome-surface-hover',
-            'group-hover:shadow-md transition-shadow duration-150',
-          )}
-        >
-          {thumbnail && (
-            <img
-              src={thumbnail}
-              alt={thumbnailAlt}
-              className="w-full h-full object-cover"
-            />
-          )}
-        </div>
-      </div>
-
-      {/* Meta */}
-      <Stack direction="col" gap="sm">
-        <Stack direction="row" gap="md" align="center">
-          <Text
-            variant="eyebrow"
-            as="span"
-            className={cn(
-              'font-display px-1.5 py-0.5 rounded-sm',
-              category === 'blog'
-                ? 'bg-accent-subtle text-accent-text'
-                : 'bg-category-work-subtle text-category-work-text',
-            )}
-          >
-            {category === 'blog' ? 'Blog' : 'Work'}
-          </Text>
-          <Text variant="caption" className="text-canvas-text-muted">
-            {date}
-          </Text>
-        </Stack>
-
-        <Text variant="labelSmall" as="h3" className="text-canvas-text-primary leading-snug">
-          {title}
-        </Text>
-
-        {description && (
-          <Text variant="caption" className="text-canvas-text-secondary leading-relaxed">
-            {description}
-          </Text>
-        )}
+      <div className="w-full relative aspect-video overflow-clip bg-canvas-surface">
+        {children}
 
         {tags && tags.length > 0 && (
-          <Stack direction="row" gap="sm" wrap className="mt-0.5" as="ul">
+          <Stack direction="row" gap="sm"wrap className="absolute bottom-0 left-0 px-4 py-3" as="ul">
             {tags.map((tag) => (
               <Text
                 key={tag}
                 variant="eyebrow"
                 as="li"
-                className="tracking-wide text-chrome-text-secondary bg-chrome-border px-1.5 py-0.5 rounded-sm"
+                className="text-chrome-text-secondary bg-chrome-border px-1.5 py-0.5 rounded-sm"
               >
                 {tag}
               </Text>
             ))}
           </Stack>
+        )}
+      </div>
+
+      {/* Meta */}
+      <Stack direction="col" gap="sm" className="p-4">
+        <Text variant="subheading3" as="h3" className="text-chrome-text-primary leading-snug">
+          {title}
+        </Text>
+
+        <Text variant="caption" className="text-chrome-text-secondary">
+          {date}
+        </Text>
+
+        {description && (
+          <Text variant="caption" className="text-chrome-text-secondary leading-relaxed">
+            {description}
+          </Text>
         )}
       </Stack>
     </a>
