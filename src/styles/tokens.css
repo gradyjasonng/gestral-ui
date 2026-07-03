@@ -37,6 +37,14 @@
   --color-category-work-border:    var(--color-violet-200);
   --color-category-work-text:      var(--color-violet-700);
 
+  /* Selection: decorative selection-affordance colours (e.g. Artboard) */
+  --color-selection-blue:          var(--color-blue-500);
+  --color-selection-purple:        var(--color-purple-500);
+  --color-selection-emerald:       var(--color-emerald-500);
+  --color-selection-blue-text:     var(--color-blue-700);
+  --color-selection-purple-text:   var(--color-purple-700);
+  --color-selection-emerald-text:  var(--color-emerald-700);
+
   /* Typography */
   --font-display:    Kombi, system-ui;
   --font-ui:         'Plus Jakarta Sans', system-ui;
@@ -50,7 +58,7 @@
   --text-subheading-1:           var(--text-4xl);
   --text-subheading-2:           var(--text-2xl);
   --text-subheading-3:           var(--text-xl);
-  --text-display-sm:             var(--text-sm);
+  --text-display-sm:             var(--text-base);
   --text-overline:               var(--text-lg);
   --text-eyebrow:                10px;
   --text-body:                   var(--text-base);
@@ -157,6 +165,13 @@
     --color-category-work-subtle:    var(--color-violet-950);
     --color-category-work-border:    var(--color-violet-800);
     --color-category-work-text:      var(--color-violet-300);
+
+    --color-selection-blue:          var(--color-blue-400);
+    --color-selection-purple:        var(--color-purple-400);
+    --color-selection-emerald:       var(--color-emerald-400);
+    --color-selection-blue-text:     var(--color-blue-300);
+    --color-selection-purple-text:   var(--color-purple-300);
+    --color-selection-emerald-text:  var(--color-emerald-300);
   }
 }
 
@@ -191,6 +206,13 @@
   --color-category-work-subtle:     var(--color-category-work-subtle);
   --color-category-work-border:     var(--color-category-work-border);
   --color-category-work-text:       var(--color-category-work-text);
+
+  --color-selection-blue:           var(--color-selection-blue);
+  --color-selection-purple:         var(--color-selection-purple);
+  --color-selection-emerald:        var(--color-selection-emerald);
+  --color-selection-blue-text:      var(--color-selection-blue-text);
+  --color-selection-purple-text:    var(--color-selection-purple-text);
+  --color-selection-emerald-text:   var(--color-selection-emerald-text);
 
   --font-display:    var(--font-display);
   --font-ui:         var(--font-ui);
