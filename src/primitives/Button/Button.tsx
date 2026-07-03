@@ -28,7 +28,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   icon?: IconName;
 }
 
-const base = 'rounded-sm cursor-pointer select-none transition-colors duration-100';
+const base = 'rounded-sm cursor-pointer select-none';
 
 export interface IconFillProps extends HTMLAttributes<HTMLDivElement> {
   icon?: IconName;

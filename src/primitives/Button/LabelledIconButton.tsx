@@ -62,7 +62,7 @@ export function LabelledIconButton({
         direction={isVertical ? 'col' : 'row'}
         gap="xs"
         align="center"
-        className={cn('group cursor-pointer select-none transition-colors duration-100', className)}
+        className={cn('group cursor-pointer select-none', className)}
         style={style}
       >
         <IconFill

@@ -12,8 +12,23 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+/**
+ * Baseline Text using the default `variant="body"`, rendered as a `<p>`.
+ * Every variant maps to both a typographic style and a default semantic
+ * element (see `defaultElement` in `Text.tsx`) — override the element via
+ * `as` only when the default tag would be semantically wrong for context
+ * (e.g. an `h3`-styled variant that shouldn't be an actual `<h3>`).
+ */
 export const Default: Story = {};
 
+/**
+ * Every `TextVariant` rendered together with its font family and intended
+ * use noted alongside — the reference to consult before picking a variant.
+ * Variants split into three families: `display` (uppercase, for hero/heading
+ * text and short labels like site names or badges), `ui` (body/chrome text
+ * at various weights and sizes), and `editorial` (`prose`, serif longform
+ * body — used by the Prose component for article content).
+ */
 export const AllVariants: Story = {
   render: () => (
     <div className="flex flex-col gap-6">
@@ -47,6 +62,13 @@ export const AllVariants: Story = {
   ),
 };
 
+/**
+ * Just the `display` family (`hero`, `h1`–`h3`, `displaySm`) in isolation,
+ * to compare the heading scale without the noise of the UI/editorial
+ * variants. Use `hero` for a page's single top-level heading, `h1`–`h3` for
+ * nested section headings, and `displaySm` for label-scale display text
+ * like a site name.
+ */
 export const DisplayScale: Story = {
   name: 'Display Scale',
   render: () => (
@@ -58,6 +80,12 @@ export const DisplayScale: Story = {
   ),
 };
 
+/**
+ * Just the `ui` family in isolation — subheadings, overline/eyebrow labels,
+ * body copy, and bold labels. This is the set to reach for when building
+ * chrome/interface text (nav items, metadata, form labels) rather than
+ * page headings or longform article content.
+ */
 export const UIScale: Story = {
   name: 'UI Scale',
   render: () => (

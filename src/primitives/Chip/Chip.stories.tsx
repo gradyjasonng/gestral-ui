@@ -12,6 +12,12 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+/**
+ * The three `active` states side by side: `active` (filled accent),
+ * `active="secondary"` (muted fill, e.g. for a filter that's applied but
+ * not the primary selection), and inactive (default). Use Chip for compact
+ * filter/tag/category controls — e.g. filtering a Card grid by category.
+ */
 export const Default: Story = {
   render: () => (
     <div className="flex items-center gap-2">
@@ -22,6 +28,12 @@ export const Default: Story = {
   ),
 };
 
+/**
+ * Chip with both an `icon` and label text — the icon renders inline before
+ * the label in both active and inactive states. Use this when a leading
+ * icon adds meaningful context (e.g. a star for "starred" items) beyond
+ * what the label text alone conveys.
+ */
 export const WithIcon: Story = {
   name: 'With Icon',
   render: () => (
@@ -32,6 +44,12 @@ export const WithIcon: Story = {
   ),
 };
 
+/**
+ * `iconOnly` — the label is still passed as `children` but rendered visually
+ * hidden (`sr-only`) rather than omitted, so screen readers still announce
+ * it; pass `aria-label` too for redundancy/clarity. Reach for this in
+ * tightly-packed toolbars where a full label chip would be too wide.
+ */
 export const IconOnly: Story = {
   name: 'Icon Only',
   render: () => (
@@ -42,6 +60,12 @@ export const IconOnly: Story = {
   ),
 };
 
+/**
+ * All three `size` values (`sm`/`md`/`lg`) across active states and the
+ * `iconOnly` form, to compare height/padding/text-size scaling together.
+ * `md` is the default; reach for `sm` in dense toolbars and `lg` where
+ * Chip needs to match larger surrounding UI.
+ */
 export const Sizes: Story = {
   render: () => (
     <div className="flex flex-col gap-3">

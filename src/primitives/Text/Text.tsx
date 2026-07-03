@@ -47,7 +47,7 @@ const variantClasses: Record<TextVariant, string> = {
   subheading2: 'font-ui text-subheading-2 font-bold',
   subheading3: 'font-ui text-subheading-3 font-bold',
   // display font at label scale — used for site names, frame labels, badges
-  displaySm:   'font-display text-display-sm font-normal uppercase',
+  displaySm:   'font-display text-display-sm font-normal uppercase tracking-wide',
   // large section overline
   overline:    'font-ui text-overline font-bold uppercase',
   // micro overline — section labels, metadata keys, category tags

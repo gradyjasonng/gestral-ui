@@ -20,6 +20,12 @@ function Box({ children }: { children?: React.ReactNode }) {
   );
 }
 
+/**
+ * `direction="col"` (the default) — children stacked top to bottom. Stack
+ * is the primitive layout building block underneath most other components
+ * here (Card, Button, RailHeader, etc.), so reach for it directly whenever
+ * you need simple flex stacking without building a one-off `<div>`.
+ */
 export const Vertical: Story = {
   render: () => (
     <Stack direction="col" gap="md">
@@ -30,6 +36,11 @@ export const Vertical: Story = {
   ),
 };
 
+/**
+ * `direction="row"` — children laid out left to right. `align="center"`
+ * here vertically centers items of differing heights; use `align` whenever
+ * row children don't share a height and shouldn't stretch to match.
+ */
 export const Horizontal: Story = {
   render: () => (
     <Stack direction="row" gap="md" align="center">
@@ -40,6 +51,12 @@ export const Horizontal: Story = {
   ),
 };
 
+/**
+ * All six `gap` values (`none` through `xl`) compared side by side — see
+ * the `gapClass` map in `Stack.tsx` for the exact pixel value each maps to.
+ * Prefer `sm`/`md` for tight chrome UI (icon groups, form fields) and
+ * `lg`/`xl` for looser, layout-level spacing between larger blocks.
+ */
 export const Gaps: Story = {
   render: () => (
     <Stack direction="col" gap="xl">
@@ -59,6 +76,11 @@ export const Gaps: Story = {
   ),
 };
 
+/**
+ * `wrap` allows row children to flow onto multiple lines instead of
+ * overflowing or shrinking — useful for a tag/chip list of unpredictable
+ * length inside a fixed-width container, as shown here via `max-w-xs`.
+ */
 export const Wrapping: Story = {
   render: () => (
     <Stack direction="row" gap="sm" wrap className="max-w-xs">

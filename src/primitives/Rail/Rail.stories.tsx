@@ -33,11 +33,15 @@ function PlaceholderHeader({ wide = false }: { wide?: boolean }) {
   );
 }
 
-/** Narrow (w-12) — icon-column width, the default SiteRail collapsed state */
+/**
+ * Narrow (`w-12`, the default `width`) — icon-column width, the footprint
+ * SiteRail uses in its collapsed state. Rail is a pure layout shell here;
+ * items shown are unstyled placeholders standing in for real nav content.
+ */
 export const Narrow: Story = {
   render: () => (
-    <div className="min-h-screen bg-canvas-surface" style={{ transform: 'translateZ(0)' }}>
-      <Rail width="w-12" aria-label="Narrow rail" className="left-0">
+    <div className="flex h-screen bg-canvas-surface">
+      <Rail width="w-12" aria-label="Narrow rail">
         <PlaceholderHeader />
         <div className="flex flex-col items-center gap-1 py-2">
           <PlaceholderItem />
@@ -45,18 +49,23 @@ export const Narrow: Story = {
           <PlaceholderItem />
         </div>
       </Rail>
-      <div className="ml-12 p-12">
+      <div className="p-12">
         <Text variant="bodySmall" className="text-canvas-text-secondary">Canvas content area</Text>
       </div>
     </div>
   ),
 };
 
-/** Wide (w-[220px]) — panel width, the LeftRail footprint */
+/**
+ * Wide (`width="w-[220px]"`) — panel width, the footprint CanvasRail uses
+ * for its Pages/TOC content. Pass an explicit `width` string like this
+ * whenever the narrow default doesn't fit the content — Rail accepts any
+ * Tailwind width class.
+ */
 export const Wide: Story = {
   render: () => (
-    <div className="min-h-screen bg-canvas-surface" style={{ transform: 'translateZ(0)' }}>
-      <Rail width="w-[220px]" aria-label="Wide rail" className="left-0">
+    <div className="flex h-screen bg-canvas-surface">
+      <Rail width="w-[220px]" aria-label="Wide rail">
         <PlaceholderHeader wide />
         <div className="flex flex-col gap-1 py-2 px-2">
           <PlaceholderItem wide />
@@ -65,18 +74,23 @@ export const Wide: Story = {
           <PlaceholderItem wide />
         </div>
       </Rail>
-      <div className="ml-[220px] p-12">
+      <div className="p-12">
         <Text variant="bodySmall" className="text-canvas-text-secondary">Canvas content area</Text>
       </div>
     </div>
   ),
 };
 
-/** Two rails side by side — the SiteRail + LeftRail composition pattern */
+/**
+ * Two Rails side by side — the SiteRail + CanvasRail composition pattern
+ * used on leaf content pages (see `Shell`'s `CanvasLayout` story). Each
+ * Rail needs its own `aria-label` when more than one appears on a page,
+ * since they're both `<aside>` landmarks and need to be distinguishable.
+ */
 export const Compound: Story = {
   render: () => (
-    <div className="min-h-screen bg-canvas-surface" style={{ transform: 'translateZ(0)' }}>
-      <Rail width="w-12" aria-label="Primary rail" className="left-0">
+    <div className="flex h-screen bg-canvas-surface">
+      <Rail width="w-12" aria-label="Primary rail">
         <PlaceholderHeader />
         <div className="flex flex-col items-center gap-1 py-2">
           <PlaceholderItem />
@@ -84,7 +98,7 @@ export const Compound: Story = {
           <PlaceholderItem />
         </div>
       </Rail>
-      <Rail width="w-[220px]" aria-label="Secondary rail" className="left-12">
+      <Rail width="w-[220px]" aria-label="Secondary rail">
         <PlaceholderHeader wide />
         <div className="flex flex-col gap-1 py-2 px-2">
           <PlaceholderItem wide />
@@ -92,7 +106,7 @@ export const Compound: Story = {
           <PlaceholderItem wide />
         </div>
       </Rail>
-      <div className="ml-[268px] p-12">
+      <div className="p-12">
         <Text variant="bodySmall" className="text-canvas-text-secondary">Canvas content area</Text>
       </div>
     </div>

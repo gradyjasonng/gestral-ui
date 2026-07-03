@@ -11,6 +11,12 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+/**
+ * `horizontal` variant — icon and label side by side, filling the width of
+ * its container. This is the variant SiteRail uses in its `expanded` state
+ * for nav items. `active`/`active="secondary"`/inactive states are all
+ * shown here; `icon` is optional — the last example shows text-only usage.
+ */
 export const Horizontal: Story = {
   render: () => (
     <div className="w-48 flex flex-col gap-1">
@@ -22,6 +28,12 @@ export const Horizontal: Story = {
   ),
 };
 
+/**
+ * `vertical` variant — icon stacked above label, sized to content rather
+ * than filling its container. Reach for this in narrower layouts where a
+ * horizontal icon+label pairing wouldn't fit, but a label is still needed
+ * (unlike `iconOnly`, which drops the label entirely).
+ */
 export const Vertical: Story = {
   render: () => (
     <div className="flex items-start gap-2">
@@ -32,6 +44,13 @@ export const Vertical: Story = {
   ),
 };
 
+/**
+ * `iconOnly` variant — renders just the square icon fill via `IconFill`,
+ * with no visible label. Since there's no text content for assistive tech
+ * to read, always pass `aria-label` when using this variant, as shown here.
+ * Use this in the most space-constrained layouts, e.g. a collapsed rail's
+ * footer actions.
+ */
 export const IconOnly: Story = {
   name: 'Icon Only',
   render: () => (
@@ -43,6 +62,12 @@ export const IconOnly: Story = {
   ),
 };
 
+/**
+ * All three `size` values (`sm`/`md`/`lg`) across all three variants, to
+ * show how `size` scales padding, text size, and icon container height
+ * together. `iconSize` can be set independently of `size` when an icon
+ * needs to read at a different scale than the surrounding text/padding.
+ */
 export const Sizes: Story = {
   render: () => (
     <div className="flex flex-col gap-6">
