@@ -26,6 +26,13 @@ The global shell has two regions.
 
 There is no persistent right panel. No top toolbar. Navigation, context, and ToC all live in the left rail.
 
+### Rail pairing convention
+
+- **Canvas + CanvasRail** (collapsed SiteRail) — post/case-study pages. Deconstructed, artboard-heavy: embedded content wrapped in `Artboard`, pannable/zoomable `Canvas`.
+- **Page** (expanded SiteRail, no CanvasRail) — top-level index pages (Home/Blog/Work): hero title and a `Card` grid on a plain content surface.
+
+`CanvasRail`'s panel section labels ("Layers", "Info") are presentation copy only — they don't imply a `Page` component is present.
+
 ---
 
 ## 3. Navigation Behaviour
@@ -126,7 +133,15 @@ These specific Figma UI elements appear as design motifs. Use them where they ea
 
 ---
 
-## 7. Token Naming Philosophy
+## 7. Motion
+
+Transitions should be used **extremely sparingly**. Gestral should feel snappy, like a design tool — state changes (hover, focus, selection) register instantly. Default to no transition at all; states just change.
+
+Do not add `transition-*` utilities as a default habit on interactive elements. If a transition is genuinely warranted, justify it against this principle first.
+
+---
+
+## 8. Token Naming Philosophy
 
 Tokens are organised in three semantic zones that map directly to the layout:
 
@@ -144,7 +159,7 @@ Primitive naming follows W3C DTCG format (`$value`, `$type`, `$description`). Se
 
 ---
 
-## 8. Token Reference
+## 9. Token Reference
 
 ### Semantic tokens — light mode
 
