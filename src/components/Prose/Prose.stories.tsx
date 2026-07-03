@@ -20,76 +20,75 @@ type Story = StoryObj<typeof meta>;
 
 const sampleContent = (
   <>
-    <h1>On Obsolescence</h1>
+    <h1>Sample Article Title</h1>
     <p>
-      I am a designer-developer hybrid, and I've always seen my ability to
-      code-switch between design and development as a strength. Lately though,
-      I feel as if my territory has been slowly chipped away at both ends.
+      This is a sample paragraph demonstrating the base typographic style
+      that Prose applies to longform content. It should read comfortably at
+      a readable measure, with generous line height for extended reading.
     </p>
-    <h2>A Shifting Landscape</h2>
+    <h2>A Sample Section Heading</h2>
     <p>
-      My LinkedIn feed is half full of UX designers trying to justify their
-      continued existence. They post comparison images of raw outputs next to
-      their iterated versions, and cling to the notion that <strong>taste</strong>{' '}
-      is what sets them apart. And perhaps they're right — <em>perhaps</em>.
+      Prose also styles inline emphasis, such as <strong>bold text</strong>{' '}
+      for strong importance and <em>italic text</em> for stress emphasis,
+      so both remain legible and distinct from the surrounding copy.
     </p>
     <blockquote>
       <p>
-        Taste is not a product. It is the residue of ten thousand decisions made
-        in the dark, with no one watching.
+        A blockquote is set apart from body copy to signal quoted or
+        highlighted material, distinct from the author's own voice.
       </p>
     </blockquote>
-    <h3>What Gets Lost</h3>
+    <h3>A Sample Subsection</h3>
     <p>
-      Here is a short list of things that cannot be automated away:
+      Here is a short unordered list of example items:
     </p>
     <ul>
-      <li>The instinct to ask a second question when the first answer feels too neat</li>
-      <li>Knowing when to stop iterating</li>
-      <li>The ability to read a room and adjust accordingly</li>
+      <li>The first example list item</li>
+      <li>A second example list item</li>
+      <li>A third example list item</li>
     </ul>
     <p>
-      For ordered context, consider the sequence of decisions in any real project:
+      And an ordered list, for sequential steps:
     </p>
     <ol>
-      <li>Understand what you're actually being asked to solve</li>
-      <li>Question whether it's the right problem</li>
-      <li>Build something that proves you were listening</li>
+      <li>The first step in a sequence</li>
+      <li>The second step in a sequence</li>
+      <li>The final step in a sequence</li>
     </ol>
     <hr />
-    <h2>Code and Craft</h2>
+    <h2>Code Samples</h2>
     <p>
-      Inline code looks like this: <code>const taste = cultivated()</code>. A
+      Inline code looks like this: <code>const example = getValue()</code>. A
       more involved example requires a full block:
     </p>
-    <pre><code>{`function cultivate(years: number): Taste {
-  return Array.from({ length: years })
-    .reduce((acc) => refine(acc), raw());
+    <pre><code>{`function example(count: number): Result {
+  return Array.from({ length: count })
+    .reduce((acc) => transform(acc), initial());
 }`}</code></pre>
     <h3>A Note on Tables</h3>
     <table>
       <thead>
         <tr>
-          <th>Tool</th>
-          <th>Role</th>
-          <th>Replaceable?</th>
+          <th>Column One</th>
+          <th>Column Two</th>
+          <th>Column Three</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>Figma</td>
-          <td>Visual thinking</td>
-          <td>Partially</td>
+          <td>Row one</td>
+          <td>Sample value</td>
+          <td>Sample value</td>
         </tr>
         <tr>
-          <td>Code</td>
-          <td>Precise realisation</td>
-          <td>Partially</td>
+          <td>Row two</td>
+          <td>Sample value</td>
+          <td>Sample value</td>
         </tr>
         <tr>
-          <td>Judgement</td>
-          <td>Deciding what matters</td>
-          <td>Not yet</td>
+          <td>Row three</td>
+          <td>Sample value</td>
+          <td>Sample value</td>
         </tr>
       </tbody>
     </table>
@@ -97,21 +96,35 @@ const sampleContent = (
       <div className="w-full h-40 bg-chrome-surface-hover rounded-md flex items-center justify-center">
         <span className="font-ui text-xs text-canvas-text-muted">Figure placeholder</span>
       </div>
-      <figcaption>A well-placed image earns more trust than a thousand words.</figcaption>
+      <figcaption>A figure caption sits below its image, set smaller and muted.</figcaption>
     </figure>
   </>
 );
 
+/**
+ * The full range of typographic elements Prose styles — headings (h1–h3),
+ * paragraphs, inline emphasis, blockquote, ordered/unordered lists, an hr
+ * divider, inline and block code, a table, and a figure with caption. Use
+ * this as the reference for how longform editorial content (e.g. a blog
+ * post body) should look; every element here should render sensibly without
+ * any additional per-element styling from the consumer.
+ */
 export const Default: Story = {
   args: { children: sampleContent },
 };
 
+/**
+ * A minimal example showing that anchor tags inside Prose content pick up
+ * link styling automatically — useful for checking link color/underline
+ * treatment doesn't need to be applied manually when authoring prose body
+ * copy with inline links.
+ */
 export const WithLink: Story = {
   args: {
     children: (
       <p>
         Read more about this at{' '}
-        <a href="#">grady.ng</a>, or follow the work on{' '}
+        <a href="#">example.com</a>, or follow the project on{' '}
         <a href="#">GitHub</a>.
       </p>
     ),

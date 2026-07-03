@@ -15,8 +15,24 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+/**
+ * Baseline Link with the default `underline` variant and `body` text.
+ * Underline styling is the safer default for inline links inside prose,
+ * where an underline is the clearest affordance that text is clickable.
+ */
 export const Default: Story = {};
 
+/**
+ * All three ways to control a Link's appearance side by side:
+ * - `underline` — default decoration, best for links inline in body copy.
+ * - `subtle` — no underline decoration, best for links in UI chrome
+ *   (nav items, metadata rows) where an underline would be visual noise.
+ *   Note `textVariant="h3"` here shows that `variant` only controls
+ *   decoration/color, independent of typographic size.
+ * - passing a `<Text>` as children instead of using `textVariant` — use
+ *   this when the link needs typography that also appears elsewhere
+ *   without a link wrapper (e.g. a heading that's sometimes a link).
+ */
 export const AllVariants: Story = {
   render: () => (
     <div className="flex flex-col gap-8">

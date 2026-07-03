@@ -29,6 +29,15 @@ function Section({ title, children }: { title: string; children: React.ReactNode
   );
 }
 
+/**
+ * Reference sheet for every semantic design token, grouped by namespace
+ * (`chrome.*`, `canvas.*`, `editorial.*`, `accent.*`, `category.work.*`) plus
+ * the three font families. Not a real usable component — it's a docs-only
+ * page (`tags: ['!autodocs']` opts it out of the autodocs tab) for checking
+ * token values visually before referencing them in component code. Since
+ * component code must never use raw hex values, this page is the place to
+ * look up which semantic token to reach for.
+ */
 export const Palette: Story = {
   name: 'Palette',
   render: () => (
