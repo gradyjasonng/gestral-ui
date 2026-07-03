@@ -1,57 +1,43 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { SiteRail } from './SiteRail';
-import { PageRail } from '../PageRail/PageRail';
-import { LeafPage } from '../PageRail/PageRail.stories';
-import { Text } from '../../primitives/Text/Text';
+import { CanvasRail } from '../CanvasRail/CanvasRail';
+import { Default as CanvasRailDefault } from '../CanvasRail/CanvasRail.stories';
 import { navItems, footerItems } from './__fixtures__.tsx';
 
 const meta = {
-  title: 'Components/Sidebar/SiteRail',
+  title: 'Components/Shell/SiteRail',
   component: SiteRail,
   parameters: { layout: 'fullscreen' },
   tags: ['autodocs'],
+  decorators: [
+    (Story) => (
+      <div className="flex h-screen bg-canvas-surface">
+        <Story />
+      </div>
+    ),
+  ],
 } satisfies Meta<typeof SiteRail>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+/**
+ * Default (collapsed) state — icon-only nav items rendered as
+ * LabelledIconButtons in a narrow (`w-14`) rail. No `siteName` is passed
+ * since it wouldn't render in this state anyway (RailHeader only shows
+ * `title` when `expanded` is true). Use this as the default site-wide rail
+ * footprint, expanding only when the user opts in or screen space allows.
+ */
 export const Collapsed: Story = {
   args: { items: navItems, footerItems },
-  decorators: [
-    (Story) => (
-      <div className="min-h-screen bg-canvas-surface" style={{ transform: 'translateZ(0)' }}>
-        <Story />
-        <div className="ml-12 p-12">
-          <Text variant="bodySmall" className="text-canvas-text-secondary">Canvas content area</Text>
-        </div>
-      </div>
-    ),
-  ],
 };
 
+/**
+ * `expanded` state — widens to `w-48`, swaps nav items to full horizontal
+ * Buttons with visible labels, and shows `siteName` in the header. Use this
+ * when there's enough horizontal space to justify labelled navigation, or
+ * as the default state paired with a top-level index Page (no CanvasRail).
+ */
 export const Expanded: Story = {
-  args: { items: navItems, footerItems, siteName: 'Grady Ng', expanded: true },
-  decorators: [
-    (Story) => (
-      <div className="min-h-screen bg-canvas-surface" style={{ transform: 'translateZ(0)' }}>
-        <Story />
-        <div className="ml-40 p-12">
-          <Text variant="bodySmall" className="text-canvas-text-secondary">Canvas content area</Text>
-        </div>
-      </div>
-    ),
-  ],
-};
-
-/** Full two-column left panel as it appears on a blog post */
-export const WithLeftRail: Story = {
-  render: () => (
-    <div className="min-h-screen bg-canvas-surface" style={{ transform: 'translateZ(0)' }}>
-      <SiteRail items={navItems} footerItems={footerItems} siteName="Grady Ng" className="left-0" />
-      <PageRail {...LeafPage.args!} className="left-12" />
-      <div className="ml-[268px] p-12">
-        <p className="font-ui text-sm text-canvas-text-secondary">Canvas content area</p>
-      </div>
-    </div>
-  ),
+  args: { items: navItems, footerItems, siteName: 'Gestral UI', expanded: true },
 };

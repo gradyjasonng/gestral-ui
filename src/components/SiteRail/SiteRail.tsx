@@ -4,12 +4,11 @@ import { Stack } from '../../primitives/Stack/Stack';
 import { RailHeader } from '../RailHeader/RailHeader';
 import { Button } from '../../primitives/Button/Button';
 import { LabelledIconButton } from '../../primitives/Button/LabelledIconButton';
-import { Text } from '../../primitives/Text/Text';
 import type { IconName } from '../../primitives/Icon/Icon';
 import { cn } from '../../lib/cn';
 
 const LogoPlaceholder = () => (
-  <span className="w-5 h-5 rounded-sm bg-accent-default shrink-0" aria-hidden="true" />
+  <span className="w-6 h-6 rounded-sm bg-accent-default shrink-0" aria-hidden="true" />
 );
 
 export interface SiteRailFooterItem {
@@ -36,8 +35,6 @@ export interface SiteRailProps {
   /** When true, shows labels alongside icons */
   expanded?: boolean;
   className?: string;
-  /** When false, renders as a flex child (for use inside Sidebar) */
-  fixed?: boolean;
 }
 
 export function SiteRail({
@@ -48,13 +45,11 @@ export function SiteRail({
   logoHref = '/',
   expanded = false,
   className,
-  fixed = true,
 }: SiteRailProps) {
   return (
     <Rail
-      width={expanded ? 'w-40' : 'w-12'}
+      width={expanded ? 'w-48' : 'w-14'}
       aria-label="Site navigation"
-      fixed={fixed}
       className={className}
     >
       <RailHeader
@@ -119,8 +114,9 @@ export function SiteRail({
         <Stack
           direction={expanded ? 'row' : 'col'}
           align="center"
+          gap="sm"
           justify={expanded ? 'around' : 'center'}
-          className="py-1 shrink-0"
+          className="py-2 shrink-0"
         >
           {footerItems.map(({ icon, label, href, onClick, active }) => (
             <Button

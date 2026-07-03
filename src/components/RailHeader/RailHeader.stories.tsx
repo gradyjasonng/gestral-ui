@@ -1,13 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { RailHeader } from './RailHeader';
-import { Icon } from '../../primitives/Icon/Icon';
 
 const LogoPlaceholder = () => (
   <span className="w-5 h-5 rounded-sm bg-accent-default shrink-0" aria-hidden="true" />
 );
 
 const meta = {
-  title: 'Components/Sidebar/RailHeader',
+  title: 'Components/Shell/RailHeader',
   component: RailHeader,
   tags: ['autodocs'],
   decorators: [
@@ -22,7 +21,12 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-/** Collapsed SiteRail — logo only */
+/**
+ * Collapsed SiteRail state — only the `left` logo slot is populated, no
+ * `title`/`subtitle`. Use this when the rail is narrow (icon-column width)
+ * and there isn't room for text, since RailHeader only renders the
+ * title/subtitle block when at least one of those props is set.
+ */
 export const LogoOnly: Story = {
   args: {
     left: (
@@ -33,7 +37,12 @@ export const LogoOnly: Story = {
   },
 };
 
-/** Expanded SiteRail — logo + site name */
+/**
+ * Expanded SiteRail state — logo plus `title` (site name), no `subtitle`.
+ * `title` renders in `displaySm` and truncates rather than wrapping, so
+ * keep it short. Use this composition on the top-level SiteRail once it's
+ * expanded to panel width.
+ */
 export const LogoWithTitle: Story = {
   args: {
     left: (
@@ -41,23 +50,18 @@ export const LogoWithTitle: Story = {
         <LogoPlaceholder />
       </a>
     ),
-    title: 'Grady Ng',
+    title: 'Gestral UI',
   },
 };
 
-/** LeftRail — back button + site name + section */
-export const WithBackButton: Story = {
+/**
+ * CanvasRail composition — no `left` slot, just `title` and `subtitle`
+ * (site name and current section). CanvasRail has no back button; use the
+ * SiteRail to navigate between sections instead.
+ */
+export const TitleWithSubtitle: Story = {
   args: {
-    left: (
-      <a
-        href="/blog"
-        aria-label="Back to Blog"
-        className="flex items-center justify-center w-full h-full text-chrome-text-muted hover:text-chrome-text-primary transition-colors duration-100"
-      >
-        <Icon name="chevron-left" size="xs" />
-      </a>
-    ),
-    title: 'Grady Ng',
-    subtitle: 'Blog',
+    title: 'Gestral UI',
+    subtitle: 'Subtitle',
   },
 };

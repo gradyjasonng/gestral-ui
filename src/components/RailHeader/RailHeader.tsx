@@ -4,7 +4,7 @@ import { Text } from '../../primitives/Text/Text';
 import { cn } from '../../lib/cn';
 
 export interface RailHeaderProps {
-  /** Left slot: logo link in SiteRail, back chevron button in PageRail */
+  /** Left slot: logo link in SiteRail, back chevron button in CanvasRail */
   left?: ReactNode;
   /** Primary text — site name */
   title?: string;
@@ -15,9 +15,9 @@ export interface RailHeaderProps {
 
 export function RailHeader({ left, title, subtitle, className }: RailHeaderProps) {
   return (
-    <Stack direction="row" align="stretch" className={cn('shrink-0 min-h-12', className)}>
+    <Stack direction="row" align="stretch" className={cn('shrink-0 min-h-14', className)}>
       {left && (
-        <Stack direction="row" align="center" justify="center" className="w-12 shrink-0">
+        <Stack direction="row" align="center" justify="center" className="w-14 shrink-0">
           {left}
         </Stack>
       )}
