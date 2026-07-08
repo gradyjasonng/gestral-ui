@@ -1,5 +1,5 @@
 import type { ElementType, HTMLAttributes, ReactNode } from 'react';
-import { cn } from '../../lib/cn';
+import { cn } from '@lib/cn';
 
 export type StackDirection = 'row' | 'col';
 export type StackAlign = 'start' | 'center' | 'end' | 'stretch' | 'baseline';

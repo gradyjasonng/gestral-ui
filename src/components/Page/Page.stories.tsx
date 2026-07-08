@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Page } from './Page';
-import { Text } from '../../primitives/Text/Text';
-import { Grid as CardGrid } from '../Card/Card.stories';
+import { Text } from '@primitives';
+import { Grid as CardGrid } from '@components/Card/Card.stories';
 
 const meta = {
   title: 'Components/Page',

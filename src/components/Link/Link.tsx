@@ -1,6 +1,6 @@
 import type { AnchorHTMLAttributes } from 'react';
-import { cn } from '../../lib/cn';
-import { Text, type TextVariant } from '../../primitives/Text/Text';
+import { cn } from '@lib/cn';
+import { Text, type TextVariant } from '@primitives';
 
 export type LinkVariant = 'underline' | 'subtle';
 

@@ -10,7 +10,11 @@
     "sourceMap": true,
     "rootDir": "src",
     "paths": {
-      "@/*": ["./src/*"]
+      "@primitives": ["./src/primitives/index.ts"],
+      "@primitives/*": ["./src/primitives/*"],
+      "@components/*": ["./src/components/*"],
+      "@lib/*": ["./src/lib/*"],
+      "@styles/*": ["./src/styles/*"]
     }
   },
   "include": ["src"],

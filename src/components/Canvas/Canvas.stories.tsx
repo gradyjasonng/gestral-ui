@@ -1,13 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Canvas } from './Canvas';
-import { Text } from '../../primitives/Text/Text';
-import { Stack } from '../../primitives/Stack/Stack';
-import { Artboard } from '../Artboard/Artboard';
+import { Text, Stack } from '@primitives';
+import { Artboard } from '@components/Artboard/Artboard';
 import {
   Default as ArtboardDefault,
   Interactive as ArtboardInteractive,
   External as ArtboardExternal,
-} from '../Artboard/Artboard.stories';
+} from '@components/Artboard/Artboard.stories';
 
 const meta = {
   title: 'Components/Canvas',

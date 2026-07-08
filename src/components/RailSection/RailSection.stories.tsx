@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { RailSection } from './RailSection';
-import { Stack } from '../../primitives/Stack/Stack';
-import { Button } from '../../primitives/Button/Button';
+import { Stack, Button } from '@primitives';
 
 const meta = {
   title: 'Components/Shell/RailSection',

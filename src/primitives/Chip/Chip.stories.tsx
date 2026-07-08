@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Chip } from './Chip';
-import { Text } from '../Text/Text';
-import { Icon } from '../Icon/Icon';
+import { Text } from '@primitives/Text/Text';
+import { Icon } from '@primitives/Icon/Icon';
 
 const meta = {
   title: 'Primitives/Chip',

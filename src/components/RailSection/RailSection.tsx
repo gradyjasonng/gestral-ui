@@ -1,7 +1,6 @@
 import type { ReactNode } from 'react';
-import { Stack } from '../../primitives/Stack/Stack';
-import { Text } from '../../primitives/Text/Text';
-import { cn } from '../../lib/cn';
+import { Stack, Text } from '@primitives';
+import { cn } from '@lib/cn';
 
 export interface RailSectionProps {
   /** Section heading (e.g. "Layers", "Info", "Up Next") */

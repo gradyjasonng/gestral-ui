@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
-import { Stack } from '../Stack/Stack';
-import { cn } from '../../lib/cn';
+import { Stack } from '@primitives/Stack/Stack';
+import { cn } from '@lib/cn';
 
 export interface RailProps {
   children: ReactNode;

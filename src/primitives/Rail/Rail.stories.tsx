@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Rail } from './Rail';
-import { Text } from '../Text/Text';
+import { Text } from '@primitives/Text/Text';
 
 const meta = {
   title: 'Primitives/Rail',
