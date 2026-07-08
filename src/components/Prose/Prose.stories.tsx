@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { expect } from 'storybook/test';
 import { Prose } from './Prose';
 
 const meta = {
@@ -128,5 +129,49 @@ export const WithLink: Story = {
         <a href="#">GitHub</a>.
       </p>
     ),
+  },
+};
+
+/**
+ * `.not-prose` is an escape hatch for content nested inside Prose that
+ * shouldn't inherit its typographic styling — e.g. an embedded widget or a
+ * hand-styled block. Wrap the subtree in an element carrying the `not-prose`
+ * class and every Prose rule (headings, paragraph spacing, list markers,
+ * etc.) stops applying to it and its descendants, while everything outside
+ * that wrapper keeps the normal Prose treatment.
+ */
+export const WithNotProse: Story = {
+  args: {
+    children: (
+      <>
+        <h2>Regular Prose Heading</h2>
+        <p>This paragraph picks up the normal Prose margin and line height.</p>
+        <div className="not-prose" data-testid="escaped">
+          <h2>Escaped Heading</h2>
+          <p>
+            This paragraph and heading sit inside a <code>not-prose</code>{' '}
+            wrapper, so neither picks up Prose's font, spacing, or list
+            styling.
+          </p>
+          <ul>
+            <li>Not styled as a Prose list item</li>
+          </ul>
+        </div>
+        <p>This paragraph is back outside the wrapper, so Prose styling resumes.</p>
+      </>
+    ),
+  },
+  play: async ({ canvasElement }) => {
+    const escapedHeading = canvasElement.querySelector('[data-testid="escaped"] h2')!;
+    const escapedParagraph = canvasElement.querySelector('[data-testid="escaped"] p')!;
+    const normalHeading = canvasElement.querySelector('h2')!;
+
+    // The escaped heading shouldn't pick up Prose's heading treatment
+    // (uppercase display font) that the normal heading gets.
+    await expect(getComputedStyle(normalHeading).textTransform).toBe('uppercase');
+    await expect(getComputedStyle(escapedHeading).textTransform).not.toBe('uppercase');
+
+    // The escaped paragraph shouldn't pick up Prose's paragraph margin.
+    await expect(getComputedStyle(escapedParagraph).marginTop).toBe('0px');
   },
 };

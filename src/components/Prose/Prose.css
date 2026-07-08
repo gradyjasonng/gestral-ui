@@ -1,0 +1,165 @@
+/* ─── Prose ──────────────────────────────────────────────────────────────── */
+/* `.not-prose` is an escape hatch (same convention as @tailwindcss/typography):
+ * wrap any subtree that shouldn't inherit prose formatting — e.g. an embedded
+ * widget or a hand-styled block — in an element carrying this class, and
+ * every rule below stops applying to it and its descendants. Each selector
+ * gets a `:not(:where(.not-prose, .not-prose *))` guard; the `:where()` keeps
+ * the guard's specificity at zero so it doesn't change how these rules
+ * cascade against each other, only what they match. */
+.prose {
+  color: var(--color-editorial-text-primary);
+  font-family: var(--font-editorial);
+  font-size: 1rem;
+  line-height: 1.75;
+
+  & > :first-child:not(:where(.not-prose, .not-prose *)) { margin-top: 0; }
+  & > :last-child:not(:where(.not-prose, .not-prose *))  { margin-bottom: 0; }
+
+  /* Paragraphs */
+  & p:not(:where(.not-prose, .not-prose *)) {
+    margin-top: 1.25em;
+    margin-bottom: 1.25em;
+  }
+
+  /* Headings */
+  & h1:not(:where(.not-prose, .not-prose *)),
+  & h2:not(:where(.not-prose, .not-prose *)),
+  & h3:not(:where(.not-prose, .not-prose *)),
+  & h4:not(:where(.not-prose, .not-prose *)),
+  & h5:not(:where(.not-prose, .not-prose *)),
+  & h6:not(:where(.not-prose, .not-prose *)) {
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    font-weight: normal;
+    color: var(--color-canvas-text-primary);
+    line-height: 1.15;
+    margin-bottom: 0.5em;
+  }
+  & h1:not(:where(.not-prose, .not-prose *)) { font-size: 2.5rem;  margin-top: 2.5em; }
+  & h2:not(:where(.not-prose, .not-prose *)) { font-size: 2rem;    margin-top: 2em; }
+  & h3:not(:where(.not-prose, .not-prose *)) { font-size: 1.5rem;  margin-top: 1.75em; }
+  & h4:not(:where(.not-prose, .not-prose *)) { font-size: 1.25rem; margin-top: 1.5em; }
+  & h5:not(:where(.not-prose, .not-prose *)) { font-size: 1rem;    margin-top: 1.25em; }
+  & h6:not(:where(.not-prose, .not-prose *)) { font-size: 0.875rem; margin-top: 1.25em; }
+
+  /* Links */
+  & a:not(:where(.not-prose, .not-prose *)) {
+    color: var(--color-accent-default);
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+    transition: color 150ms ease;
+    &:hover  { color: var(--color-accent-text); }
+    &:active { color: var(--color-accent-text); }
+  }
+
+  /* Emphasis */
+  & strong:not(:where(.not-prose, .not-prose *)) { font-weight: 700; color: currentColor; }
+  & em:not(:where(.not-prose, .not-prose *))     { font-style: italic; }
+
+  /* Blockquote */
+  & blockquote:not(:where(.not-prose, .not-prose *)) {
+    border-left: 3px solid var(--color-accent-border);
+    padding-left: 1.5rem;
+    margin-left: 0;
+    margin-right: 0;
+    color: var(--color-editorial-text-secondary);
+    font-style: italic;
+    & p:not(:where(.not-prose, .not-prose *)) { margin-top: 0.75em; margin-bottom: 0.75em; }
+  }
+
+  /* Lists */
+  & ul:not(:where(.not-prose, .not-prose *)) { list-style-type: disc;    padding-left: 1.5rem; margin: 1.25em 0; }
+  & ol:not(:where(.not-prose, .not-prose *)) { list-style-type: decimal; padding-left: 1.5rem; margin: 1.25em 0; }
+  & li:not(:where(.not-prose, .not-prose *)) {
+    margin-top: 0.4em;
+    margin-bottom: 0.4em;
+    & > p:not(:where(.not-prose, .not-prose *)) { margin-top: 0.25em; margin-bottom: 0.25em; }
+  }
+
+  /* Horizontal rule */
+  & hr:not(:where(.not-prose, .not-prose *)) {
+    border: none;
+    border-top: 1px solid var(--color-canvas-border);
+    margin: 2.5em 0;
+  }
+
+  /* Figures */
+  & figure:not(:where(.not-prose, .not-prose *)) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 2em 0;
+    & img:not(:where(.not-prose, .not-prose *)) { margin: 0; }
+  }
+  & figcaption:not(:where(.not-prose, .not-prose *)) {
+    font-family: var(--font-ui);
+    font-size: 0.8125rem;
+    color: var(--color-canvas-text-muted);
+    margin-top: 0.75rem;
+    text-align: center;
+    line-height: 1.5;
+  }
+
+  /* Images */
+  & img:not(:where(.not-prose, .not-prose *)) {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    margin: 1.5em 0;
+  }
+
+  /* Inline code */
+  & :not(pre) > code:not(:where(.not-prose, .not-prose *)) {
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.875em;
+    background-color: var(--color-chrome-surface-hover);
+    color: var(--color-editorial-text-primary);
+    border: 1px solid var(--color-chrome-border);
+    border-radius: var(--radius-sm);
+    padding: 0.1em 0.35em;
+  }
+
+  /* Code blocks */
+  & pre:not(:where(.not-prose, .not-prose *)) {
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.875rem;
+    background-color: var(--color-chrome-surface);
+    border: 1px solid var(--color-chrome-border);
+    border-radius: var(--radius-md);
+    padding: 1.25rem 1.5rem;
+    overflow-x: auto;
+    margin: 1.75em 0;
+    line-height: 1.6;
+    & code:not(:where(.not-prose, .not-prose *)) {
+      background: none;
+      border: none;
+      padding: 0;
+      font-size: inherit;
+      color: var(--color-editorial-text-primary);
+    }
+  }
+
+  /* Tables */
+  & table:not(:where(.not-prose, .not-prose *)) {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--font-ui);
+    font-size: 0.875rem;
+    margin: 1.75em 0;
+  }
+  & thead tr:not(:where(.not-prose, .not-prose *)) { border-bottom: 2px solid var(--color-canvas-border); }
+  & th:not(:where(.not-prose, .not-prose *)) {
+    font-weight: 600;
+    text-align: left;
+    padding: 0.5rem 1rem;
+    color: var(--color-canvas-text-primary);
+    font-family: var(--font-ui);
+  }
+  & td:not(:where(.not-prose, .not-prose *)) {
+    padding: 0.5rem 1rem;
+    border-bottom: 1px solid var(--color-canvas-border);
+    vertical-align: top;
+  }
+  & tbody tr:last-child td:not(:where(.not-prose, .not-prose *)) { border-bottom: none; }
+}

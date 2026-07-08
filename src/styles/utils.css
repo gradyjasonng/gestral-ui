@@ -1,0 +1,13 @@
+/* source(none) above stops the JIT from seeing z-stack used in our own
+ * .tsx files, so without this it would never get emitted despite being
+ * defined below — force it in explicitly. */
+@source inline("z-stack");
+
+@utility z-stack {
+  @apply grid grid-cols-1 grid-rows-1 place-content-center place-items-center;
+
+  & > * {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+  }
+}

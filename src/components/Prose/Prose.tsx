@@ -1,5 +1,6 @@
 import type { ElementType, ReactNode } from 'react';
-import { cn } from '../../lib/cn';
+import { cn } from '@lib/cn';
+import './Prose.css';
 
 export interface ProseProps {
   children: ReactNode;
