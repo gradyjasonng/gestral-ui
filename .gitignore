@@ -5,6 +5,11 @@ node_modules
 dist
 storybook-static
 
+# generated from tokens.css's hand-authored :root plus
+# src/lib/{textScale,radiusScale,spacingScale}.ts — see
+# src/lib/generateTokensCss.ts and vite.config.ts's generate-tokens-css plugin
+src/styles/generated.css
+
 # environment
 .env
 .env.*

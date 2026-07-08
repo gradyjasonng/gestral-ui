@@ -11,10 +11,53 @@ The short version: Gestral's visual language is a **deconstructed design tool UI
 ## Architecture
 
 - **Vite** library mode, **Tailwind v4**, **Storybook** Connect
-- Tokens are hand-authored in `src/styles/tokens.css` — no generation pipeline
-- `src/styles/theme.css` is the consumable stylesheet for downstream apps (exported as `./theme`)
+- `tokens.css`'s `:root` token *values* (colors, fonts, icon-size) are hand-authored; its `@theme inline { ... }` Tailwind-registration block is **fully generated** (nothing hand-maintained there, for any token family) into a single gitignored `src/styles/generated.css` (imported by `tokens.css`), via `vite.config.ts`'s `generate-tokens-css` plugin. The text-size, radius, and spacing-inline/stack scale *values* are also generated, from `src/lib/{textScale,radiusScale,spacingScale}.ts` — those are the source of truth for that scale (including `Text.tsx`'s HTML element/font classes and the `@source` safelist Tailwind needs since `Text.tsx` builds its class via template literal). Edit `tokens.css`'s `:root` values or the TS modules — never `generated.css` directly.
+- `dist/theme.css` (generated from `tokens.css` at build time) is the consumable stylesheet for downstream apps (exported as `./theme`)
 - Components live in `src/components/`, each with a `.tsx` and a `.stories.tsx`
 - No hex values in component code — all colours reference semantic tokens (`chrome.*`, `canvas.*`, `editorial.*`, `accent.*`, `category.work.*`)
+
+### The `./styles` export (`dist/index.css`) does not ship stock Tailwind utilities
+
+`src/styles/tokens.css` and `src/styles/global.css` both import Tailwind with
+`@import "tailwindcss" source(none);` — this stops the library's own build
+from scanning `src/**/*.tsx` and baking a duplicate copy of stock utilities
+(`flex`, `px-4`, `gap-4`, ...) into `dist/index.css`. That duplicate copy used
+to collide with a consumer's own Tailwind output: both rules have identical
+specificity, so whichever CSS layer contribution happened to land later in
+source order won — and an unconditioned utility from gestral-ui's bundle
+could silently outrank a consumer's `sm:`-prefixed responsive variant.
+
+Consequences:
+- **Consumers must add `tailwindcss` themselves** (declared as a
+  `peerDependency`) and point a Tailwind `@source` directive at
+  `node_modules/@gradyjasonng/gestral-ui/dist` so their own build generates
+  whatever stock utility classes gestral-ui's components actually use.
+  Example, in the consumer's global CSS:
+  ```css
+  @import 'tailwindcss';
+  @source '../../node_modules/@gradyjasonng/gestral-ui/dist';
+  @import '@gradyjasonng/gestral-ui/styles';
+  @import '@gradyjasonng/gestral-ui/theme';
+  ```
+  That path must stay a real filesystem path, not the bare package name —
+  `@source` resolves as a literal glob, not npm module resolution, so
+  `@source '@gradyjasonng/gestral-ui'` silently matches nothing. It also
+  must point at `dist/` specifically, not the package root: our own
+  `.gitignore` excludes `dist/`, and Tailwind's directory-walk respects
+  `.gitignore`, so pointing at the root silently skips it.
+- `dist/index.css` still ships everything that **isn't** JIT-scan-dependent
+  in the normal sense: `@theme` registrations, `@font-face`s, and hand-written
+  CSS like `.prose`.
+- Custom `@utility` classes we define ourselves (e.g. `z-stack`) *are*
+  scan-dependent even though they're not stock Tailwind utilities — the JIT
+  compiler only emits a utility's CSS if it sees the class name used
+  somewhere. Since scanning our own `.tsx` is disabled, any such utility
+  needs an explicit `@source inline("name");` right next to its `@utility`
+  definition, or it silently disappears from the build.
+- Storybook (`.storybook/preview.tsx`) is the one place that still wants the
+  full internal scan — it imports `.storybook/preview-source.css`, which
+  re-enables it via `@source '../src/**/*.{ts,tsx}';`, independently of the
+  `source(none)` used for the published package.
 
 ---
 
