@@ -1,20 +1,20 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Shell } from './Shell';
-import { Canvas } from '../Canvas/Canvas';
-import { Stack } from '../../primitives/Stack/Stack';
-import { SiteRail } from '../SiteRail/SiteRail';
-import { CanvasRail } from '../CanvasRail/CanvasRail';
-import { Page } from '../Page/Page';
-import { navItems, footerItems } from '../SiteRail/__fixtures__.tsx';
-import { Default as CanvasRailDefault } from '../CanvasRail/CanvasRail.stories';
-import { Text } from '../../primitives/Text/Text';
-import { Artboard } from '../Artboard/Artboard';
+import { Canvas } from '@components/Canvas/Canvas';
+import { SiteRail } from '@components/SiteRail/SiteRail';
+import { MobileNav } from '@components/MobileNav/MobileNav';
+import { CanvasRail } from '@components/CanvasRail/CanvasRail';
+import { Page } from '@components/Page/Page';
+import { navItems, footerItems } from '@components/SiteRail/__fixtures__';
+import { Default as CanvasRailDefault } from '@components/CanvasRail/CanvasRail.stories';
+import { Text, Stack } from '@primitives';
+import { Artboard } from '@components/Artboard/Artboard';
 import {
   Default as ArtboardDefault,
   Interactive as ArtboardInteractive,
   External as ArtboardExternal,
-} from '../Artboard/Artboard.stories';
-import { Default as PageDefault } from '../Page/Page.stories';
+} from '@components/Artboard/Artboard.stories';
+import { Default as PageDefault } from '@components/Page/Page.stories';
 
 const meta = {
   title: 'Components/Shell',
@@ -72,6 +72,25 @@ export const PageLayout: Story = {
     <Shell
       rails={<SiteRail items={navItems} footerItems={footerItems} siteName="Gestral UI" expanded />}
       canvas={<PageContent />}
+    />
+  ),
+};
+
+/**
+ * Mobile composition: a MobileNav in the `overline` slot provides the top
+ * bar + drawer below `md`, while the rails column hides itself
+ * (`hidden md:flex`) and the canvas fills the full width. On `md` and up the
+ * MobileNav disappears and the rails return — one Shell serves both. View
+ * this story in a small viewport to see the top bar.
+ */
+export const MobileLayout: Story = {
+  name: 'Mobile Layout',
+  parameters: { viewport: { defaultViewport: 'mobile1' } },
+  render: () => (
+    <Shell
+      overline={<MobileNav items={navItems} footerItems={footerItems} siteName="Gestral UI" />}
+      rails={<SiteRail items={navItems} footerItems={footerItems} siteName="Gestral UI" />}
+      canvas={<VerticalCanvasContent />}
     />
   ),
 };

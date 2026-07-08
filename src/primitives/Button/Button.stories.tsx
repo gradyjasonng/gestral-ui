@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Button } from './Button';
-import { Text } from '../Text/Text';
+import { Text } from '@primitives/Text/Text';
 
 const meta = {
   title: 'Primitives/Button',
@@ -58,6 +58,30 @@ export const IconOnly: Story = {
       <Button variant="iconOnly" icon="star" active aria-label="Star (active)">Star</Button>
       <Button variant="iconOnly" icon="star" active="secondary" aria-label="Star (secondary)">Star</Button>
       <Button variant="iconOnly" icon="star" aria-label="Star">Star</Button>
+    </div>
+  ),
+};
+
+/**
+ * `palette` controls the color scheme applied when `active` — `accent`
+ * (default, emerald), `secondary` (violet, solid fill), or `input` (blue).
+ * Also shown on a `muted` surface, where the active fill lifts back to
+ * `chrome-surface` instead of the palette's usual fill, keeping only the
+ * palette's text color (see `SegmentedControl`, which sits on a muted well).
+ */
+export const Palette: Story = {
+  render: () => (
+    <div className="flex flex-col gap-6">
+      <div className="flex items-center gap-2">
+        <Button variant="horizontal" icon="star" active palette="accent">Accent</Button>
+        <Button variant="horizontal" icon="star" active palette="secondary">Secondary</Button>
+        <Button variant="horizontal" icon="star" active palette="input">Input</Button>
+      </div>
+      <div className="flex items-center gap-2 p-2 rounded-lg bg-chrome-muted">
+        <Button variant="horizontal" icon="star" active surface="muted" palette="accent">Accent</Button>
+        <Button variant="horizontal" icon="star" active surface="muted" palette="secondary">Secondary</Button>
+        <Button variant="horizontal" icon="star" active surface="muted" palette="input">Input</Button>
+      </div>
     </div>
   ),
 };

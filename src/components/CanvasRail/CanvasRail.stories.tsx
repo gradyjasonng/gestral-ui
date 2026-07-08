@@ -27,9 +27,9 @@ type Story = StoryObj<typeof meta>;
  */
 export const Default: Story = {
   args: {
-    siteName: 'Page Title',
-    section: 'gestral.ui',
-    toc: [
+    title: 'Page Title',
+    subtitle: 'gestral.ui',
+    items: [
       { label: 'Introduction',              href: '#intro',      depth: 2, active: true },
       { label: 'The Problem',               href: '#problem',    depth: 2 },
       { label: 'Early attempts',            href: '#attempts',   depth: 3 },

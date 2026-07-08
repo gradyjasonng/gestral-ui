@@ -1,7 +1,6 @@
 import type { ReactNode } from 'react';
-import { Stack } from '../../primitives/Stack/Stack';
-import { Text } from '../../primitives/Text/Text';
-import { cn } from '../../lib/cn';
+import { Stack, Text } from '@primitives';
+import { cn } from '@lib/cn';
 
 export interface RailHeaderProps {
   /** Left slot: logo link in SiteRail, back chevron button in CanvasRail */
@@ -24,7 +23,7 @@ export function RailHeader({ left, title, subtitle, className }: RailHeaderProps
       {(title || subtitle) && (
         <Stack direction="col" justify="center" className="py-3 flex-1 min-w-0 pr-3">
           {title && (
-            <Text variant="displaySm" className="text-chrome-text-primary truncate leading-5">
+            <Text variant={subtitle ? "displaySm" : "displayMd"} className="text-chrome-text-primary truncate leading-5">
               {title}
             </Text>
           )}

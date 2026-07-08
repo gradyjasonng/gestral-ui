@@ -31,8 +31,9 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 
 /**
  * Reference sheet for every semantic design token, grouped by namespace
- * (`chrome.*`, `canvas.*`, `editorial.*`, `accent.*`, `category.work.*`) plus
- * the three font families. Not a real usable component — it's a docs-only
+ * (`chrome.*`, `canvas.*`, `editorial.*`, `accent.*`, `secondary.*`,
+ * `input.*`, `category.work.*`) plus the three font families. Not a real
+ * usable component — it's a docs-only
  * page (`tags: ['!autodocs']` opts it out of the autodocs tab) for checking
  * token values visually before referencing them in component code. Since
  * component code must never use raw hex values, this page is the place to
@@ -74,11 +75,19 @@ export const Palette: Story = {
         <Swatch name="accent-text"     className="bg-accent-text" />
       </Section>
 
-      <Section title="Category / Work">
-        <Swatch name="category-work-default"  className="bg-category-work-default" />
-        <Swatch name="category-work-subtle"   className="bg-category-work-subtle border border-category-work-border" />
-        <Swatch name="category-work-border"   className="bg-category-work-border" />
-        <Swatch name="category-work-text"     className="bg-category-work-text" />
+      <Section title="Secondary">
+        <Swatch name="secondary-default"  className="bg-secondary-default" />
+        <Swatch name="secondary-subtle"   className="bg-secondary-subtle border border-secondary-border" />
+        <Swatch name="secondary-border"   className="bg-secondary-border" />
+        <Swatch name="secondary-text"     className="bg-secondary-text" />
+      </Section>
+
+      <Section title="Input">
+        <Swatch name="input-default"  className="bg-input-default" />
+        <Swatch name="input-active"   className="bg-input-active border border-input-border" />
+        <Swatch name="input-subtle"   className="bg-input-subtle border border-input-border" />
+        <Swatch name="input-border"   className="bg-input-border" />
+        <Swatch name="input-text"     className="bg-input-text" />
       </Section>
 
       <Section title="Typography">

@@ -39,7 +39,7 @@ export const LogoOnly: Story = {
 
 /**
  * Expanded SiteRail state — logo plus `title` (site name), no `subtitle`.
- * `title` renders in `displaySm` and truncates rather than wrapping, so
+ * `title` renders in `displayMd` and truncates rather than wrapping, so
  * keep it short. Use this composition on the top-level SiteRail once it's
  * expanded to panel width.
  */

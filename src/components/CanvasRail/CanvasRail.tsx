@@ -1,10 +1,7 @@
-import { Rail } from '../../primitives/Rail/Rail';
-import { RailHeader } from '../RailHeader/RailHeader';
-import { RailSection } from '../RailSection/RailSection';
-import { Button } from '../../primitives/Button/Button';
-import { Text } from '../../primitives/Text/Text';
-import { Stack } from '../../primitives/Stack/Stack';
-import { cn } from '../../lib/cn';
+import { Rail, Button, Text, Stack } from '@primitives';
+import { RailHeader } from '@components/RailHeader/RailHeader';
+import { RailSection } from '@components/RailSection/RailSection';
+import { cn } from '@lib/cn';
 
 export type NodeIndent = 0 | 1 | 2;
 
@@ -17,8 +14,18 @@ const indentPadding: Record<NodeIndent, string> = {
 export interface TocItem {
   label: string;
   href: string;
-  depth?: 2 | 3;
+  /**
+   * Nesting depth: `2` is top-level, `3` is one level nested, `4` two levels,
+   * etc. — mirrors markdown heading depth (h2/h3) but also fits arbitrarily
+   * nested Artboards. Depths beyond what `NodeIndent` supports (3 levels)
+   * flatten to the deepest available indent.
+   */
+  depth?: number;
   active?: boolean | 'secondary';
+}
+
+function indentForDepth(depth?: number): NodeIndent {
+  return Math.min(Math.max((depth ?? 2) - 2, 0), 2) as NodeIndent;
 }
 
 export interface MetaEntry {
@@ -27,10 +34,10 @@ export interface MetaEntry {
 }
 
 export interface CanvasRailProps {
-  siteName: string;
-  /** Section display name (e.g. "Blog") — maps to an item in SiteRail */
-  section?: string;
-  toc?: TocItem[];
+  title: string;
+  /** Subtitle display name (e.g. "Blog") — maps to an item in SiteRail */
+  subtitle?: string;
+  items?: TocItem[];
   meta?: MetaEntry[];
   className?: string;
 }
@@ -48,30 +55,30 @@ function NodeButton({ label, href, active, indent = 0 }: { label: string; href: 
 }
 
 export function CanvasRail({
-  siteName,
-  section,
-  toc,
+  title,
+  subtitle,
+  items,
   meta,
   className,
 }: CanvasRailProps) {
-  const hasLayers = toc && toc.length > 0;
+  const hasLayers = items && items.length > 0;
   const hasMeta = meta && meta.length > 0;
 
   return (
-    <Rail width="w-[220px]" aria-label="Section navigation" className={cn(className)}>
-      <RailHeader title={siteName} subtitle={section} className="pl-inline-md" />
+    <Rail width="w-[min(25vw,16rem)]" aria-label="Section navigation" className={cn(className)}>
+      <RailHeader title={title} subtitle={subtitle} className="pl-inline-md" />
       <hr className="border-chrome-border" />
 
       {hasLayers && (
         <RailSection label="Layers">
           <Stack direction="col" gap="xs" padding="xs">
-            {toc!.map((item) => (
+            {items!.map((item) => (
               <NodeButton
                 key={item.href}
                 label={item.label}
                 href={item.href}
                 active={item.active}
-                indent={item.depth === 3 ? 1 : 0}
+                indent={indentForDepth(item.depth)}
               />
             ))}
           </Stack>

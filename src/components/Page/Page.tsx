@@ -1,12 +1,12 @@
 import type { ReactNode } from 'react';
-import { cn } from '../../lib/cn';
+import { cn } from '@lib/cn';
 
 export interface PageProps {
   children: ReactNode;
   className?: string;
 }
 
-const DEFAULT_WIDTH = 'w-[960px]';
+const DEFAULT_WIDTH = 'w-3xl [&>*]:w-3xl';
 
 /** Layout surface for top-level index pages (Home/Blog/Work) — pairs with an expanded SiteRail, no CanvasRail. */
 export function Page({ children, className }: PageProps) {

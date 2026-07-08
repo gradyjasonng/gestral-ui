@@ -1,8 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { expect } from 'storybook/test';
 import { SiteRail } from './SiteRail';
-import { CanvasRail } from '../CanvasRail/CanvasRail';
-import { Default as CanvasRailDefault } from '../CanvasRail/CanvasRail.stories';
-import { navItems, footerItems } from './__fixtures__.tsx';
+import { CanvasRail } from '@components/CanvasRail/CanvasRail';
+import { Default as CanvasRailDefault } from '@components/CanvasRail/CanvasRail.stories';
+import { navItems, footerItems } from './__fixtures__';
+import { ARTBOARD_FRAME_STORAGE_KEY } from '@lib/artboardFrame';
 
 const meta = {
   title: 'Components/Shell/SiteRail',
@@ -40,4 +42,31 @@ export const Collapsed: Story = {
  */
 export const Expanded: Story = {
   args: { items: navItems, footerItems, siteName: 'Gestral UI', expanded: true },
+};
+
+/**
+ * The rail footer always includes a frame-toggle icon button (alongside any
+ * caller-supplied `footerItems`), which flips `data-artboard-frame` on
+ * `<html>` and persists the choice to localStorage — that's what every
+ * Artboard on the page reads to hide its label/border, see `global.css`.
+ */
+export const FrameToggle: Story = {
+  args: { items: navItems, footerItems },
+  beforeEach: () => {
+    window.localStorage.removeItem(ARTBOARD_FRAME_STORAGE_KEY);
+    document.documentElement.removeAttribute('data-artboard-frame');
+  },
+  play: async ({ canvas }) => {
+    const button = await canvas.findByRole('button', { name: 'Hide frames' });
+    await expect(document.documentElement).not.toHaveAttribute('data-artboard-frame');
+
+    button.click();
+    await expect(await canvas.findByRole('button', { name: 'Show frames' })).toBeInTheDocument();
+    await expect(document.documentElement).toHaveAttribute('data-artboard-frame', 'off');
+    await expect(window.localStorage.getItem(ARTBOARD_FRAME_STORAGE_KEY)).toBe('off');
+
+    (await canvas.findByRole('button', { name: 'Show frames' })).click();
+    await expect(await canvas.findByRole('button', { name: 'Hide frames' })).toBeInTheDocument();
+    await expect(document.documentElement).toHaveAttribute('data-artboard-frame', 'on');
+  },
 };

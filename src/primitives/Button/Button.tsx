@@ -1,20 +1,24 @@
 import { type ButtonHTMLAttributes, type CSSProperties, type ElementType, type HTMLAttributes } from 'react';
-import { cn } from '../../lib/cn';
-import { Stack } from '../Stack/Stack';
-import { Text } from '../Text/Text';
-import { Icon, type IconName } from '../Icon/Icon';
+import { cn } from '@lib/cn';
+import { Stack } from '@primitives/Stack/Stack';
+import { Text } from '@primitives/Text/Text';
+import { Icon, type IconName } from '@primitives/Icon/Icon';
 import {
   type ButtonSize,
+  type ButtonPalette,
   buttonToIconSizeMap,
   textVariantMap,
   buttonHeightMap,
-  activeClass,
+  activeFillClass,
   activeSecondaryClass,
   inactiveClass,
+  inactiveMutedClass,
 } from './shared';
 
-export type { ButtonSize } from './shared';
+export type { ButtonSize, ButtonPalette } from './shared';
 export type ButtonVariant = 'horizontal' | 'vertical' | 'iconOnly';
+/** Which background the button sits on — controls idle/hover colors so they read correctly against that backdrop. */
+export type ButtonSurface = 'default' | 'muted';
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
@@ -23,6 +27,10 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   /** Controls icon container size. Defaults to `size`. */
   iconSize?: ButtonSize;
   active?: boolean | 'secondary';
+  /** Color scheme applied when `active`. Defaults to `'accent'`. */
+  palette?: ButtonPalette;
+  /** Background the button is rendered on, e.g. `'muted'` for a `chrome-muted` well. Defaults to `'default'`. */
+  surface?: ButtonSurface;
   /** Renders as <a> when provided */
   href?: string;
   icon?: IconName;
@@ -36,6 +44,10 @@ export interface IconFillProps extends HTMLAttributes<HTMLDivElement> {
   /** Controls icon size. Defaults to `size`. */
   iconSize?: ButtonSize;
   active?: boolean | 'secondary';
+  /** Color scheme applied when `active`. Defaults to `'accent'`. */
+  palette?: ButtonPalette;
+  /** Background the icon fill is rendered on. Defaults to `'default'`. */
+  surface?: ButtonSurface;
   style?: CSSProperties;
 }
 
@@ -45,10 +57,14 @@ export interface IconFillProps extends HTMLAttributes<HTMLDivElement> {
  * interactive element (e.g. `LabelledIconButton`) without producing invalid
  * nested buttons/anchors.
  */
-export function IconFill({ icon, size = 'md', iconSize, active = false, className, style, ...props }: IconFillProps) {
+export function IconFill({ icon, size = 'md', iconSize, active = false, palette = 'accent', surface = 'default', className, style, ...props }: IconFillProps) {
   const effectiveIconSize = iconSize ?? size;
   const iconEl = icon ? <Icon name={icon} size={buttonToIconSizeMap[effectiveIconSize]} /> : null;
-  const fillClass = active === 'secondary' ? activeSecondaryClass : active ? activeClass : inactiveClass;
+  const fillClass = active === 'secondary'
+    ? activeSecondaryClass(palette)
+    : active
+      ? activeFillClass(palette, surface)
+      : surface === 'muted' ? inactiveMutedClass : inactiveClass;
 
   return (
     <Stack
@@ -69,6 +85,8 @@ export function Button({
   size = 'md',
   iconSize,
   active = false,
+  palette = 'accent',
+  surface = 'default',
   href,
   icon,
   className,
@@ -79,14 +97,18 @@ export function Button({
   const Tag = (href ? 'a' : 'button') as ElementType;
   const effectiveIconSize = iconSize ?? size;
   const iconEl = icon ? <Icon name={icon} size={buttonToIconSizeMap[effectiveIconSize]} /> : null;
-  const fillClass = active === 'secondary' ? activeSecondaryClass : active ? activeClass : inactiveClass;
+  const fillClass = active === 'secondary'
+    ? activeSecondaryClass(palette)
+    : active
+      ? activeFillClass(palette, surface)
+      : surface === 'muted' ? inactiveMutedClass : inactiveClass;
   const textVariant = textVariantMap[size];
 
   /* ── iconOnly: the height of the button is still fixed to what it would if it had text ── */
   if (variant === 'iconOnly') {
     return (
       <Tag href={href} {...props}>
-        <IconFill icon={icon} size={size} iconSize={iconSize} active={active} className={className} style={style} />
+        <IconFill icon={icon} size={size} iconSize={iconSize} active={active} palette={palette} surface={surface} className={className} style={style} />
       </Tag>
     );
   }

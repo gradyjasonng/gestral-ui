@@ -27,27 +27,44 @@ export const PostCard: Story = {
     title: 'Sample Article One',
     description: 'A short case study exploring an interface problem.',
     date: '2 Jun 2026',
-    category: 'blog',
-    tags: ['UX Design', 'Transit'],
+    palette: 'accent',
+    icon: 'palette',
+    categoryLabel: 'UX',
+    tags: ['Transit'],
     href: '#',
   },
 };
 
 /**
- * A grid of Cards mixing both `category` values ('blog' and 'work'), with
- * and without `tags`/`description`, to show how the component behaves at
- * realistic scale. This is the layout Card is designed for — an index or
+ * A grid of Cards mixing both `palette` values ('accent' and 'secondary'),
+ * with and without `tags`/`description`, to show how the component behaves
+ * at realistic scale. This is the layout Card is designed for — an index or
  * archive page — rather than a single standalone card.
  */
 export const Grid: Story = {
   render: () => (
     <div className="grid grid-cols-3 gap-2 w-full">
-      <Card title="Sample Article One" date="2 Jun 2026" category="blog" tags={['UX Design']} href="#" description="A short case study exploring an interface problem." />
-      <Card title="Sample Work Project" date="12 Jun 2025" category="work" tags={['Product Design', 'LLMs']} href="#" description="Integrating LLM-powered conversations into a rule-based chatbot." />
-      <Card title="Sample Article Two" date="21 May 2026" category="blog" tags={['Frontend', 'Game Design']} href="#" description="How a small side project created a unique UX problem." />
-      <Card title="Sample Article Three" date="5 May 2026" category="blog" href="#" description="A short reflection on a design topic." />
+      <Card title="Sample Article One" date="2 Jun 2026" palette="accent" icon="palette" categoryLabel="UX" href="#" description="A short case study exploring an interface problem." />
+      <Card title="Sample Work Project" date="12 Jun 2025" palette="secondary" icon="code" categoryLabel="Web Dev" tags={['LLMs']} href="#" description="Integrating LLM-powered conversations into a rule-based chatbot." />
+      <Card title="Sample Article Two" date="21 May 2026" palette="secondary" icon="code" categoryLabel="Web Dev" tags={['Game Design']} href="#" description="How a small side project created a unique UX problem." />
+      <Card title="Sample Article Three" date="5 May 2026" palette="accent" href="#" description="A short reflection on a design topic." />
     </div>
   ),
+};
+
+/**
+ * `date` omitted — the meta block simply collapses to title/description.
+ * Use this for undated index items (e.g. playground experiments) where a
+ * date would be noise rather than signal.
+ */
+export const Undated: Story = {
+  args: {
+    title: 'Sample Experiment',
+    description: 'A small interactive toy with no meaningful publish date.',
+    palette: 'secondary',
+    tags: ['Playground'],
+    href: '#',
+  },
 };
 
 /**
@@ -63,7 +80,7 @@ export const CustomThumbnail: Story = {
     title: 'Sample Work Project',
     description: 'Integrating LLM-powered conversations into a rule-based chatbot.',
     date: '12 Jun 2025',
-    category: 'work',
+    palette: 'secondary',
     tags: ['Product Design', 'LLMs'],
     href: '#',
     children: (

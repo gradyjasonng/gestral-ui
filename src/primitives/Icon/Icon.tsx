@@ -13,12 +13,16 @@ import {
   BiChevronRight,
   BiStar,
   BiMoon,
+  BiMenu,
   BiPencil,
   BiBriefcase,
   BiLogoGithub,
   BiLogoLinkedin,
+  BiPalette,
+  BiCode,
+  BiDotsHorizontalRounded,
 } from 'react-icons/bi';
-import { cn } from '../../lib/cn';
+import { cn } from '@lib/cn';
 
 const icons = {
   'home':       BiHome,
@@ -35,10 +39,14 @@ const icons = {
   'chevron-right': BiChevronRight,
   'star':       BiStar,
   'moon':       BiMoon,
+  'menu':       BiMenu,
   'pencil':     BiPencil,
   'briefcase':  BiBriefcase,
   'github':     BiLogoGithub,
   'linkedin':   BiLogoLinkedin,
+  'palette':    BiPalette,
+  'code':       BiCode,
+  'comment':    BiDotsHorizontalRounded,
 } as const;
 
 export type IconName = keyof typeof icons;

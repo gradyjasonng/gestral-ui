@@ -1,13 +1,14 @@
 import { type ElementType, type ReactNode } from 'react';
-import { cn } from '../../lib/cn';
-import { Stack } from '../Stack/Stack';
-import { Text, type TextVariant } from '../Text/Text';
-import { type IconName } from '../Icon/Icon';
+import { cn } from '@lib/cn';
+import { Stack } from '@primitives/Stack/Stack';
+import { Text, type TextVariant } from '@primitives/Text/Text';
+import { type IconName } from '@primitives/Icon/Icon';
 import { IconFill, type ButtonProps } from './Button';
 import {
   textVariantMap,
-  activeClass,
+  activeFillClass,
   activeSecondaryClass,
+  paletteTextClass,
 } from './shared';
 
 export type LabelledIconButtonDirection = 'horizontal' | 'vertical';
@@ -31,6 +32,7 @@ export function LabelledIconButton({
   size = 'md',
   iconSize,
   active = false,
+  palette = 'accent',
   href,
   icon,
   textVariant,
@@ -45,16 +47,14 @@ export function LabelledIconButton({
   const isVertical = direction === 'vertical';
 
   const fillClass = active === 'secondary'
-    ? activeSecondaryClass
+    ? activeSecondaryClass(palette)
     : active
-      ? activeClass
+      ? activeFillClass(palette, 'default')
       : 'text-chrome-text-secondary group-hover:bg-chrome-surface-hover group-hover:text-chrome-text-primary';
 
-  const labelColorClass = active === 'secondary'
-    ? 'text-chrome-text-primary'
-    : active
-      ? 'text-accent-text'
-      : 'text-chrome-text-secondary group-hover:text-chrome-text-primary';
+  const labelColorClass = active
+    ? paletteTextClass[palette]
+    : 'text-chrome-text-secondary group-hover:text-chrome-text-primary';
 
   return (
     <Tag href={href} {...props}>
@@ -70,6 +70,7 @@ export function LabelledIconButton({
           size={size}
           iconSize={effectiveIconSize}
           active={active}
+          palette={palette}
           aria-hidden="true"
           className={cn('rounded-sm', fillClass)}
         />
