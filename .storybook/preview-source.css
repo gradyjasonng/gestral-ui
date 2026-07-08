@@ -1,0 +1,12 @@
+/* Storybook plays the role of a consumer app here (unlike the published
+ * dist/index.css, which disables auto-scanning via source(none) — see
+ * src/styles/tokens.css) so it needs to opt back in to scanning our own
+ * source for utility classes to render components correctly in dev.
+ *
+ * @source only takes effect within the CSS import graph rooted at
+ * `@import "tailwindcss"` — a bare @source directive reached only via a
+ * separate JS-side import in preview.tsx sits outside that graph and is
+ * silently ignored. Importing global.css here (a real CSS @import) pulls
+ * this file into the same root so the directive actually applies. */
+@source '../src/**/*.{ts,tsx}';
+@import '../src/styles/global.css';
