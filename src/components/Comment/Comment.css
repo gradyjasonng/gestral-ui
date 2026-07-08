@@ -1,0 +1,32 @@
+/* Tap-to-open: touch devices have no `:hover`, so the checkbox (toggled by
+   tapping its `label`) is what drives the expand there — mirrors the
+   `@media (hover: hover)` rules below but stays active on every device. */
+[data-comment] > input:checked ~ label {
+  /* The note's own width is fixed at `--container-xs` (`w-xs`) so it
+     doesn't reflow (see `shrink-0` on it) — but that's on top of the
+     icon's own `w-7`/`h-7` (`--spacing * 7`), which the label's cap must
+     also make room for or the tail of the text gets clipped. */
+  max-width: calc(var(--container-xs) + var(--spacing) * 8);
+  max-height: var(--container-xs);
+  padding: var(--spacing-stack-sm) var(--spacing-inline-xs);
+}
+
+[data-comment] > input:checked ~ label [data-comment-note] {
+  opacity: 1;
+  transition-delay: 100ms;
+}
+
+@media (hover: hover) {
+  [data-comment]:hover label,
+  [data-comment]:focus-within label{
+    max-width: calc(var(--container-xs) + var(--spacing) * 8);
+    max-height: var(--container-xs);
+    padding: var(--spacing-stack-sm) var(--spacing-inline-xs);
+  }
+
+  [data-comment]:hover label [data-comment-note],
+  [data-comment]:focus-within label [data-comment-note] {
+    opacity: 1;
+    transition-delay: 100ms;
+  }
+}

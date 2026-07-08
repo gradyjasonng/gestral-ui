@@ -1,0 +1,89 @@
+/* ─── Artboard frame toggle ─────────────────────────────────────────────── */
+/* Hides every Artboard's label + hover/focus border at once, without any
+ * component needing to be wired up in JS: CanvasRail's frame toggle sets
+ * data-artboard-frame="off" on <html> (persisted via localStorage, see
+ * lib/artboardFrame.ts), and narrow viewports hide the frame unconditionally
+ * since there's no rail to host the toggle there anyway (Shell hides rails
+ * below `md`). Both are independent of the Artboard `frame` prop, which is a
+ * per-instance author override. */
+html[data-artboard-frame='off'] [data-artboard-label] { display: none; }
+html[data-artboard-frame='off'] [data-artboard-border] { outline-color: transparent !important; margin-top: 0 !important; }
+
+@media (width < 48rem) {
+  [data-artboard-label] { display: none; }
+  [data-artboard-border] { outline-color: transparent !important; margin-top: 0 !important; }
+}
+
+/* ─── Artboard hover/focus selection frame ──────────────────────────────── */
+/* Colouring is plain CSS, not Tailwind's group-hover:/group-focus-within:
+ * utilities: those match *any* ancestor carrying a shared `.group` class, so
+ * with nested Artboards (which all share that class) hovering one bleeds the
+ * highlight onto every ancestor Artboard *and* onto every Artboard nested
+ * inside whichever one is hovered/focused.
+ *
+ * The selection frame itself is an `outline`, not a `border`: an outline is
+ * painted outside the box model entirely, so changing its width (or the
+ * negative `outline-offset` that pulls it back in flush with the edge)
+ * never shifts layout the way a `border-width` change does.
+ *
+ * `[data-artboard-border]` is both the root and the outlined box, so its own
+ * `:hover`/`:focus-within` state styles itself directly (no child
+ * combinator needed) — with a nesting guard,
+ * `:not(:has([data-artboard-border]:hover))` /
+ * `:not(:has([data-artboard-border]:focus-within))`, since a real hover/focus
+ * on a nested Artboard always bleeds the *same* pseudo-class upward onto
+ * every ancestor. Each guard suppresses only the bled copy of its own
+ * interaction type on an ancestor once a nested Artboard is the true target
+ * of that same type. Hover and focus are otherwise independent of each
+ * other, so an ancestor's genuine focus and a descendant's genuine hover (or
+ * vice versa) coexist rather than suppressing one another — e.g. tabbing to
+ * an outer Artboard and then mousing over an inner one shows the outer's 1px
+ * focus outline *and* the inner's 2px hover outline at once. */
+[data-artboard-border] {
+  outline: 1px solid transparent;
+}
+
+[data-artboard-border][data-artboard-variant='default']:is(
+  :hover:not(:has([data-artboard-border]:hover)),
+  :focus-within:not(:has([data-artboard-border]:focus-within))
+) > [data-artboard-label] > span {
+  color: var(--color-selection-emerald-text);
+}
+[data-artboard-border][data-artboard-variant='default']:focus-within:not(:has([data-artboard-border]:focus-within)) {
+  outline-width: 1px;
+  outline-color: var(--color-selection-emerald);
+}
+[data-artboard-border][data-artboard-variant='default']:hover:not(:has([data-artboard-border]:hover)) {
+  outline-width: 2px;
+  outline-color: var(--color-selection-emerald);
+}
+
+[data-artboard-border][data-artboard-variant='interactive']:is(
+  :hover:not(:has([data-artboard-border]:hover)),
+  :focus-within:not(:has([data-artboard-border]:focus-within))
+) > [data-artboard-label] > span {
+  color: var(--color-selection-blue-text);
+}
+[data-artboard-border][data-artboard-variant='interactive']:focus-within:not(:has([data-artboard-border]:focus-within)) {
+  outline-width: 1px;
+  outline-color: var(--color-selection-blue);
+}
+[data-artboard-border][data-artboard-variant='interactive']:hover:not(:has([data-artboard-border]:hover)) {
+  outline-width: 2px;
+  outline-color: var(--color-selection-blue);
+}
+
+[data-artboard-border][data-artboard-variant='external']:is(
+  :hover:not(:has([data-artboard-border]:hover)),
+  :focus-within:not(:has([data-artboard-border]:focus-within))
+) > [data-artboard-label] > span {
+  color: var(--color-selection-purple-text);
+}
+[data-artboard-border][data-artboard-variant='external']:focus-within:not(:has([data-artboard-border]:focus-within)) {
+  outline-width: 1px;
+  outline-color: var(--color-selection-purple);
+}
+[data-artboard-border][data-artboard-variant='external']:hover:not(:has([data-artboard-border]:hover)) {
+  outline-width: 2px;
+  outline-color: var(--color-selection-purple);
+}
