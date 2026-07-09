@@ -65,3 +65,24 @@ export const TitleWithSubtitle: Story = {
     subtitle: 'Subtitle',
   },
 };
+
+/**
+ * CanvasRail composition with a post thumbnail (`above`) — the same
+ * thumbnail content `PreviewCard` uses, e.g. a post's `<img>`. Rendered
+ * full-bleed against the rail's edges in a plain, non-interactive `Card`
+ * (`aspect-video`) above the title/subtitle row; `className` only affects
+ * that row, not the thumbnail banner.
+ */
+export const WithThumbnail: Story = {
+  name: 'With thumbnail',
+  args: {
+    title: 'Gestral UI',
+    subtitle: 'Subtitle',
+    className: 'pl-sp-md',
+    above: (
+      <div className="w-full h-full flex items-center justify-center bg-accent-default">
+        <span className="text-2xl font-bold text-chrome-surface">GN</span>
+      </div>
+    ),
+  },
+};

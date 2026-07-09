@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import { Rail, Button, Text, Stack } from '@primitives';
 import { RailHeader } from '@components/RailHeader/RailHeader';
 import { RailSection } from '@components/RailSection/RailSection';
@@ -37,6 +38,8 @@ export interface CanvasRailProps {
   title: string;
   /** Subtitle display name (e.g. "Blog") — maps to an item in SiteRail */
   subtitle?: string;
+  /** Thumbnail content rendered above the title/subtitle — see `RailHeader`'s `above` prop */
+  above?: ReactNode;
   items?: TocItem[];
   meta?: MetaEntry[];
   className?: string;
@@ -57,6 +60,7 @@ function NodeButton({ label, href, active, indent = 0 }: { label: string; href: 
 export function CanvasRail({
   title,
   subtitle,
+  above,
   items,
   meta,
   className,
@@ -66,7 +70,7 @@ export function CanvasRail({
 
   return (
     <Rail width="w-[min(25vw,16rem)]" aria-label="Section navigation" className={cn(className)}>
-      <RailHeader title={title} subtitle={subtitle} className="pl-inline-md" />
+      <RailHeader title={title} subtitle={subtitle} above={above} />
       <hr className="border-chrome-border" />
 
       {hasLayers && (
