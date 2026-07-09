@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Page } from './Page';
 import { Text } from '@primitives';
-import { Grid as CardGrid } from '@components/Card/Card.stories';
+import { Grid as CardGrid } from '@components/PreviewCard/PreviewCard.stories';
 
 const meta = {
   title: 'Components/Page',
@@ -18,7 +18,7 @@ const placeholder = (
     <Text variant="hero" className="text-chrome-text-primary mt-20">
       Page Title
     </Text>
-    <Text variant="subheading2" className="text-chrome-text-primary mb-stack-lg">
+    <Text variant="subheading2" className="text-chrome-text-primary mb-sp-lg">
       Subtitle
     </Text>
     <CardGrid.render />

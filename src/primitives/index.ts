@@ -1,5 +1,6 @@
 export * from './Text';
 export * from './Button';
+export * from './Card';
 export * from './Chip';
 export * from './Stack';
 export * from './Rail';

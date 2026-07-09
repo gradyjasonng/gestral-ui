@@ -1,25 +1,25 @@
 import type { ReactNode } from 'react';
 import { cn } from '@lib/cn';
-import { Text, Stack, Icon, type IconName } from '@primitives';
+import { Text, Stack, Icon, Card, type IconName } from '@primitives';
 
-export type CardPalette = 'accent' | 'secondary';
+export type PreviewCardPalette = 'accent' | 'secondary';
 
-const paletteClasses: Record<CardPalette, string> = {
+const paletteClasses: Record<PreviewCardPalette, string> = {
   accent: 'bg-accent-default text-white',
   secondary: 'bg-secondary-default text-white',
 };
 
-const paletteThumbnailClasses: Record<CardPalette, string> = {
+const paletteThumbnailClasses: Record<PreviewCardPalette, string> = {
   accent: 'bg-accent-subtle',
   secondary: 'bg-secondary-subtle',
 };
 
-export interface CardProps {
+export interface PreviewCardProps {
   title: string;
   description?: string;
   date?: string;
   /** Color scheme applied to `icon`'s background and `categoryLabel` */
-  palette?: CardPalette;
+  palette?: PreviewCardPalette;
   /** Renders to the left of the title/subtitle, with a background of `palette`'s color */
   icon?: IconName;
   /** Rendered as the first tag, styled with `palette`'s color to distinguish it from `tags` */
@@ -31,7 +31,12 @@ export interface CardProps {
   className?: string;
 }
 
-export function Card({
+/**
+ * The thumbnail + title/date/tags link card used for blog/work index
+ * listings. Built on the `Card` primitive for its border/hover styling —
+ * `href` is required (unlike `Card`, `PreviewCard` is always a link).
+ */
+export function PreviewCard({
   title,
   description,
   date,
@@ -42,17 +47,13 @@ export function Card({
   children,
   href,
   className,
-}: CardProps) {
+}: PreviewCardProps) {
   const paletteClassName = paletteClasses[palette];
 
   return (
-    <a
+    <Card
       href={href}
-      className={cn(
-        'group flex flex-col overflow-hidden no-underline rounded-lg border border-chrome-border bg-chrome-surface max-w-lg aspect-4/3',
-        'hover:border-selection-blue',
-        className,
-      )}
+      className={cn('group flex flex-col overflow-hidden no-underline max-w-lg aspect-4/3', className)}
     >
       {/* Thumbnail */}
       <div className={cn('w-full relative flex-1 min-h-0 overflow-clip', paletteThumbnailClasses[palette])}>
@@ -110,6 +111,6 @@ export function Card({
           )}
         </Stack>
       </Stack>
-    </a>
+    </Card>
   );
 }

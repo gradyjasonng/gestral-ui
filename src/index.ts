@@ -3,7 +3,7 @@ import "./styles/global.css";
 
 // Utilities
 export { cn } from './lib/cn';
-export { ARTBOARD_FRAME_STORAGE_KEY } from './lib/artboardFrame';
+export { ARTBOARD_FRAME_STORAGE_KEY, getStoredFramePreference, setStoredFramePreference } from './lib/artboardFrame';
 export { slugify } from './lib/slugify';
 
 // Primitives
@@ -23,6 +23,8 @@ export { Icon } from './primitives/Icon/Icon';
 export type { IconProps, IconName, IconSize } from './primitives/Icon/Icon';
 export { Popover } from './primitives/Popover/Popover';
 export type { PopoverProps, PopoverVariant } from './primitives/Popover/Popover';
+export { Card } from './primitives/Card/Card';
+export type { CardProps, CardElevation } from './primitives/Card/Card';
 
 // Components
 export { Artboard } from './components/Artboard/Artboard';
@@ -31,8 +33,8 @@ export { Canvas } from './components/Canvas/Canvas';
 export type { CanvasProps } from './components/Canvas/Canvas';
 export { Comment } from './components/Comment/Comment';
 export type { CommentProps } from './components/Comment/Comment';
-export { Card } from './components/Card/Card';
-export type { CardProps, CardPalette } from './components/Card/Card';
+export { PreviewCard } from './components/PreviewCard/PreviewCard';
+export type { PreviewCardProps, PreviewCardPalette } from './components/PreviewCard/PreviewCard';
 export { CanvasRail } from './components/CanvasRail/CanvasRail';
 export type { CanvasRailProps, TocItem, MetaEntry, NodeIndent } from './components/CanvasRail/CanvasRail';
 export { Page } from './components/Page/Page';

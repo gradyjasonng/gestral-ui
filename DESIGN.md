@@ -29,7 +29,7 @@ There is no persistent right panel. No top toolbar. Navigation, context, and ToC
 ### Rail pairing convention
 
 - **Canvas + CanvasRail** (collapsed SiteRail) — post/case-study pages. Deconstructed, artboard-heavy: embedded content wrapped in `Artboard`, pannable/zoomable `Canvas`.
-- **Page** (expanded SiteRail, no CanvasRail) — top-level index pages (Home/Blog/Work): hero title and a `Card` grid on a plain content surface.
+- **Page** (expanded SiteRail, no CanvasRail) — top-level index pages (Home/Blog/Work): hero title and a `PreviewCard` grid on a plain content surface.
 
 `CanvasRail`'s panel section labels ("Layers", "Info") are presentation copy only — they don't imply a `Page` component is present.
 
@@ -127,7 +127,7 @@ These specific Figma UI elements appear as design motifs. Use them where they ea
 | **Artboard containers** | On post pages, wrapping embedded Figma iframes. Emerald border, frame label outside-top-left. |
 | **Panel section labels** | "Pages" / "Layers" — muted, uppercase, small, above the node tree |
 | **Icon rail** | Bottom of left panel. Compressed version of Figma's left icon strip. |
-| **Card thumbnails** | Cards on the home grid carry a layer name in small text above the thumbnail image |
+| **PreviewCard thumbnails** | Cards on the home grid carry a layer name in small text above the thumbnail image |
 
 **Motifs intentionally not used:** toolbar, properties inspector (right panel), comment bubbles, cursor presence, component badges.
 

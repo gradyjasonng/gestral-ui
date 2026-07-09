@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Card } from './Card';
+import { PreviewCard } from './PreviewCard';
 
 const meta = {
-  title: 'Components/Card',
-  component: Card,
+  title: 'Components/PreviewCard',
+  component: PreviewCard,
   tags: ['autodocs'],
   decorators: [
     (Story) => (
@@ -12,13 +12,13 @@ const meta = {
       </div>
     ),
   ],
-} satisfies Meta<typeof Card>;
+} satisfies Meta<typeof PreviewCard>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 /**
- * A single Card in isolation, with all optional fields (`description`,
+ * A single PreviewCard in isolation, with all optional fields (`description`,
  * `tags`) populated. Use this to check spacing and typography of one card
  * without grid context — e.g. when validating a design change in isolation.
  */
@@ -36,18 +36,18 @@ export const PostCard: Story = {
 };
 
 /**
- * A grid of Cards mixing both `palette` values ('accent' and 'secondary'),
+ * A grid of PreviewCards mixing both `palette` values ('accent' and 'secondary'),
  * with and without `tags`/`description`, to show how the component behaves
- * at realistic scale. This is the layout Card is designed for — an index or
+ * at realistic scale. This is the layout PreviewCard is designed for — an index or
  * archive page — rather than a single standalone card.
  */
 export const Grid: Story = {
   render: () => (
     <div className="grid grid-cols-3 gap-2 w-full">
-      <Card title="Sample Article One" date="2 Jun 2026" palette="accent" icon="palette" categoryLabel="UX" href="#" description="A short case study exploring an interface problem." />
-      <Card title="Sample Work Project" date="12 Jun 2025" palette="secondary" icon="code" categoryLabel="Web Dev" tags={['LLMs']} href="#" description="Integrating LLM-powered conversations into a rule-based chatbot." />
-      <Card title="Sample Article Two" date="21 May 2026" palette="secondary" icon="code" categoryLabel="Web Dev" tags={['Game Design']} href="#" description="How a small side project created a unique UX problem." />
-      <Card title="Sample Article Three" date="5 May 2026" palette="accent" href="#" description="A short reflection on a design topic." />
+      <PreviewCard title="Sample Article One" date="2 Jun 2026" palette="accent" icon="palette" categoryLabel="UX" href="#" description="A short case study exploring an interface problem." />
+      <PreviewCard title="Sample Work Project" date="12 Jun 2025" palette="secondary" icon="code" categoryLabel="Web Dev" tags={['LLMs']} href="#" description="Integrating LLM-powered conversations into a rule-based chatbot." />
+      <PreviewCard title="Sample Article Two" date="21 May 2026" palette="secondary" icon="code" categoryLabel="Web Dev" tags={['Game Design']} href="#" description="How a small side project created a unique UX problem." />
+      <PreviewCard title="Sample Article Three" date="5 May 2026" palette="accent" href="#" description="A short reflection on a design topic." />
     </div>
   ),
 };
@@ -69,7 +69,7 @@ export const Undated: Story = {
 
 /**
  * Thumbnail area filled with arbitrary `children` rather than only an
- * `<img>` — here a plain colored block with centered text. Card doesn't
+ * `<img>` — here a plain colored block with centered text. PreviewCard doesn't
  * special-case images; whatever is passed as `children` is clipped
  * (`overflow-clip`) to the aspect-video wrapper, so oversized content is cut
  * off rather than reflowing the card.
