@@ -1,5 +1,9 @@
 # Gestral UI
 
+## Design decisions
+
+When a task involves a design decision whose right answer isn't immediately obvious from `DESIGN.md` or existing component conventions (e.g. new prop shapes/names, where styling ownership should live between a primitive and its composed components, sizing/aspect-ratio/spacing choices, elevation/interactivity semantics) — check in with the user before implementing rather than guessing. This applies even if the request already hints at an approach — surface the specific open questions and let them decide.
+
 ## Design Philosophy
 
 See `DESIGN.md` for the canonical v2 design philosophy.
@@ -11,7 +15,7 @@ The short version: Gestral's visual language is a **deconstructed design tool UI
 ## Architecture
 
 - **Vite** library mode, **Tailwind v4**, **Storybook** Connect
-- `tokens.css`'s `:root` token *values* (colors, fonts, icon-size) are hand-authored; its `@theme inline { ... }` Tailwind-registration block is **fully generated** (nothing hand-maintained there, for any token family) into a single gitignored `src/styles/generated.css` (imported by `tokens.css`), via `vite.config.ts`'s `generate-tokens-css` plugin. The text-size, radius, and spacing-inline/stack scale *values* are also generated, from `src/lib/{textScale,radiusScale,spacingScale}.ts` — those are the source of truth for that scale (including `Text.tsx`'s HTML element/font classes and the `@source` safelist Tailwind needs since `Text.tsx` builds its class via template literal). Edit `tokens.css`'s `:root` values or the TS modules — never `generated.css` directly.
+- `tokens.css`'s `:root` token *values* (colors, fonts, icon-size) are hand-authored; its `@theme inline { ... }` Tailwind-registration block is **fully generated** (nothing hand-maintained there, for any token family) into a single gitignored `src/styles/generated.css` (imported by `tokens.css`), via `vite.config.ts`'s `generate-tokens-css` plugin. The text-size, radius, and spacing scale *values* are also generated, from `src/lib/{textScale,radiusScale,spacingScale}.ts` — those are the source of truth for that scale (including `Text.tsx`'s HTML element/font classes and the `@source` safelist Tailwind needs since `Text.tsx` builds its class via template literal). Edit `tokens.css`'s `:root` values or the TS modules — never `generated.css` directly.
 - `dist/theme.css` (generated from `tokens.css` at build time) is the consumable stylesheet for downstream apps (exported as `./theme`)
 - Components live in `src/components/`, each with a `.tsx` and a `.stories.tsx`
 - No hex values in component code — all colours reference semantic tokens (`chrome.*`, `canvas.*`, `editorial.*`, `accent.*`, `category.work.*`)
