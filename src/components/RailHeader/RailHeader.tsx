@@ -52,8 +52,6 @@ export function RailHeader({ left, title, subtitle, above, className }: RailHead
     <Stack direction="col">
       <Card elevation="flat" className="relative aspect-video shrink-0 overflow-hidden border-0 rounded-none border-b border-chrome-border">
         {above}
-        {/* Tones down the thumbnail so it doesn't compete with the title/subtitle row directly below it — darkest in the middle/top, lighter at the bottom edge so it doesn't muddy the border into the row below. */}
-        <div className="absolute inset-0 bg-linear-to-b from-black/10 to-black/30" aria-hidden="true" />
       </Card>
       {row}
     </Stack>

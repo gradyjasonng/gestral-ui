@@ -91,3 +91,53 @@ export const FocusReveal: Story = {
     await expect(checkbox).toHaveFocus();
   },
 };
+
+/**
+ * Placed flush against the right edge of the viewport, opening the bubble
+ * would otherwise let its `w-xs` note spill past the screen edge.
+ * `useEdgeCollision` nudges it back in to keep a 2px gap once it's opened —
+ * and, since detection is only enabled while the bubble is actually
+ * expanded, closing it again resets the shift rather than leaving it
+ * nudged from its last measurement.
+ */
+export const NearViewportEdge: Story = {
+  args: {
+    by: 'Author',
+    children: 'This note would spill past the right edge of the viewport if left unnudged.',
+  },
+  decorators: [
+    // Escapes the meta-level `max-w-2xl` wrapper via `fixed` positioning, so
+    // this actually sits flush against the real viewport edge rather than a
+    // ~672px-wide centered column that never gets anywhere near it.
+    (Story) => (
+      <div className="fixed top-1/2 right-0 bg-canvas-surface p-1" style={{ transform: 'translateY(-50%)' }}>
+        <Story />
+      </div>
+    ),
+  ],
+  render: (args) => (
+    <p className="text-canvas-text-primary leading-relaxed">
+      Sentence ending right at the edge. <Comment {...args} />
+    </p>
+  ),
+  play: async ({ canvasElement }) => {
+    const checkbox = canvasElement.querySelector<HTMLInputElement>('[data-comment] input')!;
+    const label = canvasElement.querySelector<HTMLElement>('[data-comment] label')!;
+
+    await fireEvent.click(checkbox);
+
+    await waitFor(() => {
+      const rect = label.getBoundingClientRect();
+      expect(rect.right).toBeLessThanOrEqual(window.innerWidth - 1);
+    });
+    await waitFor(() => {
+      expect(label.style.getPropertyValue('--edge-collision-shift-x')).not.toBe('0px');
+    });
+
+    await fireEvent.click(checkbox);
+
+    await waitFor(() => {
+      expect(label.style.getPropertyValue('--edge-collision-shift-x')).toBe('0px');
+    });
+  },
+};

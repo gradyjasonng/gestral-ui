@@ -1,12 +1,13 @@
 import { useRef, useState } from 'react';
 import { cn } from '@lib/cn';
-import { Button, type ButtonSize, type ButtonPalette, Stack } from '@primitives';
+import { Button, type ButtonSize, type ButtonPalette, type IconName, Stack } from '@primitives';
 
 export type SegmentedControlPalette = ButtonPalette;
 
 export interface SegmentedControlOption {
   label: string;
   value: string;
+  icon?: IconName;
 }
 
 export interface SegmentedControlProps {
@@ -21,6 +22,8 @@ export interface SegmentedControlProps {
   size?: ButtonSize;
   /** Rendered as `data-name`, letting non-React listeners scope a `gui-change` CustomEvent to this instance. */
   name?: string;
+  /** Renders each option as an icon-only button — the label becomes the accessible name (`aria-label`/`title`) instead of visible text. Every option must have an `icon` when this is set. */
+  iconOnly?: boolean;
   className?: string;
 }
 
@@ -32,6 +35,7 @@ export function SegmentedControl({
   palette = 'input',
   size = 'md',
   name,
+  iconOnly = false,
   className,
 }: SegmentedControlProps) {
   const [internalValue, setInternalValue] = useState(defaultValue ?? options[0]?.value);
@@ -59,14 +63,19 @@ export function SegmentedControl({
         {options.map((option) => (
           <Button
             key={option.value}
+            variant={iconOnly ? 'iconOnly' : undefined}
             size={size}
             active={current === option.value}
+            aria-pressed={current === option.value}
             palette={palette}
             surface="muted"
+            icon={option.icon}
             className="justify-center"
             onClick={() => select(option.value)}
+            aria-label={iconOnly ? option.label : undefined}
+            title={iconOnly ? option.label : undefined}
           >
-            {option.label}
+            {iconOnly ? undefined : option.label}
           </Button>
         ))}
       </Stack>

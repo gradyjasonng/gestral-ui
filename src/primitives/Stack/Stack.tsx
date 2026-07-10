@@ -23,18 +23,18 @@ const gapClass: Record<StackGap, string> = {
 
 const paddingClass: Record<StackPadding, string> = {
   none:          '',
-  xs:            'py-[var(--spacing-stack-xs)] px-[var(--spacing-inline-xs)]', // 4px all sides
-  sm:            'py-[var(--spacing-stack-sm)] px-[var(--spacing-inline-sm)]', // 8px all sides
-  md:            'py-[var(--spacing-stack-md)] px-[var(--spacing-inline-md)]', // 12px all sides
-  lg:            'py-[var(--spacing-stack-xl)] px-[var(--spacing-inline-xl)]', // 24px all sides
-  'xs-squish':   'py-0 px-[var(--spacing-inline-xs)]',                                             // 0px vertical, 4px horizontal
-  'xs-stretch':  'py-[var(--spacing-stack-xs)] px-0',                                              // 4px vertical, 0px horizontal
-  'sm-squish':   'py-[var(--spacing-stack-xs)] px-[var(--spacing-inline-sm)]',                     // 4px vertical, 8px horizontal
-  'sm-stretch':  'py-[var(--spacing-stack-sm)] px-[var(--spacing-inline-xs)]',                     // 8px vertical, 4px horizontal
-  'md-squish':   'py-[var(--spacing-stack-sm)] px-[var(--spacing-inline-md)]',                     // 8px vertical, 12px horizontal
-  'md-stretch':  'py-[var(--spacing-stack-md)] px-[var(--spacing-inline-sm)]',                     // 12px vertical, 8px horizontal
-  'lg-squish':   'py-[var(--spacing-stack-lg)] px-[var(--spacing-inline-xl)]',                     // 16px vertical, 24px horizontal
-  'lg-stretch':  'py-[var(--spacing-stack-xl)] px-[var(--spacing-inline-lg)]',                     // 24px vertical, 16px horizontal
+  xs:            'py-[var(--spacing-sp-xs)] px-[var(--spacing-sp-xs)]', // 4px all sides
+  sm:            'py-[var(--spacing-sp-sm)] px-[var(--spacing-sp-sm)]', // 8px all sides
+  md:            'py-[var(--spacing-sp-md)] px-[var(--spacing-sp-md)]', // 12px all sides
+  lg:            'py-[var(--spacing-sp-xl)] px-[var(--spacing-sp-xl)]', // 24px all sides
+  'xs-squish':   'py-0 px-[var(--spacing-sp-xs)]',                                     // 0px vertical, 4px horizontal
+  'xs-stretch':  'py-[var(--spacing-sp-xs)] px-0',                                     // 4px vertical, 0px horizontal
+  'sm-squish':   'py-[var(--spacing-sp-xs)] px-[var(--spacing-sp-sm)]',                   // 4px vertical, 8px horizontal
+  'sm-stretch':  'py-[var(--spacing-sp-sm)] px-[var(--spacing-sp-xs)]',                   // 8px vertical, 4px horizontal
+  'md-squish':   'py-[var(--spacing-sp-sm)] px-[var(--spacing-sp-md)]',                   // 8px vertical, 12px horizontal
+  'md-stretch':  'py-[var(--spacing-sp-md)] px-[var(--spacing-sp-sm)]',                   // 12px vertical, 8px horizontal
+  'lg-squish':   'py-[var(--spacing-sp-lg)] px-[var(--spacing-sp-xl)]',                   // 16px vertical, 24px horizontal
+  'lg-stretch':  'py-[var(--spacing-sp-xl)] px-[var(--spacing-sp-lg)]',                   // 24px vertical, 16px horizontal
 };
 
 const alignClass: Record<StackAlign, string> = {

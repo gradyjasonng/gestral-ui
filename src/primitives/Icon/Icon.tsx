@@ -21,7 +21,15 @@ import {
   BiPalette,
   BiCode,
   BiDotsHorizontalRounded,
+  BiShow,
+  BiHide,
 } from 'react-icons/bi';
+import {
+  LuRotateCw,
+  LuRotateCcw,
+  LuRefreshCw,
+  LuRefreshCcw,
+} from 'react-icons/lu';
 import { cn } from '@lib/cn';
 
 const icons = {
@@ -47,6 +55,12 @@ const icons = {
   'palette':    BiPalette,
   'code':       BiCode,
   'comment':    BiDotsHorizontalRounded,
+  'eye':        BiShow,
+  'eye-off':    BiHide,
+  'rotate-cw':    LuRotateCw,
+  'rotate-ccw':   LuRotateCcw,
+  'refresh-cw':   LuRefreshCw,
+  'refresh-ccw':  LuRefreshCcw,
 } as const;
 
 export type IconName = keyof typeof icons;

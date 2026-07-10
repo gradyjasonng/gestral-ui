@@ -18,7 +18,7 @@ describe('generateTokensCss', () => {
     expect(css).toContain('@theme inline {');
     expect(css).toContain('--text-caption: var(--text-xs);');
     expect(css).toContain('--radius-pill: 9999px;');
-    expect(css).toContain('--spacing-inline-xs: calc(var(--spacing) * 1);');
+    expect(css).toContain('--spacing-sp-xs: calc(var(--spacing) * 1);');
     // regression check: --leading-display-md was previously missing from the
     // hand-authored @theme inline mirror block.
     expect(css).toContain('--leading-display-md: var(--leading-display-md);');

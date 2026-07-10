@@ -91,7 +91,7 @@ export const ColorInheritance: Story = {
 export const Showcase: Story = {
   render: () => (
     <div className="flex flex-wrap gap-4 text-chrome-text-primary">
-      {(['home', 'search', 'cog', 'user', 'folder', 'file', 'arrow-back', 'check', 'x', 'plus'] as const).map((name) => (
+      {(['home', 'search', 'cog', 'user', 'folder', 'file', 'arrow-back', 'check', 'x', 'plus', 'rotate-cw', 'rotate-ccw', 'refresh-cw', 'refresh-ccw'] as const).map((name) => (
         <div key={name} className="flex flex-col items-center gap-1.5">
           <Icon name={name} size="lg" />
           <Text variant="caption" as="span" className="font-mono text-chrome-text-muted">{name}</Text>

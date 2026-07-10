@@ -6,9 +6,9 @@
      doesn't reflow (see `shrink-0` on it) — but that's on top of the
      icon's own `w-7`/`h-7` (`--spacing * 7`), which the label's cap must
      also make room for or the tail of the text gets clipped. */
-  max-width: calc(var(--container-xs) + var(--spacing) * 8);
+  max-width: calc(var(--container-xs) + (3 * var(--spacing-sp-xs))  +  var(--spacing) * 8);
   max-height: var(--container-xs);
-  padding: var(--spacing-stack-sm) var(--spacing-inline-xs);
+  padding: var(--spacing-sp-sm) var(--spacing-sp-xs);
 }
 
 [data-comment] > input:checked ~ label [data-comment-note] {
@@ -19,9 +19,9 @@
 @media (hover: hover) {
   [data-comment]:hover label,
   [data-comment]:focus-within label{
-    max-width: calc(var(--container-xs) + var(--spacing) * 8);
+    max-width: calc(var(--container-xs) + (3 * var(--spacing-sp-xs)) + var(--spacing) * 8);
     max-height: var(--container-xs);
-    padding: var(--spacing-stack-sm) var(--spacing-inline-xs);
+    padding: var(--spacing-sp-sm) var(--spacing-sp-xs);
   }
 
   [data-comment]:hover label [data-comment-note],

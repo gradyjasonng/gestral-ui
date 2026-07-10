@@ -25,7 +25,7 @@ export function Link({ variant = 'underline', textVariant, className, children, 
   return (
     <a
       className={cn(
-        'cursor-pointer transition-colors',
+        'cursor-pointer',
         // Force all descendants to inherit the link's color, overriding Text's own color class.
         '**:text-inherit!',
         variant === 'underline' && [

@@ -65,7 +65,10 @@ export interface ArtboardProps {
  * outlined. The label sits inside it, absolutely positioned to float above
  * the box; `mt-6` on the root reserves the space for it (instead of a
  * `pt-6` that would sit *inside* the outline) so the label reads as sitting
- * above the frame rather than inside it.
+ * above the frame rather than inside it. That `mt-6` stays put even when the
+ * frame is hidden (site-wide toggle or narrow viewport, see `Artboard.css`)
+ * — only the label's `display` and the outline's colour change, so toggling
+ * frames never reflows the page.
  */
 export function Artboard({ label, variant = 'default', frame = true, children, className }: ArtboardProps) {
   return (
@@ -74,7 +77,7 @@ export function Artboard({ label, variant = 'default', frame = true, children, c
       data-artboard-border=""
       data-artboard-variant={frame ? variant : undefined}
       className={cn(
-        'relative outline-none bg-transparent overflow-visible w-full px-inline-sm py-stack-sm',
+        'relative outline-none bg-transparent overflow-visible w-full px-sp-sm py-sp-sm',
         frame && label && 'mt-6',
         className,
       )}

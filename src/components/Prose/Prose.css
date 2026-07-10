@@ -42,17 +42,6 @@
   & h5:not(:where(.not-prose, .not-prose *)) { font-size: 1rem;    margin-top: 1.25em; }
   & h6:not(:where(.not-prose, .not-prose *)) { font-size: 0.875rem; margin-top: 1.25em; }
 
-  /* Links */
-  & a:not(:where(.not-prose, .not-prose *)) {
-    color: var(--color-accent-default);
-    text-decoration: underline;
-    text-decoration-thickness: 2px;
-    text-underline-offset: 3px;
-    transition: color 150ms ease;
-    &:hover  { color: var(--color-accent-text); }
-    &:active { color: var(--color-accent-text); }
-  }
-
   /* Emphasis */
   & strong:not(:where(.not-prose, .not-prose *)) { font-weight: 700; color: currentColor; }
   & em:not(:where(.not-prose, .not-prose *))     { font-style: italic; }

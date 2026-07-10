@@ -6,7 +6,7 @@ import dts from 'vite-plugin-dts';
 import { resolve } from 'path';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { storybookTest } from '@storybook/addon-vitest/vitest-plugin';
 import { playwright } from '@vitest/browser-playwright';
 import { generateTokensCss } from './src/lib/generateTokensCss';
@@ -25,6 +25,13 @@ const WATCHED_SCALE_FILES = [
 function writeGeneratedCss() {
   const handAuthoredTokensCss = readFileSync(TOKENS_CSS_PATH, 'utf-8');
   const css = generateTokensCss(handAuthoredTokensCss) + '\n' + generateTextSourceCss();
+  // generated.css is part of the module graph (tokens.css @imports it), so
+  // under `vite build --watch` an unconditional write here re-triggers the
+  // watcher on every build, which re-runs buildStart, which writes again —
+  // an infinite rebuild loop. Only write when the content actually changed.
+  if (existsSync(GENERATED_CSS_PATH) && readFileSync(GENERATED_CSS_PATH, 'utf-8') === css) {
+    return;
+  }
   writeFileSync(GENERATED_CSS_PATH, css);
 }
 

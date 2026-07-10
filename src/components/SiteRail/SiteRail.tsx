@@ -129,7 +129,7 @@ export function SiteRail({
               key={label}
               direction="vertical"
               size="lg"
-              iconSize="lg"
+              iconSize="md"
               textVariant="caption"
               icon={icon as IconName}
               href={href}
@@ -155,6 +155,7 @@ export function SiteRail({
             key={label}
             variant="iconOnly"
             size="lg"
+            iconSize='md'
             icon={icon}
             href={href}
             onClick={onClick}

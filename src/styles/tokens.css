@@ -5,7 +5,7 @@
  * dist/index.mjs with their own Tailwind build instead; see CLAUDE.md. */
 @import "tailwindcss" source(none);
 /* Generated (@theme inline registration for every token below, plus the
- * text/radius/spacing-inline/spacing-stack scales) — see
+ * text/radius/spacing scales) — see
  * src/lib/generateTokensCss.ts and vite.config.ts's generate-tokens-css
  * plugin. Edit the :root values below (or src/lib/{textScale,radiusScale,
  * spacingScale}.ts), not generated.css — see CLAUDE.md. */
@@ -26,16 +26,16 @@
   --color-chrome-text-muted:       var(--color-stone-400);
 
   /* Canvas: page content area — neutral gray ground */
-  --color-canvas-surface:          var(--color-stone-100);
-  --color-canvas-border:           var(--color-stone-200);
-  --color-canvas-text-primary:     var(--color-stone-900);
-  --color-canvas-text-secondary:   var(--color-stone-600);
-  --color-canvas-text-muted:       var(--color-stone-500);
+  --color-canvas-surface:          var(--color-taupe-100);
+  --color-canvas-border:           var(--color-taupe-200);
+  --color-canvas-text-primary:     var(--color-taupe-900);
+  --color-canvas-text-secondary:   var(--color-taupe-600);
+  --color-canvas-text-muted:       var(--color-taupe-500);
 
   /* Editorial: longform prose */
-  --color-editorial-surface:       var(--color-stone-100);
-  --color-editorial-text-primary:  var(--color-stone-800);
-  --color-editorial-text-secondary: var(--color-stone-500);
+  --color-editorial-surface:       var(--color-taupe-100);
+  --color-editorial-text-primary:  var(--color-taupe-800);
+  --color-editorial-text-secondary: var(--color-taupe-500);
 
   /* Accent: emerald interactive states */
   --color-accent-default:          var(--color-emerald-500);
@@ -70,23 +70,23 @@
   --font-ui:         'Plus Jakarta Sans', system-ui;
   --font-editorial:  Lora, Georgia, serif;
 
-  /* Text-size, line-height, radius, and spacing-inline/stack scales are
+  /* Text-size, line-height, radius, and spacing scale are
    * generated into tokens.generated.css (@imported above) from
    * src/lib/{textScale,radiusScale,spacingScale}.ts. */
 
   /* Icon sizes — maps back to the Icon component's size prop */
-  --icon-size-xs: calc(var(--spacing) * 3);
-  --icon-size-sm: calc(var(--spacing) * 4);
-  --icon-size-md: calc(var(--spacing) * 5);
-  --icon-size-lg: calc(var(--spacing) * 6);
-  --icon-size-xl: calc(var(--spacing) * 8);
+  --icon-size-xs: --spacing(4);
+  --icon-size-sm: --spacing(5);
+  --icon-size-md: --spacing(6);
+  --icon-size-lg: --spacing(7);
+  --icon-size-xl: --spacing(10);
 }
 
 /* ─── Dark mode ──────────────────────────────────────────────────────────── */
 @media (prefers-color-scheme: dark) {
   :root {
     /* Chrome: lighter than canvas */
-    --color-chrome-surface:          var(--color-stone-900);
+    --color-chrome-surface:          var(--color-red-900);
     --color-chrome-surface-hover:    var(--color-stone-800);
     --color-chrome-active:           var(--color-stone-800);
     --color-chrome-border:           var(--color-stone-700);
@@ -135,7 +135,7 @@
 }
 
 /* The `@theme inline { ... }` block that registers every token above with
- * Tailwind (plus the text/radius/spacing-inline/spacing-stack scales) is
+ * Tailwind (plus the text/radius/spacing scales) is
  * entirely generated into generated.css (@imported above) — see
  * src/lib/generateTokensCss.ts, which mirrors whatever custom properties it
  * finds declared in this file's :root, so there's nothing to hand-maintain

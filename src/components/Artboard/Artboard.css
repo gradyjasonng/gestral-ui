@@ -5,13 +5,18 @@
  * lib/artboardFrame.ts), and narrow viewports hide the frame unconditionally
  * since there's no rail to host the toggle there anyway (Shell hides rails
  * below `md`). Both are independent of the Artboard `frame` prop, which is a
- * per-instance author override. */
+ * per-instance author override.
+ *
+ * `margin-top` (the `mt-6` reserving space for the label, see Artboard.tsx)
+ * is deliberately left untouched here: it's part of the root's box model, so
+ * changing it would reflow every Artboard on the page and everything below
+ * it. Only the label's own visibility and the outline's colour change. */
 html[data-artboard-frame='off'] [data-artboard-label] { display: none; }
-html[data-artboard-frame='off'] [data-artboard-border] { outline-color: transparent !important; margin-top: 0 !important; }
+html[data-artboard-frame='off'] [data-artboard-border] { outline-color: transparent !important; }
 
 @media (width < 48rem) {
   [data-artboard-label] { display: none; }
-  [data-artboard-border] { outline-color: transparent !important; margin-top: 0 !important; }
+  [data-artboard-border] { outline-color: transparent !important; }
 }
 
 /* ─── Artboard hover/focus selection frame ──────────────────────────────── */
@@ -44,7 +49,6 @@ html[data-artboard-frame='off'] [data-artboard-border] { outline-color: transpar
 }
 
 [data-artboard-border][data-artboard-variant='default']:is(
-  :hover:not(:has([data-artboard-border]:hover)),
   :focus-within:not(:has([data-artboard-border]:focus-within))
 ) > [data-artboard-label] > span {
   color: var(--color-selection-emerald-text);
@@ -59,7 +63,6 @@ html[data-artboard-frame='off'] [data-artboard-border] { outline-color: transpar
 }
 
 [data-artboard-border][data-artboard-variant='interactive']:is(
-  :hover:not(:has([data-artboard-border]:hover)),
   :focus-within:not(:has([data-artboard-border]:focus-within))
 ) > [data-artboard-label] > span {
   color: var(--color-selection-blue-text);

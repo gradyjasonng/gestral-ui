@@ -21,7 +21,7 @@ const textButtonLineHeightMap: Record<ButtonSize, string> = {
 };
 
 /** Vertical padding applied to text buttons — fixed, not scaled with `size`. */
-const textButtonPaddingVar = 'var(--spacing-stack-sm)';
+const textButtonPaddingVar = 'var(--spacing-sp-sm)';
 
 /** Height of a text button at each size (line-height + padding), so `iconOnly` buttons can match it. */
 export const buttonHeightMap: Record<ButtonSize, string> = {

@@ -19,9 +19,15 @@ export function Shell({ overline, rails, canvas = <Canvas />, footer, className 
       )}
     >
       {overline && <div className="col-span-2 shrink-0">{overline}</div>}
-      <div className="col-start-1 row-start-2 hidden md:flex min-h-0">{rails}</div>
-      <div className="col-start-2 row-start-2 min-w-0 min-h-0 max-h-screen overflow-scroll">{canvas}</div>
-      {footer && <div className="col-span-2 border-t border-chrome-border shrink-0">{footer}</div>}
+      <div className="col-start-1 row-start-2 hidden md:flex min-h-0 relative">
+        {rails}
+      </div>
+      <div className="col-start-2 row-start-2 row-span-2 min-w-0 min-h-0 max-h-screen overflow-scroll">{canvas}</div>
+      {footer && (
+        <div className="col-start-1 row-start-3 hidden md:block border-t border-r border-chrome-border text-right shrink-0">
+          {footer}
+        </div>
+      )}
     </div>
   );
 }

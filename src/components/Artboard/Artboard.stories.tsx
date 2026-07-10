@@ -89,6 +89,10 @@ export const NoFrame: Story = {
  * `Artboard.css`. Regression check for the label's `data-artboard-label` hook
  * actually landing on a real DOM node (`Text` doesn't forward unknown props,
  * so it has to sit on a wrapping `<span>` instead).
+ *
+ * Also a regression check that toggling frames off doesn't reflow the page:
+ * the root's `mt-6` (reserving space for the label) must stay put — only the
+ * label's `display` and the outline's colour change.
  */
 export const FrameHiddenGlobally: Story = {
   args: {
@@ -100,8 +104,11 @@ export const FrameHiddenGlobally: Story = {
     document.documentElement.setAttribute('data-artboard-frame', 'off');
     return () => document.documentElement.removeAttribute('data-artboard-frame');
   },
-  play: async ({ canvas }) => {
+  play: async ({ canvas, canvasElement }) => {
     await expect(canvas.getByText('case-study-alpha')).not.toBeVisible();
+
+    const region = canvasElement.querySelector<HTMLElement>('[data-artboard-border]')!;
+    await expect(getComputedStyle(region).marginTop).not.toBe('0px');
   },
 };
 

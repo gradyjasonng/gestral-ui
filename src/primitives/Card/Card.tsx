@@ -46,9 +46,9 @@ export function Card({ elevation = 'flat', children, className, ...rest }: CardP
   return (
     <Tag
       className={cn(
-        'rounded-lg border border-chrome-border bg-chrome-surface',
+        'rounded-lg border border-chrome-border bg-chrome-surface outline-2 -outline-offset-1 outline-transparent',
         elevationClass[elevation],
-        interactive && 'cursor-pointer hover:border-selection-blue',
+        interactive && 'cursor-pointer hover:outline-selection-blue focus:outline-selection-blue',
         className,
       )}
       {...rest}
