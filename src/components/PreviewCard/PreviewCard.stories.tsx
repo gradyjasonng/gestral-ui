@@ -89,6 +89,7 @@ export const Horizontal: Story = {
     date: 'Late 2024 – 2025',
     meta: 'Product Designer',
     palette: 'secondary',
+    icon: 'palette',
     categoryLabel: 'Product Design',
     tags: ['Healthcare', 'Generative AI'],
     href: '#',
