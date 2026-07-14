@@ -1,3 +1,11 @@
+## [0.2.1](https://github.com/gradyjasonng/gestral-ui/compare/v0.2.0...v0.2.1) (2026-07-14)
+
+
+### Bug Fixes
+
+* adjust PreviewCard responsive padding ([990d65b](https://github.com/gradyjasonng/gestral-ui/commit/990d65bbfd8e1e0adc209ff30c7c292a1eeb6d1d))
+* lower contrast for muted chrome colour tokens ([719e51a](https://github.com/gradyjasonng/gestral-ui/commit/719e51a64fb52b9d900824a2f2e0e595eb6069ec))
+
 # [0.2.0](https://github.com/gradyjasonng/gestral-ui/compare/v0.1.1...v0.2.0) (2026-07-14)
 
 
