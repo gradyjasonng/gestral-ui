@@ -185,6 +185,92 @@ export const Nested: Story = {
 };
 
 /**
+ * `withHandles` adds four solid corner selection-handle squares to the
+ * outline, evoking a resizable layer selection in a design tool. They're
+ * filled (`background-color`), not hollow, so the outline underneath
+ * doesn't show through the handle. They mirror the outline's
+ * transparent-at-rest, coloured-on-hover/focus behaviour and colour — this
+ * story drives focus (real `:hover` can't be triggered from a test, see
+ * `Nested` above) and checks a handle actually picks up the variant colour.
+ */
+export const WithHandles: Story = {
+  args: {
+    label: 'case-study-alpha',
+    variant: 'interactive',
+    withHandles: true,
+    children: placeholder,
+  },
+  play: async ({ canvasElement }) => {
+    const region = canvasElement.querySelector<HTMLElement>('[data-artboard-border]')!;
+    const handle = canvasElement.querySelector<HTMLElement>('[data-artboard-handle]')!;
+
+    await expect(getComputedStyle(handle).backgroundColor).toBe('rgba(0, 0, 0, 0)');
+    region.focus();
+    await expect(region).toHaveFocus();
+    await expect(getComputedStyle(handle).backgroundColor).not.toBe('rgba(0, 0, 0, 0)');
+  },
+};
+
+/**
+ * `isAlwaysOutlined` shows the outline (and handles, with `withHandles`) in
+ * their variant colour at rest, instead of only on hover/focus-within —
+ * for purely decorative Artboards that should read as permanently
+ * "selected". This story checks both are already coloured before any
+ * interaction, unlike `Default`/`WithHandles` above.
+ */
+export const AlwaysOutlined: Story = {
+  args: {
+    variant: 'interactive',
+    withHandles: true,
+    isAlwaysOutlined: true,
+    children: placeholder,
+  },
+  play: async ({ canvasElement }) => {
+    const region = canvasElement.querySelector<HTMLElement>('[data-artboard-border]')!;
+    const handle = canvasElement.querySelector<HTMLElement>('[data-artboard-handle]')!;
+
+    await expect(getComputedStyle(region).outlineColor).not.toBe('rgba(0, 0, 0, 0)');
+    await expect(getComputedStyle(handle).backgroundColor).not.toBe('rgba(0, 0, 0, 0)');
+  },
+};
+
+/**
+ * `exemptFromFrameToggle` opts a purely-decorative Artboard (e.g. wrapping a
+ * page heading, not a togglable content frame) out of the site-wide frame
+ * toggle: its outline, handles, and label stay visible even when
+ * `data-artboard-frame="off"` is set on `<html>` — unlike `FrameHiddenGlobally`
+ * above, where the same toggle hides a regular Artboard's frame.
+ */
+export const ExemptFromFrameToggle: Story = {
+  // Excluded from the aggregated Docs page for the same reason as
+  // `FrameHiddenGlobally`: this story's beforeEach sets `data-artboard-frame`
+  // on the shared <html>, and Docs mode never unmounts stories individually
+  // to run the cleanup.
+  tags: ['!autodocs'],
+  args: {
+    label: 'case-study-alpha',
+    variant: 'default',
+    withHandles: true,
+    exemptFromFrameToggle: true,
+    children: placeholder,
+  },
+  beforeEach: () => {
+    document.documentElement.setAttribute('data-artboard-frame', 'off');
+    return () => document.documentElement.removeAttribute('data-artboard-frame');
+  },
+  play: async ({ canvas, canvasElement }) => {
+    await expect(canvas.getByText('case-study-alpha')).toBeVisible();
+
+    const region = canvasElement.querySelector<HTMLElement>('[data-artboard-border]')!;
+    const handle = canvasElement.querySelector<HTMLElement>('[data-artboard-handle]')!;
+    region.focus();
+    await expect(region).toHaveFocus();
+    await expect(getComputedStyle(region).outlineColor).not.toBe('rgba(0, 0, 0, 0)');
+    await expect(getComputedStyle(handle).backgroundColor).not.toBe('rgba(0, 0, 0, 0)');
+  },
+};
+
+/**
  * The Artboard's root is keyboard-focusable (`tabIndex={0}`) and applies the
  * same hover accent on `focus-within`, so keyboard users get the same
  * affordance as mouse users hovering the frame. This story drives focus

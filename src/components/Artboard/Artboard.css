@@ -10,13 +10,21 @@
  * `margin-top` (the `mt-6` reserving space for the label, see Artboard.tsx)
  * is deliberately left untouched here: it's part of the root's box model, so
  * changing it would reflow every Artboard on the page and everything below
- * it. Only the label's own visibility and the outline's colour change. */
-html[data-artboard-frame='off'] [data-artboard-label] { display: none; }
-html[data-artboard-frame='off'] [data-artboard-border] { outline-color: transparent !important; }
+ * it. Only the label's own visibility and the outline's colour change.
+ *
+ * `[data-artboard-frame-exempt]` (the `exemptFromFrameToggle` prop) opts an
+ * Artboard out of both rules below — its label, outline, and handles stay
+ * visible regardless of the site-wide toggle or viewport width. Intended for
+ * purely decorative Artboards (e.g. wrapping a page heading) that aren't a
+ * togglable content frame. */
+html[data-artboard-frame='off'] [data-artboard-border]:not([data-artboard-frame-exempt]) [data-artboard-label] { display: none; }
+html[data-artboard-frame='off'] [data-artboard-border]:not([data-artboard-frame-exempt]) { outline-color: transparent !important; }
+html[data-artboard-frame='off'] [data-artboard-border]:not([data-artboard-frame-exempt]) [data-artboard-handle] { background-color: transparent !important; border-color: transparent !important; }
 
 @media (width < 48rem) {
-  [data-artboard-label] { display: none; }
-  [data-artboard-border] { outline-color: transparent !important; }
+  [data-artboard-border]:not([data-artboard-frame-exempt]) [data-artboard-label] { display: none; }
+  [data-artboard-border]:not([data-artboard-frame-exempt]) { outline-color: transparent !important; }
+  [data-artboard-border]:not([data-artboard-frame-exempt]) [data-artboard-handle] { background-color: transparent !important; border-color: transparent !important; }
 }
 
 /* ─── Artboard hover/focus selection frame ──────────────────────────────── */
@@ -89,4 +97,88 @@ html[data-artboard-frame='off'] [data-artboard-border] { outline-color: transpar
 [data-artboard-border][data-artboard-variant='external']:hover:not(:has([data-artboard-border]:hover)) {
   outline-width: 2px;
   outline-color: var(--color-selection-purple);
+}
+
+/* ─── Artboard corner selection handles (withHandles) ───────────────────── */
+/* Four corner squares layered on top of the outline, evoking a resizable
+ * layer selection in a design tool. `background-color` is always the fixed
+ * `--color-canvas-surface`, not the variant colour: it's what occludes the
+ * outline directly underneath the handle (a transparent centre would let
+ * the outline show through, reading as a broken/interrupted line rather
+ * than a clean handle sitting on top of it). `border-color` carries the
+ * variant colour instead, so the handle still reads as "selected" the same
+ * way the outline does.
+ *
+ * They mirror the outline's own transparent-at-rest, coloured-and-
+ * thickening-on-hover/focus behaviour (1px focus, 2px hover, same as the
+ * outline), using the same nesting guards, so a handle-bearing Artboard
+ * reads as one consistent selection frame rather than two
+ * independently-timed effects. */
+[data-artboard-handle] {
+  background-color: transparent;
+  border: 1px solid transparent;
+}
+
+[data-artboard-border][data-artboard-variant='default']:focus-within:not(:has([data-artboard-border]:focus-within)) > [data-artboard-handle] {
+  background-color: var(--color-canvas-surface);
+  border-width: 1px;
+  border-color: var(--color-selection-emerald);
+}
+[data-artboard-border][data-artboard-variant='default']:hover:not(:has([data-artboard-border]:hover)) > [data-artboard-handle] {
+  background-color: var(--color-canvas-surface);
+  border-width: 2px;
+  border-color: var(--color-selection-emerald);
+}
+
+[data-artboard-border][data-artboard-variant='interactive']:focus-within:not(:has([data-artboard-border]:focus-within)) > [data-artboard-handle] {
+  background-color: var(--color-canvas-surface);
+  border-width: 1px;
+  border-color: var(--color-selection-blue);
+}
+[data-artboard-border][data-artboard-variant='interactive']:hover:not(:has([data-artboard-border]:hover)) > [data-artboard-handle] {
+  background-color: var(--color-canvas-surface);
+  border-width: 2px;
+  border-color: var(--color-selection-blue);
+}
+
+[data-artboard-border][data-artboard-variant='external']:focus-within:not(:has([data-artboard-border]:focus-within)) > [data-artboard-handle] {
+  background-color: var(--color-canvas-surface);
+  border-width: 1px;
+  border-color: var(--color-selection-purple);
+}
+[data-artboard-border][data-artboard-variant='external']:hover:not(:has([data-artboard-border]:hover)) > [data-artboard-handle] {
+  background-color: var(--color-canvas-surface);
+  border-width: 2px;
+  border-color: var(--color-selection-purple);
+}
+
+/* ─── Artboard always-visible outline (isAlwaysOutlined) ─────────────────── */
+/* Shows the outline (and handles) in their variant colour at rest, instead
+ * of only on hover/focus-within — for purely decorative Artboards that
+ * should read as permanently "selected". This only sets the idle-state
+ * colour; the hover/focus rules above still apply on top and take over the
+ * outline-width thickening, since they're more specific (they additionally
+ * match `:hover`/`:focus-within`). */
+[data-artboard-border][data-artboard-always-outlined][data-artboard-variant='default'] {
+  outline-color: var(--color-selection-emerald);
+}
+[data-artboard-border][data-artboard-always-outlined][data-artboard-variant='default'] > [data-artboard-handle] {
+  background-color: var(--color-canvas-surface);
+  border-color: var(--color-selection-emerald);
+}
+
+[data-artboard-border][data-artboard-always-outlined][data-artboard-variant='interactive'] {
+  outline-color: var(--color-selection-blue);
+}
+[data-artboard-border][data-artboard-always-outlined][data-artboard-variant='interactive'] > [data-artboard-handle] {
+  background-color: var(--color-canvas-surface);
+  border-color: var(--color-selection-blue);
+}
+
+[data-artboard-border][data-artboard-always-outlined][data-artboard-variant='external'] {
+  outline-color: var(--color-selection-purple);
+}
+[data-artboard-border][data-artboard-always-outlined][data-artboard-variant='external'] > [data-artboard-handle] {
+  background-color: var(--color-canvas-surface);
+  border-color: var(--color-selection-purple);
 }

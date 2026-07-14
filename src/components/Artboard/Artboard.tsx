@@ -31,6 +31,30 @@ export interface ArtboardProps {
    * `md` breakpoint, regardless of this prop. See `Artboard.css`.
    */
   frame?: boolean;
+  /**
+   * Adds four solid corner selection-handle squares at the outline's
+   * corners, evoking a resizable layer selection in a design tool. Defaults
+   * to `false`. Handles are filled (not hollow) so the outline doesn't show
+   * through them, and pick up the same `variant` colour and hover/focus/
+   * `isAlwaysOutlined` visibility as the outline itself — see `Artboard.css`.
+   */
+  withHandles?: boolean;
+  /**
+   * Opts this Artboard out of the site-wide frame toggle and the `md`-breakpoint
+   * frame hide, so its outline/handles/label stay visible regardless of either.
+   * Defaults to `false`. Intended for purely decorative Artboards (e.g.
+   * wrapping a page heading) that aren't a togglable content frame — see
+   * `Artboard.css`.
+   */
+  exemptFromFrameToggle?: boolean;
+  /**
+   * Shows the outline (and handles, if `withHandles`) in their variant colour
+   * at rest, instead of only on hover/focus-within. Defaults to `false`.
+   * Hover/focus still thickens the outline as usual on top of this. Intended
+   * for purely decorative Artboards that should read as permanently
+   * "selected" rather than only on interaction — see `Artboard.css`.
+   */
+  isAlwaysOutlined?: boolean;
   /** The wrapped content — prose, an image, a mini-app, an iframe, etc. */
   children: ReactNode;
   className?: string;
@@ -72,12 +96,24 @@ export interface ArtboardProps {
  * — only the label's `display` and the outline's colour change, so toggling
  * frames never reflows the page.
  */
-export function Artboard({ label, variant = 'default', frame = true, children, className, as: Tag = 'div' }: ArtboardProps) {
+export function Artboard({
+  label,
+  variant = 'default',
+  frame = true,
+  withHandles = false,
+  exemptFromFrameToggle = false,
+  isAlwaysOutlined = false,
+  children,
+  className,
+  as: Tag = 'div',
+}: ArtboardProps) {
   return (
     <Tag
       tabIndex={0}
       data-artboard-border=""
       data-artboard-variant={frame ? variant : undefined}
+      data-artboard-frame-exempt={exemptFromFrameToggle ? '' : undefined}
+      data-artboard-always-outlined={frame && isAlwaysOutlined ? '' : undefined}
       id={label ? slugify(label) : undefined}
       className={cn(
         'relative outline-none bg-transparent overflow-visible w-full px-sp-sm py-sp-sm',
@@ -91,6 +127,14 @@ export function Artboard({ label, variant = 'default', frame = true, children, c
             {label}
           </Text>
         </span>
+      )}
+      {frame && withHandles && (
+        <>
+          <span data-artboard-handle="" className="absolute -top-1 -left-1 h-2 w-2" />
+          <span data-artboard-handle="" className="absolute -top-1 -right-1 h-2 w-2" />
+          <span data-artboard-handle="" className="absolute -bottom-1 -left-1 h-2 w-2" />
+          <span data-artboard-handle="" className="absolute -bottom-1 -right-1 h-2 w-2" />
+        </>
       )}
       {children}
     </Tag>
