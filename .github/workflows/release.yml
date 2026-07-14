@@ -28,6 +28,13 @@ jobs:
           node-version: 22
           cache: pnpm
 
+      # Node 22's bundled npm predates OIDC Trusted Publishing support
+      # (npm 11.5.1+) — without this, `npm publish` never attempts the OIDC
+      # exchange and falls straight to legacy token auth, which fails with
+      # ENEEDAUTH now that NPM_TOKEN has been removed.
+      - name: Update npm
+        run: npm install -g npm@latest
+
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
