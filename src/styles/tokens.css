@@ -22,20 +22,21 @@
   --color-chrome-muted:            var(--color-stone-100);
   --color-chrome-muted-hover:      var(--color-stone-200);
   --color-chrome-text-primary:     var(--color-stone-900);
-  --color-chrome-text-secondary:   var(--color-stone-500);
-  --color-chrome-text-muted:       var(--color-stone-400);
+  --color-chrome-text-secondary:   var(--color-stone-600);
+  --color-chrome-text-muted:       var(--color-stone-500);
 
   /* Canvas: page content area — neutral gray ground */
-  --color-canvas-surface:          var(--color-taupe-100);
-  --color-canvas-border:           var(--color-taupe-200);
-  --color-canvas-text-primary:     var(--color-taupe-900);
-  --color-canvas-text-secondary:   var(--color-taupe-600);
-  --color-canvas-text-muted:       var(--color-taupe-500);
+  --color-canvas-surface:          var(--color-neutral-100);
+  --color-canvas-muted:            var(--color-neutral-200);
+  --color-canvas-border:           var(--color-neutral-200);
+  --color-canvas-text-primary:     var(--color-neutral-900);
+  --color-canvas-text-secondary:   var(--color-neutral-600);
+  --color-canvas-text-muted:       var(--color-neutral-500);
 
   /* Editorial: longform prose */
-  --color-editorial-surface:       var(--color-taupe-100);
-  --color-editorial-text-primary:  var(--color-taupe-800);
-  --color-editorial-text-secondary: var(--color-taupe-500);
+  --color-editorial-surface:       var(--color-neutral-50);
+  --color-editorial-text-primary:  var(--color-neutral-800);
+  --color-editorial-text-secondary: var(--color-neutral-500);
 
   /* Accent: emerald interactive states */
   --color-accent-default:          var(--color-emerald-500);
@@ -86,7 +87,7 @@
 @media (prefers-color-scheme: dark) {
   :root {
     /* Chrome: lighter than canvas */
-    --color-chrome-surface:          var(--color-red-900);
+    --color-chrome-surface:          var(--color-stone-900);
     --color-chrome-surface-hover:    var(--color-stone-800);
     --color-chrome-active:           var(--color-stone-800);
     --color-chrome-border:           var(--color-stone-700);
@@ -94,17 +95,18 @@
     --color-chrome-muted:            var(--color-stone-700);
     --color-chrome-muted-hover:      var(--color-stone-600);
     --color-chrome-text-primary:     var(--color-stone-50);
-    --color-chrome-text-secondary:   var(--color-stone-400);
-    --color-chrome-text-muted:       var(--color-stone-500);
+    --color-chrome-text-secondary:   var(--color-stone-200);
+    --color-chrome-text-muted:       var(--color-stone-300);
 
     /* Canvas: darkest — the ground */
     --color-canvas-surface:          var(--color-stone-950);
+    --color-canvas-muted:            var(--color-stone-900);
     --color-canvas-border:           var(--color-stone-800);
     --color-canvas-text-primary:     var(--color-stone-100);
     --color-canvas-text-secondary:   var(--color-stone-400);
     --color-canvas-text-muted:       var(--color-stone-500);
 
-    --color-editorial-surface:       var(--color-stone-950);
+    --color-editorial-surface:       var(--color-stone-900);
     --color-editorial-text-primary:  var(--color-stone-200);
     --color-editorial-text-secondary: var(--color-stone-400);
 
