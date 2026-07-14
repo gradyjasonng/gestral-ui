@@ -40,6 +40,7 @@ export const AllVariants: Story = {
         ['subheading1', 'Subheading 1',  'UI — large subheading'],
         ['subheading2', 'Subheading 2',  'UI — medium subheading'],
         ['subheading3', 'Subheading 3',  'UI — small subheading'],
+        ['headline',    'Headline',      'UI — subheading2 size, not bold'],
         ['displayMd',   'Display Md',    'Display font a step up from displaySm — larger labels, small headings'],
         ['displaySm',   'Display Sm',    'Display font at label scale — site name, badges'],
         ['overline',    'Overline',      'UI — large section overline'],
@@ -91,7 +92,7 @@ export const UIScale: Story = {
   name: 'UI Scale',
   render: () => (
     <div className="flex flex-col gap-3">
-      {(['subheading1', 'subheading2', 'subheading3', 'overline', 'eyebrow', 'body', 'bodySmall', 'caption', 'labelSmall', 'labelXSmall'] as TextVariant[]).map((v) => (
+      {(['subheading1', 'subheading2', 'subheading3', 'headline', 'overline', 'eyebrow', 'body', 'bodySmall', 'caption', 'labelSmall', 'labelXSmall'] as TextVariant[]).map((v) => (
         <Text key={v} variant={v}>The quick brown fox</Text>
       ))}
     </div>
