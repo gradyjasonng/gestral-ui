@@ -26,6 +26,7 @@ export const PostCard: Story = {
   args: {
     title: 'Sample Article One',
     description: 'A short case study exploring an interface problem.',
+    className: 'aspect-4/3 w-120',
     date: '2 Jun 2026',
     palette: 'accent',
     icon: 'palette',
@@ -43,28 +44,13 @@ export const PostCard: Story = {
  */
 export const Grid: Story = {
   render: () => (
-    <div className="grid grid-cols-3 gap-2 w-full">
-      <PreviewCard title="Sample Article One" date="2 Jun 2026" palette="accent" icon="palette" categoryLabel="UX" href="#" description="A short case study exploring an interface problem." />
-      <PreviewCard title="Sample Work Project" date="12 Jun 2025" palette="secondary" icon="code" categoryLabel="Web Dev" tags={['LLMs']} href="#" description="Integrating LLM-powered conversations into a rule-based chatbot." />
-      <PreviewCard title="Sample Article Two" date="21 May 2026" palette="secondary" icon="code" categoryLabel="Web Dev" tags={['Game Design']} href="#" description="How a small side project created a unique UX problem." />
-      <PreviewCard title="Sample Article Three" date="5 May 2026" palette="accent" href="#" description="A short reflection on a design topic." />
+    <div className="grid grid-cols-3 gap-2 w-full *:aspect-4/3">
+      <PreviewCard title="Sample Article One" date="2 Jun 2026" palette="accent" icon="palette" categoryLabel="UX" href="#" />
+      <PreviewCard title="Sample Work Project" date="12 Jun 2025" palette="secondary" icon="code" categoryLabel="Web Dev" tags={['LLMs']} href="#" />
+      <PreviewCard title="Sample Article Two" date="21 May 2026" palette="secondary" icon="code" categoryLabel="Web Dev" tags={['Game Design']} href="#" />
+      <PreviewCard title="Sample Article Three" date="5 May 2026" palette="accent" href="#" />
     </div>
   ),
-};
-
-/**
- * `date` omitted — the meta block simply collapses to title/description.
- * Use this for undated index items (e.g. playground experiments) where a
- * date would be noise rather than signal.
- */
-export const Undated: Story = {
-  args: {
-    title: 'Sample Experiment',
-    description: 'A small interactive toy with no meaningful publish date.',
-    palette: 'secondary',
-    tags: ['Playground'],
-    href: '#',
-  },
 };
 
 /**
@@ -144,6 +130,7 @@ export const CustomThumbnail: Story = {
     palette: 'secondary',
     tags: ['Product Design', 'LLMs'],
     href: '#',
+    className: 'aspect-4/3 w-120',
     children: (
       <div className="w-full h-full flex items-center justify-center bg-accent-default">
         <span className="text-4xl font-bold text-chrome-surface">GN</span>
