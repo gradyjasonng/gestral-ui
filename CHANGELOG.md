@@ -1,3 +1,10 @@
+# [0.2.0](https://github.com/gradyjasonng/gestral-ui/compare/v0.1.1...v0.2.0) (2026-07-14)
+
+
+### Features
+
+* **artboard:** add withHandles, isAlwaysOutlined, exemptFromFrameToggle ([9232ff6](https://github.com/gradyjasonng/gestral-ui/commit/9232ff6c17a2fcc0909b70199430318f12210473))
+
 ## [0.1.1](https://github.com/gradyjasonng/gestral-ui/compare/v0.1.0...v0.1.1) (2026-07-14)
 
 
