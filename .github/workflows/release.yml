@@ -3,6 +3,7 @@ name: Release
 on:
   push:
     branches: [main]
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -34,7 +35,19 @@ jobs:
         run: pnpm build
 
       - name: Release
+        if: github.event_name == 'push'
         run: pnpm semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      # Manual escape hatch: publishes whatever version is already committed
+      # in package.json as-is, without semantic-release. Needed because
+      # semantic-release won't re-attempt a release it already tagged (it
+      # only looks at commits since the last version tag) — so if `npm
+      # publish` ever fails after the tag/changelog/version bump already
+      # landed (e.g. the EOTP failure that prompted adding npm Trusted
+      # Publishing), a plain re-push can't retry it. Trigger this manually
+      # via workflow_dispatch instead.
+      - name: Publish (manual retry)
+        if: github.event_name == 'workflow_dispatch'
+        run: npm publish --provenance --access public
