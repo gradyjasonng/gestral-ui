@@ -63,6 +63,23 @@ export const IconOnly: Story = {
 };
 
 /**
+ * `iconPosition` controls which side of the label the icon renders on —
+ * `'before'` (default, backwards-compatible) or `'after'`. Useful for
+ * "more"/"next" style buttons where the icon should trail the label instead
+ * of leading it. Applies to `horizontal` and `vertical`; ignored by
+ * `iconOnly` since there's no label to be before/after.
+ */
+export const IconPosition: Story = {
+  render: () => (
+    <div className="flex flex-col gap-2 items-start">
+      <Button variant="horizontal" icon="chevron-right">Before (default)</Button>
+      <Button variant="horizontal" icon="chevron-right" iconPosition="after">After</Button>
+      <Button variant="vertical" icon="chevron-right" iconPosition="after">After</Button>
+    </div>
+  ),
+};
+
+/**
  * `palette` controls the color scheme applied when `active` — `accent`
  * (default, emerald), `secondary` (violet, solid fill), or `input` (blue).
  * Also shown on a `muted` surface, where the active fill lifts back to
@@ -87,7 +104,23 @@ export const Palette: Story = {
 };
 
 /**
- * All three `size` values (`sm`/`md`/`lg`) across all three variants, to
+ * `disabled` dims the button and blocks pointer interaction, regardless of
+ * `active`/`palette`/`surface` — shown here layered over an active state to
+ * confirm it always wins.
+ */
+export const Disabled: Story = {
+  render: () => (
+    <div className="flex items-center gap-2">
+      <Button variant="horizontal" icon="star" disabled>Horizontal</Button>
+      <Button variant="horizontal" icon="star" active disabled>Active</Button>
+      <Button variant="vertical" icon="star" disabled>Vertical</Button>
+      <Button variant="iconOnly" icon="star" disabled aria-label="Star">Star</Button>
+    </div>
+  ),
+};
+
+/**
+ * All four `size` values (`sm`/`md`/`lg`/`xl`) across all three variants, to
  * show how `size` scales padding, text size, and icon container height
  * together. `iconSize` can be set independently of `size` when an icon
  * needs to read at a different scale than the surrounding text/padding.
@@ -95,7 +128,7 @@ export const Palette: Story = {
 export const Sizes: Story = {
   render: () => (
     <div className="flex flex-col gap-6">
-      {(['sm', 'md', 'lg'] as const).map((s) => (
+      {(['sm', 'md', 'lg', 'xl'] as const).map((s) => (
         <div key={s} className="flex items-center gap-4">
           <Text variant="caption" as="span" className="font-mono text-chrome-text-muted w-6">{s}</Text>
           <Button variant="horizontal" size={s} icon="star" active>Horizontal</Button>
