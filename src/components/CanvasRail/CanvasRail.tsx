@@ -57,6 +57,7 @@ function NodeButton({ label, href, active, indent = 0 }: { label: string; href: 
   );
 }
 
+/** The secondary, page-scoped rail: a title/subtitle header, an optional table-of-contents (`items`, nestable via `depth`), and an optional metadata list (`meta`). Paired with `Canvas` to navigate within a single page. */
 export function CanvasRail({
   title,
   subtitle,

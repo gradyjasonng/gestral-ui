@@ -21,6 +21,7 @@ export interface RailHeaderProps {
   className?: string;
 }
 
+/** Header row for a `Rail` (`SiteRail`/`CanvasRail`): an optional left slot (logo or back button), title/subtitle text, and an optional thumbnail banner (`above`) above the row. */
 export function RailHeader({ left, title, subtitle, above, className }: RailHeaderProps) {
   const row = (
     <Stack direction="row" align="stretch" className={cn('shrink-0 min-h-14 px-sp-md', above && 'rounded-t-2xl', className)}>

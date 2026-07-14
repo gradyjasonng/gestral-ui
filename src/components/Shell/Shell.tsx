@@ -10,6 +10,7 @@ export interface ShellProps {
   className?: string;
 }
 
+/** Top-level page grid: rails on the left, scrollable canvas on the right, with optional overline and footer rows. The layout other components (`SiteRail`, `CanvasRail`, `Canvas`) are composed into. */
 export function Shell({ overline, rails, canvas = <Canvas />, footer, className }: ShellProps) {
   return (
     <div

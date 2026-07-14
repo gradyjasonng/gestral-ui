@@ -10,6 +10,7 @@ export interface RailProps {
   className?: string;
 }
 
+/** Generic bordered, vertically-scrolling `<aside>` — the shared shell `SiteRail` and `CanvasRail` build on. */
 export function Rail({ children, width = 'w-12', className, 'aria-label': ariaLabel }: RailProps) {
   return (
     <Stack

@@ -73,6 +73,7 @@ export interface StackProps extends HTMLAttributes<HTMLElement> {
   children: ReactNode;
 }
 
+/** Flex layout primitive: direction, gap, padding, align, and justify, all driven by the generated spacing-scale tokens (`gap-sp-*`/`p-sp-*`). */
 export function Stack({
   direction = 'col',
   gap = 'none',

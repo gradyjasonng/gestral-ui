@@ -11,6 +11,7 @@ export interface TextProps extends Omit<ComponentPropsWithoutRef<'p'>, 'children
   as?: ElementType;
 }
 
+/** Typographic primitive: renders the semantic HTML element and size/weight/line-height defined for `variant` in the generated text scale (`src/lib/textScale.ts`). */
 export function Text({ variant = 'body', children, className, as, ...rest }: TextProps) {
   const entry = TEXT_SCALE[variant];
   const Tag = as ?? entry.element;

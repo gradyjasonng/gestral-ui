@@ -23,6 +23,7 @@ const activeClass          = 'bg-accent-default text-white';
 const activeSecondaryClass = 'bg-chrome-active text-chrome-text-primary';
 const inactiveClass        = 'bg-chrome-border text-chrome-text-secondary hover:bg-chrome-border-emphasis hover:text-chrome-text-primary';
 
+/** A compact pill-shaped button or link — for tags, filters, or category labels. */
 export function Chip({
   size = 'md',
   active = false,

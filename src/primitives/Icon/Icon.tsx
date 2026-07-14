@@ -78,6 +78,7 @@ export interface IconProps {
   className?: string;
 }
 
+/** Renders a named icon (from `react-icons`) sized via the `--icon-size-{size}` custom properties. Hidden from assistive tech unless `label` is given, in which case it gets `role="img"`/`aria-label` instead. */
 export function Icon({ name, size = 'md', label, className }: IconProps) {
   const IconComponent = icons[name];
   const sizeVar = `var(--icon-size-${size})`;

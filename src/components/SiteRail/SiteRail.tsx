@@ -52,6 +52,7 @@ export interface SiteRailProps {
   className?: string;
 }
 
+/** The primary site-navigation rail: logo/site name header, top-level nav `items`, and a secondary `externalLinks` section (e.g. GitHub/LinkedIn) below a divider. Collapses to icon-only when not `expanded`. */
 export function SiteRail({
   items,
   externalLinks,

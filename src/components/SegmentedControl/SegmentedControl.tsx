@@ -27,6 +27,7 @@ export interface SegmentedControlProps {
   className?: string;
 }
 
+/** A row of mutually-exclusive `Button` options, e.g. for filters or a form control's palette. Selection is controlled via `value`/`onChange` or managed internally when omitted. */
 export function SegmentedControl({
   options,
   value,
