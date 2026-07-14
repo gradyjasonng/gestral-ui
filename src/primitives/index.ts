@@ -6,3 +6,4 @@ export * from './Stack';
 export * from './Rail';
 export * from './Icon';
 export * from './Popover';
+export * from './Quote';

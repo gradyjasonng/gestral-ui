@@ -84,6 +84,25 @@ export const NoFrame: Story = {
 };
 
 /**
+ * `as="li"` overrides the root tag — for an Artboard that's itself an item
+ * inside a `Stack as="ul"`/`as="ol"` list. Regression check that the root
+ * actually renders as a real `<li>` rather than silently staying a `<div>`.
+ */
+export const AsListItem: Story = {
+  render: () => (
+    <ul className="flex gap-4 list-none p-0 m-0">
+      <Artboard as="li" label="item-one" variant="default">
+        {placeholder}
+      </Artboard>
+    </ul>
+  ),
+  play: async ({ canvasElement }) => {
+    const region = canvasElement.querySelector('[data-artboard-border]')!;
+    await expect(region.tagName).toBe('LI');
+  },
+};
+
+/**
  * The site-wide toggle (SiteRail's frame button) hides the label as well as
  * the border, by setting `data-artboard-frame="off"` on `<html>` — see
  * `Artboard.css`. Regression check for the label's `data-artboard-label` hook

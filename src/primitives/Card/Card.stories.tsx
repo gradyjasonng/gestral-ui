@@ -48,3 +48,35 @@ export const Interactive: Story = {
     </div>
   ),
 };
+
+/**
+ * `as` overrides the root tag for the non-interactive form — e.g. `li` when
+ * the Card is itself an item inside a `Stack as="ul"`.
+ */
+export const AsListItem: Story = {
+  render: () => (
+    <ul className="flex gap-4 list-none p-0 m-0">
+      {['One', 'Two', 'Three'].map((label) => (
+        <Card key={label} as="li" className="w-32 h-20 p-4">
+          <Text variant="caption" className="text-chrome-text-secondary">{label}</Text>
+        </Card>
+      ))}
+    </ul>
+  ),
+};
+
+/**
+ * `surface` swaps the token set: `chrome` (default, app UI) vs `editorial`
+ * (long-form article content, matches `Prose`/`Artboard` editorial theming).
+ */
+export const Surface: Story = {
+  render: () => (
+    <div className="flex items-center gap-4">
+      {(['chrome', 'editorial'] as const).map((surface) => (
+        <Card key={surface} surface={surface} className="w-40 h-24 p-4">
+          <Text variant="caption" className="text-chrome-text-secondary">{surface}</Text>
+        </Card>
+      ))}
+    </div>
+  ),
+};

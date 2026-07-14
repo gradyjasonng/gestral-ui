@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import type { ElementType, ReactNode } from 'react';
 import { cn } from '@lib/cn';
 import { slugify } from '@lib/slugify';
 import { Text } from '@primitives';
@@ -34,6 +34,8 @@ export interface ArtboardProps {
   /** The wrapped content — prose, an image, a mini-app, an iframe, etc. */
   children: ReactNode;
   className?: string;
+  /** Root element tag. Defaults to `div` — override to `li` when the Artboard is itself an item in a `Stack as="ul"`/`as="ol"` list. */
+  as?: ElementType;
 }
 
 /**
@@ -70,9 +72,9 @@ export interface ArtboardProps {
  * — only the label's `display` and the outline's colour change, so toggling
  * frames never reflows the page.
  */
-export function Artboard({ label, variant = 'default', frame = true, children, className }: ArtboardProps) {
+export function Artboard({ label, variant = 'default', frame = true, children, className, as: Tag = 'div' }: ArtboardProps) {
   return (
-    <div
+    <Tag
       tabIndex={0}
       data-artboard-border=""
       data-artboard-variant={frame ? variant : undefined}
@@ -90,6 +92,6 @@ export function Artboard({ label, variant = 'default', frame = true, children, c
         </span>
       )}
       {children}
-    </div>
+    </Tag>
   );
 }

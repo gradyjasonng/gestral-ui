@@ -24,7 +24,10 @@ export type { IconProps, IconName, IconSize } from './primitives/Icon/Icon';
 export { Popover } from './primitives/Popover/Popover';
 export type { PopoverProps, PopoverVariant } from './primitives/Popover/Popover';
 export { Card } from './primitives/Card/Card';
-export type { CardProps, CardElevation } from './primitives/Card/Card';
+export type { CardProps, CardElevation, CardSurface } from './primitives/Card/Card';
+
+export { Quote } from './primitives/Quote/Quote';
+export type { QuoteProps } from './primitives/Quote/Quote';
 
 // Components
 export { Artboard } from './components/Artboard/Artboard';
