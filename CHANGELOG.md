@@ -1,3 +1,10 @@
+## [0.1.1](https://github.com/gradyjasonng/gestral-ui/compare/v0.1.0...v0.1.1) (2026-07-14)
+
+
+### Bug Fixes
+
+* add repository field required for npm provenance verification ([a0bb17a](https://github.com/gradyjasonng/gestral-ui/commit/a0bb17ad80a5001eb5916079c475fdbd08dc3d79))
+
 # [0.1.0](https://github.com/gradyjasonng/gestral-ui/compare/v0.0.1...v0.1.0) (2026-07-14)
 
 
