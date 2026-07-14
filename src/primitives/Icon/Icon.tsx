@@ -23,6 +23,8 @@ import {
   BiDotsHorizontalRounded,
   BiShow,
   BiHide,
+  BiSolidCog,
+  BiLock
 } from 'react-icons/bi';
 import {
   LuRotateCw,
@@ -57,6 +59,8 @@ const icons = {
   'comment':    BiDotsHorizontalRounded,
   'eye':        BiShow,
   'eye-off':    BiHide,
+  'wrench':     BiSolidCog,
+  'lock':       BiLock,
   'rotate-cw':    LuRotateCw,
   'rotate-ccw':   LuRotateCcw,
   'refresh-cw':   LuRefreshCw,
