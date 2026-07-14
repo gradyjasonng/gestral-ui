@@ -5,7 +5,7 @@ import { SiteRail } from '@components/SiteRail/SiteRail';
 import { MobileNav } from '@components/MobileNav/MobileNav';
 import { CanvasRail } from '@components/CanvasRail/CanvasRail';
 import { Page } from '@components/Page/Page';
-import { navItems, footerItems } from '@components/SiteRail/__fixtures__';
+import { navItems, externalLinks } from '@components/SiteRail/__fixtures__';
 import { Default as CanvasRailDefault } from '@components/CanvasRail/CanvasRail.stories';
 import { Text, Stack } from '@primitives';
 import { Artboard } from '@components/Artboard/Artboard';
@@ -51,7 +51,7 @@ export const CanvasLayout: Story = {
     <Shell
       rails={
         <>
-          <SiteRail items={navItems} footerItems={footerItems} siteName="Gestral UI" />
+          <SiteRail items={navItems} externalLinks={externalLinks} siteName="Gestral UI" />
           <CanvasRail {...CanvasRailDefault.args!} />
         </>
       }
@@ -70,7 +70,7 @@ export const PageLayout: Story = {
   name: 'Page Layout',
   render: () => (
     <Shell
-      rails={<SiteRail items={navItems} footerItems={footerItems} siteName="Gestral UI" expanded />}
+      rails={<SiteRail items={navItems} externalLinks={externalLinks} siteName="Gestral UI" expanded />}
       canvas={<PageContent />}
     />
   ),
@@ -88,8 +88,8 @@ export const MobileLayout: Story = {
   parameters: { viewport: { defaultViewport: 'mobile1' } },
   render: () => (
     <Shell
-      overline={<MobileNav items={navItems} footerItems={footerItems} siteName="Gestral UI" />}
-      rails={<SiteRail items={navItems} footerItems={footerItems} siteName="Gestral UI" />}
+      overline={<MobileNav items={navItems} externalLinks={externalLinks} siteName="Gestral UI" />}
+      rails={<SiteRail items={navItems} externalLinks={externalLinks} siteName="Gestral UI" />}
       canvas={<VerticalCanvasContent />}
     />
   ),

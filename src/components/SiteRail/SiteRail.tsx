@@ -1,56 +1,12 @@
-import { useEffect, useState, type ReactNode } from 'react';
-import { Rail, Stack, Button, LabelledIconButton, type IconName } from '@primitives';
+import type { ReactNode } from 'react';
+import { Rail, Stack, Button, LabelledIconButton, Text, type IconName } from '@primitives';
 import { RailHeader } from '@components/RailHeader/RailHeader';
+import { ButtonWithPreviewCard } from '@components/ButtonWithPreviewCard/ButtonWithPreviewCard';
 import { cn } from '@lib/cn';
-import { getStoredFramePreference, setStoredFramePreference } from '@lib/artboardFrame';
 
 export const LogoPlaceholder = () => (
   <span className="w-6 h-6 rounded-sm bg-accent-default shrink-0" aria-hidden="true" />
 );
-
-/**
- * Toggles `data-artboard-frame` on `<html>` (persisted to localStorage),
- * which every Artboard on the page reacts to via `global.css` — no per-
- * instance wiring needed, including for Artboards authored in MDX content.
- */
-function FrameToggle() {
-  const [frameEnabled, setFrameEnabled] = useState(true);
-
-  useEffect(() => {
-    setFrameEnabled(getStoredFramePreference());
-  }, []);
-
-  const toggle = () => {
-    const next = !frameEnabled;
-    setFrameEnabled(next);
-    setStoredFramePreference(next);
-  };
-
-  const label = frameEnabled ? 'Hide frames' : 'Show frames';
-
-  return (
-    <Button
-      variant="iconOnly"
-      size="lg"
-      icon="palette"
-      onClick={toggle}
-      active={!frameEnabled}
-      aria-pressed={!frameEnabled}
-      aria-label={label}
-      title={label}
-    >
-      {label}
-    </Button>
-  );
-}
-
-export interface SiteRailFooterItem {
-  icon: IconName;
-  label: string;
-  href?: string;
-  onClick?: () => void;
-  active?: boolean;
-}
 
 export interface SiteRailItem {
   label: string;
@@ -59,9 +15,35 @@ export interface SiteRailItem {
   active?: boolean | 'secondary';
 }
 
+export interface SiteRailExternalLink {
+  label: string;
+  href: string;
+  icon?: IconName;
+  /** Site-specific icon rendered in the compact (hover-capable) link — see `Button`'s `customIcon`. */
+  customIcon?: ReactNode;
+  /**
+    Optional rich preview shown on hover next to the compact link (e.g. a
+    `PreviewCard`). On touch devices — which can't hover — this is rendered
+    directly as the link instead of the compact icon+label. Links with no
+    `preview` (e.g. a plain GitHub/LinkedIn link) just render the compact
+    icon+label everywhere, with no hover reveal.
+  */
+  preview?: ReactNode;
+}
+
 export interface SiteRailProps {
   items: SiteRailItem[];
-  footerItems?: SiteRailFooterItem[];
+  /**
+    A secondary set of links — individual pages, external sites, or social
+    profiles — rendered after a divider, below `items`. Each renders as a
+    compact icon+label `Button`; if it has a `preview`, that's revealed on
+    hover, with the preview itself rendered directly as the link on touch
+    devices (no hover). Unlike `items`, this section renders even when the
+    rail is collapsed.
+  */
+  externalLinks?: SiteRailExternalLink[];
+  /** Gray `labelSm` heading rendered just below the divider, above `externalLinks`. Only shown when the rail is `expanded`. */
+  externalLinksLabel?: string;
   siteName?: string;
   logo?: ReactNode;
   logoHref?: string;
@@ -72,7 +54,8 @@ export interface SiteRailProps {
 
 export function SiteRail({
   items,
-  footerItems,
+  externalLinks,
+  externalLinksLabel,
   siteName,
   logo = <LogoPlaceholder />,
   logoHref = '/',
@@ -106,17 +89,18 @@ export function SiteRail({
       <Stack
         as="nav"
         direction="col"
-        gap={expanded ? 'sm' : 'lg'}
+        gap={expanded ? 'xs' : 'lg'}
         align={!expanded ? 'center' : undefined}
-        padding='sm'
-        className={cn('flex-1', expanded ? 'px-1' : 'px-0')}
+        padding={expanded ? 'xs' : 'md'}
+        className={'flex-1'}
       >
         {items.map(({ label, href, icon, active }) => (
           expanded ? (
             <Button
               key={label}
               variant="horizontal"
-              size="md"
+              size="xl"
+              iconSize="md"
               icon={icon}
               href={href}
               active={active}
@@ -143,32 +127,46 @@ export function SiteRail({
         ))}
       </Stack>
 
-      <Stack
-        direction={expanded ? 'row' : 'col'}
-        align="center"
-        gap="xs"
-        justify={expanded ? undefined : 'center'}
-        className="p-2 shrink-0 *:grow"
-      >
-        {footerItems?.map(({ icon, label, href, onClick, active }) => (
-          <Button
-            key={label}
-            variant="iconOnly"
-            size="lg"
-            iconSize='md'
-            icon={icon}
-            href={href}
-            onClick={onClick}
-            active={active}
-            aria-label={label}
-            title={label}
-            className={cn(expanded && 'aspect-auto')}
+      {externalLinks && externalLinks.length > 0 && (
+        <>
+          {expanded
+            ? <hr className="border-chrome-border" />
+            : <div className="w-8 mx-auto border-b border-chrome-border" />
+          }
+          <Stack
+            direction="col"
+            gap="sm"
+            align={!expanded ? 'center' : undefined}
+            padding={expanded ? 'xs' : 'lg'}
+            className={cn('shrink-0')}
           >
-            {label}
-          </Button>
-        ))}
-        {/* <FrameToggle /> */}
-      </Stack>
+            {expanded && externalLinksLabel && (
+              <Text variant="labelXSmall" className="text-chrome-text-muted p-sp-xs">
+                {externalLinksLabel}
+              </Text>
+            )}
+            {externalLinks.map(({ label, href, icon, customIcon, preview }) => (
+              preview ? (
+                <ButtonWithPreviewCard
+                  key={label}
+                  label={label}
+                  href={href}
+                  icon={icon}
+                  customIcon={customIcon}
+                  previewCard={preview}
+                  expanded={expanded}
+                />
+              ) : expanded ? (
+                <Button key={label} variant="horizontal" size="xl" iconSize="md" icon={icon} customIcon={customIcon} href={href} aria-label={label}>
+                  {label}
+                </Button>
+              ) : (
+                <Button key={label} variant="iconOnly" size="lg" iconSize="md" icon={icon} customIcon={customIcon} href={href} aria-label={label} title={label} />
+              )
+            ))}
+          </Stack>
+        </>
+      )}
     </Rail>
   );
 }

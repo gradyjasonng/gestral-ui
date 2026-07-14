@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, userEvent, waitFor } from 'storybook/test';
 import { MobileNav } from './MobileNav';
-import { navItems, footerItems } from '@components/SiteRail/__fixtures__';
+import { navItems, externalLinks } from '@components/SiteRail/__fixtures__';
 
 const meta = {
   title: 'Components/Shell/MobileNav',
@@ -13,7 +13,7 @@ const meta = {
   tags: ['autodocs'],
   args: {
     items: navItems,
-    footerItems,
+    externalLinks,
     siteName: 'Gestral UI',
   },
 } satisfies Meta<typeof MobileNav>;

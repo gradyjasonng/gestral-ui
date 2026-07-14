@@ -94,15 +94,13 @@ export function PreviewCard({
     return (
       <Card
         href={href}
-        className={cn('group flex flex-col sm:flex-row w-full max-h-[50vh] overflow-hidden no-underline', className)}
+        className={cn('group flex flex-col sm:flex-row w-full overflow-hidden no-underline', className)}
       >
-        <div className={cn('w-full sm:w-1/2 aspect-video sm:aspect-auto shrink-0 overflow-clip', paletteThumbnailClasses[palette])}>
+        <div className={cn('w-full sm:w-1/2 shrink-0 overflow-clip', paletteThumbnailClasses[palette])}>
           {children}
         </div>
 
-        <Stack direction="col" gap="sm" className="sm:w-1/2 min-w-0 p-6 justify-center">
-          {tagList}
-
+        <Stack direction="col" gap="md" padding="2xl" className="sm:w-1/2 min-w-0 justify-center">
           <Stack direction="row" gap="md" className="items-center">
             {icon && (
               <div className={cn('shrink-0 flex items-center justify-center h-7 aspect-square rounded-sm', paletteClassName)}>
@@ -122,10 +120,12 @@ export function PreviewCard({
           )}
 
           {(date || meta) && (
-            <Text variant="caption" className="text-chrome-text-muted">
+            <Text variant="bodySmall" className="text-chrome-text-muted mb-sp-xs">
               {[date, meta].filter(Boolean).join(' · ')}
             </Text>
           )}
+
+          {tagList}
         </Stack>
       </Card>
     );
@@ -134,7 +134,7 @@ export function PreviewCard({
   return (
     <Card
       href={href}
-      className={cn('group flex flex-col overflow-hidden no-underline max-w-lg aspect-4/3', className)}
+      className={cn('group flex flex-col overflow-hidden no-underline', className)}
     >
       {/* Thumbnail */}
       <div className={cn('w-full relative flex-1 min-h-0 overflow-clip', paletteThumbnailClasses[palette])}>

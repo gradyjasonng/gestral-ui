@@ -4,8 +4,7 @@ export const navItems = [
   { label: 'Work',  href: '/work', icon: 'briefcase' as const },
 ];
 
-export const footerItems = [
-  { icon: 'github'   as const, label: 'GitHub',       href: 'https://github.com/gradyjasonng' },
-  { icon: 'linkedin' as const, label: 'LinkedIn',     href: 'https://linkedin.com/in/gradyjasonng' },
-  { icon: 'moon'     as const, label: 'Toggle theme', onClick: () => {} },
+export const externalLinks = [
+  { icon: 'github'   as const, label: 'GitHub',   href: 'https://github.com/gradyjasonng' },
+  { icon: 'linkedin' as const, label: 'LinkedIn', href: 'https://linkedin.com/in/gradyjasonng' },
 ];
