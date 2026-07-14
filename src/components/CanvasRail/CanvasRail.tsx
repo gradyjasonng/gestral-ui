@@ -96,7 +96,7 @@ export function CanvasRail({
             <Stack as="dl" direction="col" gap="md" className="px-3 py-1">
               {meta!.map(({ key, value }) => (
                 <Stack key={key} direction="col" gap="xs">
-                  <Text variant="eyebrow" as="dt" className="text-chrome-text-muted">
+                  <Text variant="eyebrow" as="dt" className="text-chrome-text-secondary">
                     {key}
                   </Text>
                   {Array.isArray(value) ? (
@@ -104,9 +104,9 @@ export function CanvasRail({
                       {value.map((tag) => (
                         <Text
                           key={tag}
-                          variant="eyebrow"
+                          variant="labelXSmall"
                           as="span"
-                          className="px-1.5 py-0.5 rounded-sm bg-chrome-surface-hover text-chrome-text-secondary border border-chrome-border"
+                          className="px-sp-xs py-sp-2xs rounded-sm bg-chrome-surface-hover text-chrome-text-muted border border-chrome-border"
                         >
                           {tag}
                         </Text>

@@ -30,6 +30,7 @@ export interface SpacingEntry {
 }
 
 export const SPACING_SCALE = {
+  '2xs':  { slug: 'sp-2xs',  multiplier: 0.5,  comment: 'p-0.5' },
   xs:  { slug: 'sp-xs',  multiplier: 1,  comment: 'p-1' },
   sm:  { slug: 'sp-sm',  multiplier: 2,  comment: 'p-2' },
   md:  { slug: 'sp-md',  multiplier: 3,  comment: 'p-3' },
