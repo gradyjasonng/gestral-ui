@@ -114,6 +114,15 @@ export const AsListItem: Story = {
  * label's `display` and the outline's colour change.
  */
 export const FrameHiddenGlobally: Story = {
+  // Excluded from the aggregated Docs page: this story's beforeEach sets
+  // data-artboard-frame="off" on the shared <html>, and its cleanup only
+  // runs on unmount — but Docs mode mounts every story in this file inline,
+  // in one shared document, without ever unmounting them individually. Left
+  // in, the attribute would stay "off" for as long as the Docs page is open,
+  // killing every other story's hover/focus outline via Artboard.css's
+  // `!important` rule. The story's own Canvas tab (a fresh document per
+  // story) is unaffected and still exercises the real behavior.
+  tags: ['!autodocs'],
   args: {
     label: 'case-study-alpha',
     variant: 'default',

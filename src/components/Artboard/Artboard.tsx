@@ -78,6 +78,7 @@ export function Artboard({ label, variant = 'default', frame = true, children, c
       tabIndex={0}
       data-artboard-border=""
       data-artboard-variant={frame ? variant : undefined}
+      id={label ? slugify(label) : undefined}
       className={cn(
         'relative outline-none bg-transparent overflow-visible w-full px-sp-sm py-sp-sm',
         frame && label && 'mt-6',
@@ -85,7 +86,7 @@ export function Artboard({ label, variant = 'default', frame = true, children, c
       )}
     >
       {frame && label && (
-        <span data-artboard-label="" id={label ? slugify(label) : undefined} className="absolute -top-6 left-0 select-none">
+        <span data-artboard-label="" className="absolute -top-6 left-0 select-none">
           <Text variant="caption" as="span" className="text-canvas-text-muted">
             {label}
           </Text>
