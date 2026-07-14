@@ -100,7 +100,7 @@ export function PreviewCard({
           {children}
         </div>
 
-        <Stack direction="col" gap="md" padding="2xl" className="sm:w-1/2 min-w-0 justify-center">
+        <Stack direction="col" gap="md" padding="lg" className="sm:w-1/2 sm:p-sp-2xl min-w-0 justify-center">
           <Stack direction="row" gap="md" className="items-center">
             {icon && (
               <div className={cn('shrink-0 flex items-center justify-center h-7 aspect-square rounded-sm', paletteClassName)}>
