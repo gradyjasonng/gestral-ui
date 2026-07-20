@@ -6,7 +6,7 @@ import dts from 'vite-plugin-dts';
 import { resolve } from 'path';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { existsSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { storybookTest } from '@storybook/addon-vitest/vitest-plugin';
 import { playwright } from '@vitest/browser-playwright';
 import { generateTokensCss } from './src/lib/generateTokensCss';
@@ -79,6 +79,10 @@ export default defineConfig({
         .replace(/^\/\*[\s\S]*?\*\/\n/, '') // drop the source(none) rationale comment
         .replace(/^@import ['"]tailwindcss['"](?: source\(none\))?;\n+/, '')
         .replace(/^@import ['"]\.\/generated\.css['"];\n/m, `${generated}\n`);
+      // dist/ won't exist yet on a fresh checkout that only runs `build-storybook`
+      // (e.g. Chromatic in CI) without a preceding `vite build` — this plugin's
+      // closeBundle fires on that build too, since it's registered globally here.
+      mkdirSync(resolve(dirname, 'dist'), { recursive: true });
       writeFileSync(resolve(dirname, 'dist/theme.css'), theme);
     },
   }],
