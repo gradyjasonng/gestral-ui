@@ -1,3 +1,10 @@
+## [0.3.1](https://github.com/gradyjasonng/gestral-ui/compare/v0.3.0...v0.3.1) (2026-07-20)
+
+
+### Bug Fixes
+
+* ensure dist/ exists before writing theme.css ([5277297](https://github.com/gradyjasonng/gestral-ui/commit/5277297e7fb36ce9ee8fbfe2bafed22e0999ec87))
+
 # [0.3.0](https://github.com/gradyjasonng/gestral-ui/compare/v0.2.1...v0.3.0) (2026-07-20)
 
 
