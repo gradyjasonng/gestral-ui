@@ -1,3 +1,10 @@
+# [0.3.0](https://github.com/gradyjasonng/gestral-ui/compare/v0.2.1...v0.3.0) (2026-07-20)
+
+
+### Features
+
+* add figma token export script ([8e214c8](https://github.com/gradyjasonng/gestral-ui/commit/8e214c8a16638f6eba90e988a3027e2dcdd4b73c))
+
 ## [0.2.1](https://github.com/gradyjasonng/gestral-ui/compare/v0.2.0...v0.2.1) (2026-07-14)
 
 
