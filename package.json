@@ -30,7 +30,8 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "test": "vitest run --project unit",
-    "prepare": "husky"
+    "prepare": "husky",
+    "tokens:export": "node scripts/export-figma-tokens.mjs"
   },
   "author": "Grady Ng",
   "license": "ISC",
@@ -58,6 +59,7 @@
     "@vitejs/plugin-react": "^6.0.2",
     "@vitest/browser-playwright": "^4.1.9",
     "@vitest/coverage-v8": "^4.1.9",
+    "culori": "^4.0.2",
     "husky": "^9.1.7",
     "playwright": "^1.61.0",
     "react": "^19.2.7",
