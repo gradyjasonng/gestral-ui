@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { SiteRail, LogoPlaceholder, type SiteRailProps } from '@components/SiteRail/SiteRail';
 import { RailHeader } from '@components/RailHeader/RailHeader';
-import { Button } from '@primitives';
+import { Button } from '@components/Button/Button';
 import { cn } from '@lib/cn';
 
 export interface MobileNavProps extends Omit<SiteRailProps, 'expanded' | 'className'> {

@@ -3,7 +3,7 @@ import { Button } from './Button';
 import { Text } from '@primitives/Text/Text';
 
 const meta = {
-  title: 'Primitives/Button',
+  title: 'Components/Button',
   component: Button,
   tags: ['autodocs'],
 } satisfies Meta<typeof Button>;

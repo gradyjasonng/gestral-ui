@@ -9,27 +9,28 @@ export { slugify } from './lib/slugify';
 // Primitives
 export { Text } from './primitives/Text/Text';
 export type { TextProps, TextVariant } from './primitives/Text/Text';
-export { Button } from './primitives/Button/Button';
-export type { ButtonProps, ButtonVariant, ButtonSize, ButtonSurface } from './primitives/Button/Button';
-export { LabelledIconButton } from './primitives/Button/LabelledIconButton';
-export type { LabelledIconButtonProps, LabelledIconButtonDirection } from './primitives/Button/LabelledIconButton';
 export { Chip } from './primitives/Chip/Chip';
 export type { ChipProps, ChipSize } from './primitives/Chip/Chip';
 export { Stack } from './primitives/Stack/Stack';
 export type { StackProps, StackDirection, StackAlign, StackJustify, StackGap, StackPadding } from './primitives/Stack/Stack';
-export { Rail } from './primitives/Rail/Rail';
-export type { RailProps } from './primitives/Rail/Rail';
 export { Icon } from './primitives/Icon/Icon';
 export type { IconProps, IconName, IconSize } from './primitives/Icon/Icon';
-export { Popover } from './primitives/Popover/Popover';
-export type { PopoverProps, PopoverVariant } from './primitives/Popover/Popover';
-export { Card } from './primitives/Card/Card';
-export type { CardProps, CardElevation, CardSurface } from './primitives/Card/Card';
-
-export { Quote } from './primitives/Quote/Quote';
-export type { QuoteProps } from './primitives/Quote/Quote';
+export { Surface } from './primitives/Surface/Surface';
+export type { SurfaceProps, SurfaceElevation, SurfacePalette } from './primitives/Surface/Surface';
 
 // Components
+export { Button } from './components/Button/Button';
+export type { ButtonProps, ButtonVariant, ButtonSize, ButtonSurface, ButtonPalette } from './components/Button/Button';
+export { LabelledIconButton } from './components/Button/LabelledIconButton';
+export type { LabelledIconButtonProps, LabelledIconButtonDirection } from './components/Button/LabelledIconButton';
+export { Rail } from './components/Rail/Rail';
+export type { RailProps } from './components/Rail/Rail';
+export { Popover } from './components/Popover/Popover';
+export type { PopoverProps, PopoverVariant } from './components/Popover/Popover';
+export { Card } from './components/Card/Card';
+export type { CardProps, CardElevation, CardSurface } from './components/Card/Card';
+export { Quote } from './components/Quote/Quote';
+export type { QuoteProps } from './components/Quote/Quote';
 export { Artboard } from './components/Artboard/Artboard';
 export type { ArtboardProps, ArtboardVariant } from './components/Artboard/Artboard';
 export { Canvas } from './components/Canvas/Canvas';

@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import { cn } from '@lib/cn';
-import { Text, Stack, Icon, Card, type IconName } from '@primitives';
+import { Text, Stack, Icon, type IconName } from '@primitives';
+import { Card } from '@components/Card/Card';
 
 export type PreviewCardPalette = 'accent' | 'secondary';
 

@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import { cn } from '@lib/cn';
-import { Button, type ButtonSize, type ButtonPalette, type IconName, Stack } from '@primitives';
+import { type IconName, Stack } from '@primitives';
+import { Button, type ButtonSize, type ButtonPalette } from '@components/Button/Button';
 
 export type SegmentedControlPalette = ButtonPalette;
 

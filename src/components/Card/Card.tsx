@@ -1,22 +1,12 @@
 import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ElementType, HTMLAttributes, ReactNode } from 'react';
 import { cn } from '@lib/cn';
+import { Surface, type SurfaceElevation, type SurfacePalette } from '@primitives/Surface/Surface';
 
 /** Shadow depth. `flat` sits on the page (border only); `raised` and `floating` add progressively deeper shadows for cards that sit above other content (e.g. a menu or a dragged item). */
-export type CardElevation = 'flat' | 'raised' | 'floating';
+export type CardElevation = SurfaceElevation;
 
 /** Token set for the border/background. `chrome` (default) is app UI; `editorial` is long-form article content (matches `Prose`/`Artboard` editorial theming). */
-export type CardSurface = 'chrome' | 'editorial';
-
-const elevationClass: Record<CardElevation, string> = {
-  flat: '',
-  raised: 'shadow-md',
-  floating: 'shadow-xl',
-};
-
-const surfaceClass: Record<CardSurface, string> = {
-  chrome: 'border-chrome-border bg-chrome-surface',
-  editorial: 'border-canvas-border bg-editorial-surface',
-};
+export type CardSurface = Extract<SurfacePalette, 'chrome' | 'editorial'>;
 
 type CardOwnProps = {
   elevation?: CardElevation;
@@ -56,17 +46,18 @@ export function Card({ elevation = 'flat', surface = 'chrome', as = 'div', child
   const Tag = ('href' in rest && rest.href != null ? 'a' : 'onClick' in rest && rest.onClick != null ? 'button' : as) as ElementType;
 
   return (
-    <Tag
+    <Surface
+      as={Tag}
+      palette={surface}
+      elevation={elevation}
       className={cn(
-        'rounded-lg border outline-2 -outline-offset-1 outline-transparent',
-        surfaceClass[surface],
-        elevationClass[elevation],
+        'rounded-lg outline-2 -outline-offset-1 outline-transparent',
         interactive && 'cursor-pointer hover:outline-selection-blue focus:outline-selection-blue',
         className,
       )}
       {...rest}
     >
       {children}
-    </Tag>
+    </Surface>
   );
 }

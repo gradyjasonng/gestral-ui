@@ -1,5 +1,7 @@
 import type { ReactNode } from 'react';
-import { Rail, Button, Text, Stack } from '@primitives';
+import { Text, Stack } from '@primitives';
+import { Rail } from '@components/Rail/Rail';
+import { Button } from '@components/Button/Button';
 import { RailHeader } from '@components/RailHeader/RailHeader';
 import { RailSection } from '@components/RailSection/RailSection';
 import { cn } from '@lib/cn';

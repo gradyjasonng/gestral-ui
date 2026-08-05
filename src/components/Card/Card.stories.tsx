@@ -3,7 +3,7 @@ import { Card } from './Card';
 import { Text } from '@primitives/Text/Text';
 
 const meta = {
-  title: 'Primitives/Card',
+  title: 'Components/Card',
   component: Card,
   tags: ['autodocs'],
 } satisfies Meta<typeof Card>;
@@ -69,7 +69,7 @@ export const AsListItem: Story = {
  * `surface` swaps the token set: `chrome` (default, app UI) vs `editorial`
  * (long-form article content, matches `Prose`/`Artboard` editorial theming).
  */
-export const Surface: Story = {
+export const SurfaceToken: Story = {
   render: () => (
     <div className="flex items-center gap-4">
       {(['chrome', 'editorial'] as const).map((surface) => (
