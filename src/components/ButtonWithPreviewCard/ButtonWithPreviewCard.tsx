@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
-import { Button, type IconName } from '@primitives';
+import { type IconName } from '@primitives';
+import { Button } from '@components/Button/Button';
 import { cn } from '@lib/cn';
 import { useEdgeCollision } from '@lib/useEdgeCollision';
 

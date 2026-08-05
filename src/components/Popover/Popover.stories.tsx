@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Popover } from './Popover';
 
 const meta = {
-  title: 'Primitives/Popover',
+  title: 'Components/Popover',
   component: Popover,
   tags: ['autodocs'],
   decorators: [

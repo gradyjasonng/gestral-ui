@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
-import { Stack, Text, Card } from '@primitives';
+import { Stack, Text } from '@primitives';
+import { Card } from '@components/Card/Card';
 import { cn } from '@lib/cn';
 
 export interface RailHeaderProps {

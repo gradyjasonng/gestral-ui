@@ -21,22 +21,43 @@ export type ButtonVariant = 'horizontal' | 'vertical' | 'iconOnly';
 export type ButtonSurface = 'default' | 'muted';
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  /** @figmaVariant */
   variant?: ButtonVariant;
-  /** Controls padding and text size */
+  /**
+   * Controls padding and text size
+   * @figmaVariant
+   */
   size?: ButtonSize;
-  /** Controls icon container size. Defaults to `size`. */
+  /**
+   * Controls icon container size. Defaults to `size`.
+   * @figmaVariant
+   */
   iconSize?: ButtonSize;
+  /** @figmaVariant */
   active?: boolean | 'secondary';
-  /** Color scheme applied when `active`. Defaults to `'accent'`. */
+  /**
+   * Color scheme applied when `active`. Defaults to `'accent'`.
+   * @figmaVariant
+   */
   palette?: ButtonPalette;
-  /** Background the button is rendered on, e.g. `'muted'` for a `chrome-muted` well. Defaults to `'default'`. */
+  /**
+   * Background the button is rendered on, e.g. `'muted'` for a `chrome-muted` well. Defaults to `'default'`.
+   * @figmaVariant
+   */
   surface?: ButtonSurface;
   /** Renders as <a> when provided */
   href?: string;
+  /** @figmaSwap */
   icon?: IconName;
-  /** Arbitrary icon content (e.g. a site-specific SVG) sized to match `icon`. Takes precedence over `icon` when both are given. */
+  /**
+   * Arbitrary icon content (e.g. a site-specific SVG) sized to match `icon`. Takes precedence over `icon` when both are given.
+   * @figmaSwap
+   */
   customIcon?: ReactNode;
-  /** Which side of the label the icon renders on. Ignored by `iconOnly`. Defaults to `'before'`. */
+  /**
+   * Which side of the label the icon renders on. Ignored by `iconOnly`. Defaults to `'before'`.
+   * @figmaVariant
+   */
   iconPosition?: 'before' | 'after';
 }
 
@@ -56,16 +77,31 @@ function renderIcon(icon: IconName | undefined, customIcon: ReactNode | undefine
 }
 
 export interface IconFillProps extends HTMLAttributes<HTMLDivElement> {
+  /** @figmaSwap */
   icon?: IconName;
-  /** Arbitrary icon content (e.g. a site-specific SVG) sized to match `icon`. Takes precedence over `icon` when both are given. */
+  /**
+   * Arbitrary icon content (e.g. a site-specific SVG) sized to match `icon`. Takes precedence over `icon` when both are given.
+   * @figmaSwap
+   */
   customIcon?: ReactNode;
+  /** @figmaVariant */
   size?: ButtonSize;
-  /** Controls icon size. Defaults to `size`. */
+  /**
+   * Controls icon size. Defaults to `size`.
+   * @figmaVariant
+   */
   iconSize?: ButtonSize;
+  /** @figmaVariant */
   active?: boolean | 'secondary';
-  /** Color scheme applied when `active`. Defaults to `'accent'`. */
+  /**
+   * Color scheme applied when `active`. Defaults to `'accent'`.
+   * @figmaVariant
+   */
   palette?: ButtonPalette;
-  /** Background the icon fill is rendered on. Defaults to `'default'`. */
+  /**
+   * Background the icon fill is rendered on. Defaults to `'default'`.
+   * @figmaVariant
+   */
   surface?: ButtonSurface;
   style?: CSSProperties;
 }

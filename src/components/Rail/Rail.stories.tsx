@@ -3,7 +3,7 @@ import { Rail } from './Rail';
 import { Text } from '@primitives/Text/Text';
 
 const meta = {
-  title: 'Primitives/Rail',
+  title: 'Components/Rail',
   component: Rail,
   parameters: { layout: 'fullscreen' },
   tags: ['autodocs'],

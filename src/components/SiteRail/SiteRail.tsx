@@ -1,5 +1,8 @@
 import type { ReactNode } from 'react';
-import { Rail, Stack, Button, LabelledIconButton, Text, type IconName } from '@primitives';
+import { Stack, Text, type IconName } from '@primitives';
+import { Rail } from '@components/Rail/Rail';
+import { Button } from '@components/Button/Button';
+import { LabelledIconButton } from '@components/Button/LabelledIconButton';
 import { RailHeader } from '@components/RailHeader/RailHeader';
 import { ButtonWithPreviewCard } from '@components/ButtonWithPreviewCard/ButtonWithPreviewCard';
 import { cn } from '@lib/cn';
