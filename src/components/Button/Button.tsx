@@ -1,67 +1,42 @@
 import { type ButtonHTMLAttributes, type CSSProperties, type ElementType, type HTMLAttributes, type ReactNode } from 'react';
 import { cn } from '@lib/cn';
-import { Stack } from '@primitives/Stack/Stack';
 import { Text } from '@primitives/Text/Text';
 import { Icon, type IconName } from '@primitives/Icon/Icon';
+import { Surface } from '@primitives/Surface/Surface';
 import {
   type ButtonSize,
   type ButtonPalette,
+  type ButtonSurface,
   buttonToIconSizeMap,
   textVariantMap,
   buttonHeightMap,
-  activeFillClass,
-  activeSecondaryClass,
-  inactiveClass,
-  inactiveMutedClass,
 } from './shared';
 
-export type { ButtonSize, ButtonPalette } from './shared';
+export type { ButtonSize, ButtonPalette, ButtonSurface } from './shared';
 export type ButtonVariant = 'horizontal' | 'vertical' | 'iconOnly';
-/** Which background the button sits on — controls idle/hover colors so they read correctly against that backdrop. */
-export type ButtonSurface = 'default' | 'muted';
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  /** @figmaVariant */
   variant?: ButtonVariant;
-  /**
-   * Controls padding and text size
-   * @figmaVariant
-   */
+  /** Controls padding and text size */
   size?: ButtonSize;
-  /**
-   * Controls icon container size. Defaults to `size`.
-   * @figmaVariant
-   */
+  /** Controls icon container size. Defaults to `size`. */
   iconSize?: ButtonSize;
-  /** @figmaVariant */
+  /** Forwarded to the nested `Surface`'s `active` prop. */
   active?: boolean | 'secondary';
-  /**
-   * Color scheme applied when `active`. Defaults to `'accent'`.
-   * @figmaVariant
-   */
+  /** Color scheme applied when `active`. Defaults to `'accent'`. Forwarded to the nested `Surface`'s `palette` prop. */
   palette?: ButtonPalette;
-  /**
-   * Background the button is rendered on, e.g. `'muted'` for a `chrome-muted` well. Defaults to `'default'`.
-   * @figmaVariant
-   */
+  /** Background the button is rendered on, e.g. `'muted'` for a `chrome-muted` well. Defaults to `'default'`. Forwarded to the nested `Surface`'s `on` prop. */
   surface?: ButtonSurface;
   /** Renders as <a> when provided */
   href?: string;
-  /** @figmaSwap */
   icon?: IconName;
-  /**
-   * Arbitrary icon content (e.g. a site-specific SVG) sized to match `icon`. Takes precedence over `icon` when both are given.
-   * @figmaSwap
-   */
+  /** Arbitrary icon content (e.g. a site-specific SVG) sized to match `icon`. Takes precedence over `icon` when both are given. */
   customIcon?: ReactNode;
-  /**
-   * Which side of the label the icon renders on. Ignored by `iconOnly`. Defaults to `'before'`.
-   * @figmaVariant
-   */
+  /** Which side of the label the icon renders on. Ignored by `iconOnly`. Defaults to `'before'`. */
   iconPosition?: 'before' | 'after';
 }
 
-const base = 'rounded-sm cursor-pointer select-none';
+const base = 'rounded-sm cursor-pointer select-none flex';
 
 /** Renders `customIcon` (sized to match `icon`'s box) when given, falling back to the named `icon`. */
 function renderIcon(icon: IconName | undefined, customIcon: ReactNode | undefined, size: ButtonSize) {
@@ -77,31 +52,17 @@ function renderIcon(icon: IconName | undefined, customIcon: ReactNode | undefine
 }
 
 export interface IconFillProps extends HTMLAttributes<HTMLDivElement> {
-  /** @figmaSwap */
   icon?: IconName;
-  /**
-   * Arbitrary icon content (e.g. a site-specific SVG) sized to match `icon`. Takes precedence over `icon` when both are given.
-   * @figmaSwap
-   */
+  /** Arbitrary icon content (e.g. a site-specific SVG) sized to match `icon`. Takes precedence over `icon` when both are given. */
   customIcon?: ReactNode;
-  /** @figmaVariant */
   size?: ButtonSize;
-  /**
-   * Controls icon size. Defaults to `size`.
-   * @figmaVariant
-   */
+  /** Controls icon size. Defaults to `size`. */
   iconSize?: ButtonSize;
-  /** @figmaVariant */
+  /** Forwarded to the nested `Surface`'s `active` prop. */
   active?: boolean | 'secondary';
-  /**
-   * Color scheme applied when `active`. Defaults to `'accent'`.
-   * @figmaVariant
-   */
+  /** Color scheme applied when `active`. Defaults to `'accent'`. Forwarded to the nested `Surface`'s `palette` prop. */
   palette?: ButtonPalette;
-  /**
-   * Background the icon fill is rendered on. Defaults to `'default'`.
-   * @figmaVariant
-   */
+  /** Background the icon fill is rendered on. Defaults to `'default'`. Forwarded to the nested `Surface`'s `on` prop. */
   surface?: ButtonSurface;
   style?: CSSProperties;
 }
@@ -115,23 +76,19 @@ export interface IconFillProps extends HTMLAttributes<HTMLDivElement> {
 export function IconFill({ icon, customIcon, size = 'md', iconSize, active = false, palette = 'accent', surface = 'default', className, style, ...props }: IconFillProps) {
   const effectiveIconSize = iconSize ?? size;
   const iconEl = renderIcon(icon, customIcon, effectiveIconSize);
-  const fillClass = active === 'secondary'
-    ? activeSecondaryClass(palette)
-    : active
-      ? activeFillClass(palette, surface)
-      : surface === 'muted' ? inactiveMutedClass : inactiveClass;
 
   return (
-    <Stack
-      direction="row"
-      align="center"
-      justify="center"
-      className={cn(base, 'aspect-square', fillClass, className)}
+    <Surface
+      palette={palette}
+      active={active}
+      on={surface}
+      border={false}
+      className={cn(base, 'aspect-square items-center justify-center', className)}
       style={{ height: buttonHeightMap[size], ...style }}
       {...props}
     >
       {iconEl}
-    </Stack>
+    </Surface>
   );
 }
 
@@ -158,11 +115,6 @@ export function Button({
   const Tag = (href ? 'a' : 'button') as ElementType;
   const effectiveIconSize = iconSize ?? size;
   const iconEl = renderIcon(icon, customIcon, effectiveIconSize);
-  const fillClass = active === 'secondary'
-    ? activeSecondaryClass(palette)
-    : active
-      ? activeFillClass(palette, surface)
-      : surface === 'muted' ? inactiveMutedClass : inactiveClass;
   const textVariant = textVariantMap[size];
 
   /* ── iconOnly: the height of the button is still fixed to what it would if it had text ── */
@@ -178,15 +130,15 @@ export function Button({
 
   return (
     <Tag href={href} disabled={disabled} {...props}>
-      <Stack
-        direction={isVertical ? 'col' : 'row'}
-        gap="sm"
-        align="center"
-        padding="sm"
+      <Surface
+        palette={palette}
+        active={active}
+        on={surface}
+        border={false}
         className={cn(
           base,
-          'w-full',
-          fillClass,
+          'w-full items-center gap-sp-sm p-sp-sm',
+          isVertical ? 'flex-col' : 'flex-row',
           disabled && disabledClass,
           className,
         )}
@@ -199,7 +151,7 @@ export function Button({
           </Text>
         )}
         {iconPosition === 'after' && iconEl}
-      </Stack>
+      </Surface>
     </Tag>
   );
 }
