@@ -32,7 +32,8 @@
     "test": "vitest run --project unit",
     "prepare": "husky",
     "chromatic": "npx chromatic",
-    "tokens:export": "node scripts/export-figma-tokens.mjs"
+    "tokens:export": "node scripts/export-figma-tokens.mjs",
+    "snapshot:component": "node scripts/build-component-snapshot.mjs"
   },
   "author": "Grady Ng",
   "license": "ISC",

@@ -4,6 +4,8 @@ node_modules
 # build output
 dist
 storybook-static
+.storybook-snapshot
+snapshots
 
 # generated from tokens.css's hand-authored :root plus
 # src/lib/{textScale,radiusScale,spacingScale}.ts — see
