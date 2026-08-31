@@ -13,7 +13,7 @@ export interface RailSectionProps {
 export function RailSection({ label, children, className }: RailSectionProps) {
   return (
     <Stack direction="col" gap="none" className={cn('py-2', className)}>
-      <Text variant="eyebrow" as="p" className="px-3 py-1.5 text-chrome-text-secondary select-none">
+      <Text variant="eyebrow" as="p" className="px-sp-sm py-1.5 text-chrome-text-secondary select-none">
         {label}
       </Text>
       {children}

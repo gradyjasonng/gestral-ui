@@ -11,3 +11,14 @@
     grid-row: 1 / 2;
   }
 }
+
+/* Same source(none) issue as z-stack above — force this one in too. */
+@source inline("canvas-dot-grid");
+
+/* Faint dot grid — a hint of a design-tool canvas, not a texture that
+ * competes with content. Colour tracks the canvas-border token so it
+ * follows light/dark automatically instead of a hand-tuned opacity. */
+@utility canvas-dot-grid {
+  background-image: radial-gradient(circle, var(--color-canvas-border) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
