@@ -7,20 +7,22 @@ import { cn } from '@lib/cn';
 export interface MobileNavProps extends Omit<SiteRailProps, 'expanded' | 'className'> {
   className?: string;
   /**
-   * Extra rail content shown alongside the expanded SiteRail in the drawer —
-   * typically a CanvasRail composition, so a section/leaf page's drawer
-   * mirrors the desktop Shell's collapsed-SiteRail-plus-CanvasRail column
-   * instead of just the site-wide nav. Omit it (e.g. on the home page, which
-   * has nothing analogous to show here) for a SiteRail-only drawer.
+   * Extra rail content shown alongside the (collapsed) SiteRail in the
+   * drawer — typically a CanvasRail composition, so the drawer mirrors the
+   * desktop Shell's own collapsed-SiteRail-plus-CanvasRail column instead of
+   * just the site-wide nav. Omit it (e.g. on the home page, which has
+   * nothing analogous to show here) for a SiteRail-only drawer.
    */
   secondaryRail?: ReactNode;
 }
 
 /**
  * Small-screen navigation for the Shell: a slim top bar (menu button, logo,
- * site name) that opens the SiteRail — plus `secondaryRail`, if given — as a
- * slide-in overlay drawer. Hidden at `md` and up, where the Shell's rails
- * take over. Place it in the Shell's `overline` slot.
+ * site name) that opens the SiteRail — collapsed, same as the desktop
+ * Shell's, so it sits narrow alongside `secondaryRail` rather than crowding
+ * it out — plus `secondaryRail` itself, if given, as a slide-in overlay
+ * drawer. Hidden at `md` and up, where the Shell's rails take over. Place it
+ * in the Shell's `overline` slot.
  */
 export function MobileNav({ className, secondaryRail, ...railProps }: MobileNavProps) {
   const [open, setOpen] = useState(false);
@@ -83,12 +85,18 @@ export function MobileNav({ className, secondaryRail, ...railProps }: MobileNavP
           <div
             className="absolute inset-y-0 left-0 flex items-start gap-2"
             onClick={(event) => {
-              // Navigating from the drawer should also dismiss it.
-              if ((event.target as HTMLElement).closest('a')) setOpen(false);
+              // Navigating from the drawer should also dismiss it — but not
+              // when the link's own onClick (see SiteRailItem.onClick)
+              // already called preventDefault() to intercept the click
+              // instead of navigating (e.g. to swap secondaryRail's content
+              // in place first). That handler runs before this one (it's on
+              // the descendant <a>, and this fires on bubble), so
+              // defaultPrevented already reflects its decision by here.
+              if (!event.defaultPrevented && (event.target as HTMLElement).closest('a')) setOpen(false);
             }}
           >
             <div className="flex h-full shadow-xl">
-              <SiteRail expanded {...railProps} className="h-full" />
+              <SiteRail {...railProps} className="h-full" />
               {secondaryRail}
             </div>
             <Button
