@@ -9,7 +9,7 @@ export interface CanvasProps {
 /** Stubbed artboard area — the content region a Shell lays out alongside its rails */
 export function Canvas({ children, className }: CanvasProps) {
   return (
-    <div className={cn('min-w-0 bg-canvas-surface', className)}>
+    <div className={cn('min-w-0 bg-canvas-surface canvas-dot-grid', className)}>
       {children}
     </div>
   );

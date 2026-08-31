@@ -41,8 +41,16 @@ export { ButtonWithPreviewCard } from './components/ButtonWithPreviewCard/Button
 export type { ButtonWithPreviewCardProps } from './components/ButtonWithPreviewCard/ButtonWithPreviewCard';
 export { PreviewCard } from './components/PreviewCard/PreviewCard';
 export type { PreviewCardProps, PreviewCardPalette } from './components/PreviewCard/PreviewCard';
+export { AssetCard } from './components/AssetCard/AssetCard';
+export type { AssetCardProps } from './components/AssetCard/AssetCard';
 export { CanvasRail } from './components/CanvasRail/CanvasRail';
-export type { CanvasRailProps, TocItem, MetaEntry, NodeIndent } from './components/CanvasRail/CanvasRail';
+export type { CanvasRailProps } from './components/CanvasRail/CanvasRail';
+export { PageList } from './components/PageList/PageList';
+export type { PageListProps, PageListItem } from './components/PageList/PageList';
+export { LayerList } from './components/LayerList/LayerList';
+export type { LayerListProps, TocItem, NodeIndent } from './components/LayerList/LayerList';
+export { MetaList } from './components/MetaList/MetaList';
+export type { MetaListProps, MetaEntry } from './components/MetaList/MetaList';
 export { Page } from './components/Page/Page';
 export type { PageProps } from './components/Page/Page';
 export { RailHeader } from './components/RailHeader/RailHeader';

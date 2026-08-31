@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 import { type IconName } from '@primitives';
-import { Button } from '@components/Button/Button';
+import { Button, type ButtonSize, type ButtonPalette } from '@components/Button/Button';
 import { cn } from '@lib/cn';
 import { useEdgeCollision } from '@lib/useEdgeCollision';
 
@@ -19,6 +19,14 @@ export interface ButtonWithPreviewCardProps {
   previewCard: ReactNode;
   /** When true, renders the trigger as a horizontal icon+label `Button`; otherwise a compact icon-only `Button`. */
   expanded?: boolean;
+  /** Forwarded to the trigger `Button`'s `active` prop. */
+  active?: boolean | 'secondary';
+  /** Forwarded to the trigger `Button`'s `palette` prop — the color scheme applied when `active`. */
+  palette?: ButtonPalette;
+  /** Forwarded to the trigger `Button`'s `size`/`iconSize`. Defaults to `xl` when `expanded`, `lg` otherwise — matching the compact SiteRail trigger sizes. */
+  size?: ButtonSize;
+  /** Forwarded to the trigger `Button`'s `className`. */
+  className?: string;
 }
 
 /**
@@ -34,7 +42,7 @@ export interface ButtonWithPreviewCardProps {
  * (no hover), the preview itself renders as the link instead of the compact
  * trigger.
  */
-export function ButtonWithPreviewCard({ label, href, icon, customIcon, previewCard, expanded = false }: ButtonWithPreviewCardProps) {
+export function ButtonWithPreviewCard({ label, href, icon, customIcon, previewCard, expanded = false, active = false, palette, size, className }: ButtonWithPreviewCardProps) {
   const triggerRef = useRef<HTMLDivElement>(null);
   const previewRef = useRef<HTMLDivElement>(null);
   const [rect, setRect] = useState<DOMRect | null>(null);
@@ -64,11 +72,11 @@ export function ButtonWithPreviewCard({ label, href, icon, customIcon, previewCa
   }, [hovered, setEdgeCollisionEnabled]);
 
   const trigger = expanded ? (
-    <Button variant="horizontal" size="xl" iconSize="md" icon={icon} customIcon={customIcon} href={href} aria-label={label}>
+    <Button variant="horizontal" size={size ?? 'xl'} iconSize="md" icon={icon} customIcon={customIcon} href={href} active={active} palette={palette} className={className} aria-label={label}>
       {label}
     </Button>
   ) : (
-    <Button variant="iconOnly" size="lg" iconSize="md" icon={icon} customIcon={customIcon} href={href} aria-label={label} title={label} />
+    <Button variant="iconOnly" size={size ?? 'lg'} iconSize="md" icon={icon} customIcon={customIcon} href={href} active={active} palette={palette} className={className} aria-label={label} title={label} />
   );
 
   return (
@@ -88,15 +96,19 @@ export function ButtonWithPreviewCard({ label, href, icon, customIcon, previewCa
             ref={previewRef}
             data-button-with-preview-card-popover=""
             className={cn(
-              // `overflow-hidden` keeps this box's rendered footprint equal to
-              // its declared h-62/aspect-4/3 size — otherwise arbitrary
-              // `previewCard` content taller than that (e.g. a PreviewCard
-              // whose meta text pushes past the thumbnail) would visually
-              // spill past what useEdgeCollision measures, so its correction
-              // would undershoot: it'd correctly clear the box it *thinks*
-              // this is, while the actually-rendered content keeps
-              // overflowing.
-              'fixed z-50 h-62 aspect-4/3 overflow-hidden drop-shadow-2xl transition-opacity',
+              // Fixed width, intrinsic (content-driven) height — so
+              // useEdgeCollision always measures the box's *actual* rendered
+              // footprint via getBoundingClientRect, whatever `previewCard`'s
+              // natural height turns out to be, rather than a declared
+              // fixed-height box that could clip taller content (an
+              // AssetCard's fixed-aspect thumbnail plus title/meta text
+              // underneath, for instance). An opaque background/rounding
+              // lives here rather than on `previewCard` itself, since content
+              // like AssetCard has no background of its own behind its text
+              // (by design, for its in-flow rail usage) — floating this box
+              // over arbitrary page content needs one regardless of what's
+              // inside it.
+              'fixed z-50 w-62 rounded-lg bg-chrome-surface p-2 drop-shadow-2xl transition-opacity',
               '[transform:translate(var(--edge-collision-shift-x,0px),var(--edge-collision-shift-y,0px))]',
               hovered ? 'opacity-100' : 'opacity-0 invisible pointer-events-none',
             )}

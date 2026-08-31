@@ -15,7 +15,7 @@ export function Shell({ overline, rails, canvas = <Canvas />, footer, className 
   return (
     <div
       className={cn(
-        'grid grid-cols-[auto_1fr] grid-rows-[auto_1fr_auto] h-dvh bg-chrome-surface',
+        'grid grid-cols-[auto_1fr] grid-rows-[auto_1fr_auto] h-dvh bg-canvas-surface',
         className,
       )}
     >

@@ -11,7 +11,13 @@ const DEFAULT_WIDTH = 'w-3xl [&>*]:w-3xl';
 /** Layout surface for top-level index pages (Home/Blog/Work) — pairs with an expanded SiteRail, no CanvasRail. */
 export function Page({ children, className }: PageProps) {
   return (
-    <div className={cn(DEFAULT_WIDTH, 'max-w-full mx-auto bg-chrome-surface text-chrome-text-primary', className)}>
+    <div
+      className={cn(
+        DEFAULT_WIDTH,
+        'max-w-full mx-auto bg-canvas-surface text-canvas-text-primary canvas-dot-grid',
+        className,
+      )}
+    >
       {children}
     </div>
   );
