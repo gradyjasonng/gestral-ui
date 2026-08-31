@@ -15,6 +15,10 @@ const columnsClass: Record<GridColumns, string> = {
   6: 'grid-cols-6',
 };
 
+function columnsClassName(columns: GridColumns | string): string {
+  return typeof columns === 'number' ? columnsClass[columns] : columns;
+}
+
 const alignClass: Record<GridAlign, string> = {
   start:    'items-start',
   center:   'items-center',
@@ -31,7 +35,18 @@ const justifyClass: Record<GridJustify, string> = {
 };
 
 export interface GridProps extends HTMLAttributes<HTMLElement> {
-  columns?: GridColumns;
+  /**
+   * A fixed column count (1–6), or a raw space-separated string of Tailwind
+   * `grid-cols-*` utilities (with responsive prefixes, e.g.
+   * `"grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"`) for anything that needs
+   * to change per breakpoint. The string form is passed straight through as
+   * literal classes rather than resolved through a lookup, specifically so
+   * `sm:`/`lg:`/etc. work exactly as they would in a plain `className` —
+   * unlike `gap`/`padding`, a fixed per-breakpoint token count isn't a
+   * sensible default here, since how many columns collapse at which
+   * breakpoint is inherently content-specific. Defaults to `2`.
+   */
+  columns?: GridColumns | string;
   gap?: StackGap;
   padding?: StackPadding;
   /** Cross-axis alignment of each item within its own cell (`align-items`). */
@@ -43,14 +58,11 @@ export interface GridProps extends HTMLAttributes<HTMLElement> {
 }
 
 /**
- * Grid layout primitive: a fixed `columns` count, gap, and padding, all
- * driven by the same generated spacing-scale tokens (`gap-sp-*`/`p-sp-*`)
- * Stack uses — reach for this instead of Stack whenever content should wrap
- * into a fixed number of columns rather than a single row/column. `columns`
- * is a plain count rather than responsive breakpoints, matching Stack's own
- * lack of a built-in `sm:`/`lg:` story — pass a responsive override via
- * `className` (e.g. `className="lg:grid-cols-3"`) the same way you would
- * for Stack.
+ * Grid layout primitive: `columns`, gap, and padding, the latter two driven
+ * by the same generated spacing-scale tokens (`gap-sp-*`/`p-sp-*`) Stack
+ * uses — reach for this instead of Stack whenever content should wrap into
+ * columns rather than a single row/column. See `columns`' own doc comment
+ * for the responsive string form.
  */
 export function Grid({
   columns = 2,
@@ -67,7 +79,7 @@ export function Grid({
     <Tag
       className={cn(
         'grid',
-        columnsClass[columns],
+        columnsClassName(columns),
         gapClass[gap],
         padding && paddingClass[padding],
         align && alignClass[align],
