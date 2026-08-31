@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { SiteRail, LogoPlaceholder, type SiteRailProps } from '@components/SiteRail/SiteRail';
 import { RailHeader } from '@components/RailHeader/RailHeader';
 import { Button } from '@components/Button/Button';
@@ -6,15 +6,23 @@ import { cn } from '@lib/cn';
 
 export interface MobileNavProps extends Omit<SiteRailProps, 'expanded' | 'className'> {
   className?: string;
+  /**
+   * Extra rail content shown alongside the expanded SiteRail in the drawer —
+   * typically a CanvasRail composition, so a section/leaf page's drawer
+   * mirrors the desktop Shell's collapsed-SiteRail-plus-CanvasRail column
+   * instead of just the site-wide nav. Omit it (e.g. on the home page, which
+   * has nothing analogous to show here) for a SiteRail-only drawer.
+   */
+  secondaryRail?: ReactNode;
 }
 
 /**
  * Small-screen navigation for the Shell: a slim top bar (menu button, logo,
- * site name) that opens the SiteRail as a slide-in overlay drawer. Hidden at
- * `md` and up, where the Shell's rails take over. Place it in the Shell's
- * `overline` slot.
+ * site name) that opens the SiteRail — plus `secondaryRail`, if given — as a
+ * slide-in overlay drawer. Hidden at `md` and up, where the Shell's rails
+ * take over. Place it in the Shell's `overline` slot.
  */
-export function MobileNav({ className, ...railProps }: MobileNavProps) {
+export function MobileNav({ className, secondaryRail, ...railProps }: MobileNavProps) {
   const [open, setOpen] = useState(false);
   const dialogRef = useRef<HTMLDivElement>(null);
 
@@ -79,7 +87,10 @@ export function MobileNav({ className, ...railProps }: MobileNavProps) {
               if ((event.target as HTMLElement).closest('a')) setOpen(false);
             }}
           >
-            <SiteRail expanded {...railProps} className="h-full shadow-xl" />
+            <div className="flex h-full shadow-xl">
+              <SiteRail expanded {...railProps} className="h-full" />
+              {secondaryRail}
+            </div>
             <Button
               variant="iconOnly"
               size="sm"
