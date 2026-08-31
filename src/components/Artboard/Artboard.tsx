@@ -35,8 +35,10 @@ export interface ArtboardProps {
    * Adds four solid corner selection-handle squares at the outline's
    * corners, evoking a resizable layer selection in a design tool. Defaults
    * to `false`. Handles are filled (not hollow) so the outline doesn't show
-   * through them, and pick up the same `variant` colour and hover/focus/
-   * `isAlwaysOutlined` visibility as the outline itself — see `Artboard.css`.
+   * through them, and pick up the same `variant` colour as the outline —
+   * but unlike the outline, they only appear on this exact Artboard's own
+   * `:focus` (not hover, and not `focus-within` from a nested element) — see
+   * `Artboard.css`.
    */
   withHandles?: boolean;
   /**

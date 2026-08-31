@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect } from 'storybook/test';
 import { Artboard } from './Artboard';
+import { Text } from '@primitives';
 
 const meta = {
   title: 'Components/Artboard',
@@ -143,10 +144,17 @@ export const FrameHiddenGlobally: Story = {
 /**
  * A nested Artboard's `:focus-within` bleeds up onto every ancestor (real
  * focus lives inside their box too), so an ancestor should suppress its own
- * focus highlight whenever a *nested* Artboard is the true target — never
- * showing both at once for the same interaction. See `Artboard.css`'s
+ * *solid* focus highlight whenever a *nested* Artboard is the true target —
+ * never showing both at once for the same interaction. See `Artboard.css`'s
  * `:focus-within:not(:has([data-artboard-border]:focus-within))` guard (and
  * its `:hover` counterpart, which isn't exercised here — see below).
+ *
+ * That's not the *only* thing the immediate parent shows, though: it also
+ * picks up the dashed "breadcrumb" outline `FocusBreadcrumb` below covers in
+ * more depth (with three levels, to actually distinguish "immediate parent"
+ * from "any ancestor"). With only two levels here, focusing Inner still
+ * dashes Outer — this story just asserts Outer's solid self-highlight stays
+ * suppressed, not that it's unoutlined altogether.
  *
  * `:hover` itself can't be driven from a test (dispatched pointer events
  * don't set real browser `:hover` state), so this exercises the same
@@ -168,15 +176,19 @@ export const Nested: Story = {
     const outerRoot = canvasElement.querySelector<HTMLElement>('#outer')!;
     const innerRoot = canvasElement.querySelector<HTMLElement>('#inner')!;
 
-    // Focusing the nested (inner) Artboard highlights only the inner one.
+    // Focusing the nested (inner) Artboard highlights the inner one with its
+    // own solid outline; the outer one picks up the dashed breadcrumb
+    // instead of its own solid self-highlight — never both solid at once.
     innerRoot.focus();
     await expect(innerRoot).toHaveFocus();
+    await expect(getComputedStyle(innerRoot).outlineStyle).toBe('solid');
     await expect(getComputedStyle(innerRoot).outlineColor).not.toBe('rgba(0, 0, 0, 0)');
-    await expect(getComputedStyle(outerRoot).outlineColor).toBe('rgba(0, 0, 0, 0)');
+    await expect(getComputedStyle(outerRoot).outlineStyle).toBe('dashed');
     innerRoot.blur();
 
     // Focusing the outer Artboard directly highlights only the outer one —
-    // it must not bleed down onto the Artboard nested inside it.
+    // it must not bleed down onto the Artboard nested inside it, which goes
+    // fully unoutlined as a descendant of the genuinely-focused Artboard.
     outerRoot.focus();
     await expect(outerRoot).toHaveFocus();
     await expect(getComputedStyle(outerRoot).outlineColor).not.toBe('rgba(0, 0, 0, 0)');
@@ -185,13 +197,118 @@ export const Nested: Story = {
 };
 
 /**
+ * Two more nesting hints layer on top of the suppression `Nested` above
+ * exercises, both driven by Artboard.css's "genuinely hovered/focused"
+ * concept:
+ *
+ * - **Hover** dashes the outline of every Artboard nested inside whichever
+ *   one is genuinely hovered (any depth), in each nested Artboard's own
+ *   variant colour — a lighter "this is inside what you're hovering" hint
+ *   alongside the genuinely-hovered one's own solid outline. `:hover` can't
+ *   be driven from a `play` function (see `Nested`'s doc comment), so this
+ *   half isn't asserted here — open this story's Canvas tab and hover
+ *   "Outer" to see "Middle" and "Inner" both dash.
+ * - **Focus** instead draws a "breadcrumb": every Artboard nested inside the
+ *   genuinely-focused one goes fully unoutlined (even if separately
+ *   hovered), while its *immediate* parent dashes regardless of hover
+ *   state. With three levels nested — Outer > Middle > Inner — focusing
+ *   Inner dashes only Middle (its immediate parent), leaves Outer
+ *   unoutlined entirely (not immediate), and Inner keeps its own normal
+ *   solid focus outline.
+ */
+export const FocusBreadcrumb: Story = {
+  render: () => (
+    <Artboard label="Outer" variant="default">
+      <div className="p-6">
+        <Artboard label="Middle" variant="interactive">
+          <div className="p-6">
+            <Artboard label="Inner" variant="external">
+              {placeholder}
+            </Artboard>
+          </div>
+        </Artboard>
+      </div>
+    </Artboard>
+  ),
+  play: async ({ canvasElement }) => {
+    const outerRoot = canvasElement.querySelector<HTMLElement>('#outer')!;
+    const middleRoot = canvasElement.querySelector<HTMLElement>('#middle')!;
+    const innerRoot = canvasElement.querySelector<HTMLElement>('#inner')!;
+
+    innerRoot.focus();
+    await expect(innerRoot).toHaveFocus();
+
+    // Inner (genuinely focused): its own normal solid outline.
+    await expect(getComputedStyle(innerRoot).outlineStyle).toBe('solid');
+    await expect(getComputedStyle(innerRoot).outlineColor).not.toBe('rgba(0, 0, 0, 0)');
+
+    // Middle (immediate parent): dashed, regardless of hover.
+    await expect(getComputedStyle(middleRoot).outlineStyle).toBe('dashed');
+    await expect(getComputedStyle(middleRoot).outlineColor).not.toBe('rgba(0, 0, 0, 0)');
+
+    // Outer (grandparent, not immediate): no outline at all.
+    await expect(getComputedStyle(outerRoot).outlineColor).toBe('rgba(0, 0, 0, 0)');
+
+    innerRoot.blur();
+  },
+};
+
+/**
+ * A `Text` that's an Artboard's own *immediate* child (not nested inside
+ * some other wrapper passed as children) underlines in the variant colour on
+ * the same genuinely-hovered/focused triggers as the outline — including
+ * hover, unlike the handles' focus-only behaviour — evoking a Figma text
+ * frame. The underline is a fixed `2px` regardless of the `Text` variant's
+ * own font weight/size (`text-decoration-thickness: auto` would otherwise
+ * scale a heading's underline noticeably thicker than a caption's).
+ *
+ * `:hover` can't be driven from a `play` function (see `Nested`'s doc
+ * comment), so only the focus half is asserted here — open this story's
+ * Canvas tab and hover it to see the other half.
+ */
+export const TextFrame: Story = {
+  render: () => (
+    <Artboard label="case-study-alpha" variant="default">
+      <Text variant="h3">Sample headline</Text>
+    </Artboard>
+  ),
+  play: async ({ canvasElement }) => {
+    const region = canvasElement.querySelector<HTMLElement>('[data-artboard-border]')!;
+    const text = canvasElement.querySelector<HTMLElement>('[data-text]')!;
+
+    await expect(getComputedStyle(text).textDecorationLine).toBe('none');
+    region.focus();
+    await expect(region).toHaveFocus();
+    await expect(getComputedStyle(text).textDecorationLine).toBe('underline');
+    await expect(getComputedStyle(text).textDecorationThickness).toBe('2px');
+  },
+};
+
+/**
  * `withHandles` adds four solid corner selection-handle squares to the
  * outline, evoking a resizable layer selection in a design tool. They're
  * filled (`background-color`), not hollow, so the outline underneath
- * doesn't show through the handle. They mirror the outline's
- * transparent-at-rest, coloured-on-hover/focus behaviour and colour — this
- * story drives focus (real `:hover` can't be triggered from a test, see
- * `Nested` above) and checks a handle actually picks up the variant colour.
+ * doesn't show through the handle, and pick up the same variant colour as
+ * the outline.
+ *
+ * Unlike the outline, handles deliberately do **not** react to `:hover` or
+ * to `:focus-within` from something nested inside — only this exact
+ * Artboard's own `:focus` (e.g. tabbing directly to it, or `isAlwaysOutlined`
+ * for a permanently-selected decorative Artboard, see `AlwaysOutlined`
+ * below). This story drives that focus and checks a handle actually picks
+ * up the variant colour.
+ *
+ * Handles also always render on top of any outline they overlap, including
+ * a *different* Artboard's — each `[data-artboard-border]` isolates its own
+ * stacking context (`isolation: isolate`) and handles carry `z-index: 1`
+ * within it, so a handle sitting flush against another Artboard's edge (e.g.
+ * a nested Artboard with no gap to its parent) never gets visually painted
+ * over by that other Artboard's outline. See `Artboard.css`'s handles
+ * section for the one case this can't cover: two Artboards living under
+ * *independently* `z-index`-stacked ancestors elsewhere on the page (e.g.
+ * one portaled) — `z-index` can never compare across separate stacking
+ * contexts, portal or not. Not exercised by any Artboard usage in this
+ * codebase today (nothing portals one), so untested here.
  */
 export const WithHandles: Story = {
   args: {
