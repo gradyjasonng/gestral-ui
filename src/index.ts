@@ -13,6 +13,8 @@ export { Chip } from './primitives/Chip/Chip';
 export type { ChipProps, ChipSize } from './primitives/Chip/Chip';
 export { Stack } from './primitives/Stack/Stack';
 export type { StackProps, StackDirection, StackAlign, StackJustify, StackGap, StackPadding } from './primitives/Stack/Stack';
+export { Grid } from './primitives/Grid/Grid';
+export type { GridProps, GridColumns, GridAlign, GridJustify } from './primitives/Grid/Grid';
 export { Icon } from './primitives/Icon/Icon';
 export type { IconProps, IconName, IconSize } from './primitives/Icon/Icon';
 export { Surface } from './primitives/Surface/Surface';

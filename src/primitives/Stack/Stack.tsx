@@ -14,7 +14,7 @@ export type StackPadding =
   | 'xl-squish'  | 'xl-stretch'
   | '2xl-squish' | '2xl-stretch';
 
-const gapClass: Record<StackGap, string> = {
+export const gapClass: Record<StackGap, string> = {
   none:  'gap-0',
   xs:    'gap-sp-xs',
   sm:    'gap-sp-sm',
@@ -24,7 +24,7 @@ const gapClass: Record<StackGap, string> = {
   '2xl': 'gap-sp-2xl'
 };
 
-const paddingClass: Record<StackPadding, string> = {
+export const paddingClass: Record<StackPadding, string> = {
   none:          '',
   xs:            'p-sp-xs',
   sm:            'p-sp-sm',
