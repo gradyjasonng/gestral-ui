@@ -38,11 +38,9 @@ export const Default: Story = {
 };
 
 /**
- * `columns` from 1 through 6, compared side by side. Pass a responsive
- * override via `className` (e.g. `className="lg:grid-cols-3"`) for a column
- * count that should change per breakpoint — `columns` itself is a plain,
- * unconditional count, matching Stack's own lack of a built-in responsive
- * story.
+ * `columns` from 1 through 6, compared side by side. For a column count
+ * that changes per breakpoint, pass a Tailwind class string instead — see
+ * `Responsive` below.
  */
 export const Columns: Story = {
   render: () => (
@@ -59,6 +57,27 @@ export const Columns: Story = {
           </Grid>
         </Grid>
       ))}
+    </Grid>
+  ),
+};
+
+/**
+ * `columns` also accepts a raw string of Tailwind `grid-cols-*` classes
+ * (with responsive prefixes) instead of a fixed number, for a column count
+ * that should change per breakpoint — passed straight through as literal
+ * classes rather than resolved through a lookup, so `sm:`/`lg:`/etc. work
+ * exactly as they would in a plain `className`. Resize this story's preview
+ * viewport to see it collapse from 3 columns down to 1.
+ */
+export const Responsive: Story = {
+  render: () => (
+    <Grid gap="md" columns="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+      <Box>First</Box>
+      <Box>Second</Box>
+      <Box>Third</Box>
+      <Box>Fourth</Box>
+      <Box>Fifth</Box>
+      <Box>Sixth</Box>
     </Grid>
   ),
 };
