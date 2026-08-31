@@ -5,6 +5,7 @@ import { Text } from '@primitives/Text/Text';
 const meta = {
   title: 'Primitives/Grid',
   component: Grid,
+  tags: ['autodocs'],
 } satisfies Meta<typeof Grid>;
 
 export default meta;
