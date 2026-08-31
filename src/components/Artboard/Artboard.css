@@ -54,6 +54,12 @@ html[data-artboard-frame='off'] [data-artboard-border]:not([data-artboard-frame-
  * focus outline *and* the inner's 2px hover outline at once. */
 [data-artboard-border] {
   outline: 1px solid transparent;
+  /* Gives each Artboard its own stacking context, so a nested Artboard's
+   * handle `z-index` (see the handles section below) is compared only
+   * against its own local siblings — reliably beating any outline paint at
+   * a shared edge — rather than leaking into some unrelated ancestor's
+   * stacking order. */
+  isolation: isolate;
 }
 
 [data-artboard-border][data-artboard-variant='default']:is(
@@ -99,6 +105,131 @@ html[data-artboard-frame='off'] [data-artboard-border]:not([data-artboard-frame-
   outline-color: var(--color-selection-purple);
 }
 
+/* ─── Artboard text-frame underline (Text as an immediate child) ─────────── */
+/* Evokes a Figma text frame: a `Text` that's this Artboard's own immediate
+ * child (not one nested inside some other wrapper passed as children, hence
+ * the direct-child combinator) underlines in the variant colour on the same
+ * genuinely-hovered/focused triggers as the outline above — including hover,
+ * unlike the handles' focus-only behaviour, since this is meant to read as
+ * part of the same selection frame rather than a separate resize affordance.
+ * `text-decoration-thickness` is pinned to `2px` rather than left at its
+ * `auto` default, which some browsers scale with font weight/size — a
+ * heavier `Text` variant (e.g. a large heading) would otherwise get a
+ * noticeably thicker underline than a small caption, when this is meant to
+ * read as one consistent-weight selection mark regardless of what it's
+ * underlining. */
+[data-artboard-border][data-artboard-variant='default']:is(
+  :hover:not(:has([data-artboard-border]:hover)),
+  :focus-within:not(:has([data-artboard-border]:focus-within))
+) > [data-text] {
+  text-decoration-line: underline;
+  text-decoration-thickness: 2px;
+  text-decoration-color: var(--color-selection-emerald);
+}
+
+[data-artboard-border][data-artboard-variant='interactive']:is(
+  :hover:not(:has([data-artboard-border]:hover)),
+  :focus-within:not(:has([data-artboard-border]:focus-within))
+) > [data-text] {
+  text-decoration-line: underline;
+  text-decoration-thickness: 2px;
+  text-decoration-color: var(--color-selection-blue);
+}
+
+[data-artboard-border][data-artboard-variant='external']:is(
+  :hover:not(:has([data-artboard-border]:hover)),
+  :focus-within:not(:has([data-artboard-border]:focus-within))
+) > [data-text] {
+  text-decoration-line: underline;
+  text-decoration-thickness: 2px;
+  text-decoration-color: var(--color-selection-purple);
+}
+
+/* ─── Artboard nesting hints: hover-dashed descendants, focus breadcrumb ─── */
+/* Two more layers on top of the hover/focus frame above, both scoped off the
+ * same "genuinely hovered/focused" concept (`:hover:not(:has(...:hover))` /
+ * `:focus-within:not(:has(...:focus-within))`) used there — repeated inline
+ * here since plain CSS has no way to name/reuse a selector fragment.
+ *
+ * 1. Hovering an Artboard dashes the outline of every Artboard nested inside
+ *    it (any depth), in each nested Artboard's own variant colour — a
+ *    lighter "this is inside what you're hovering" hint alongside the
+ *    genuinely-hovered Artboard's own solid outline. A plain descendant
+ *    combinator is enough here (no `:has()` needed): CSS `:hover` already
+ *    bubbles to every ancestor of the true target, so `genuinely-hovered
+ *    ancestor` → `nested Artboard` naturally covers exactly the Artboards
+ *    inside whichever one is genuinely hovered, at any depth.
+ *
+ *    `:not(:focus)` on the targeted nested Artboard is a deliberate
+ *    exception: an Artboard that's itself the exact focused element (the
+ *    same "self, not focus-within" trigger the handles use) keeps its own
+ *    solid focus outline even if some ancestor is simultaneously hovered —
+ *    it should never flip to the lighter dashed treatment just because the
+ *    pointer happens to be resting somewhere above it.
+ *
+ * 2. Focusing an Artboard (tabbing to it, or a nested interactive element
+ *    inside it) instead draws a "breadcrumb": every Artboard nested inside
+ *    the genuinely-focused one goes fully unoutlined (even if separately
+ *    hovered — `!important` wins over rule 1 above), while its *immediate*
+ *    parent Artboard dashes regardless of hover state.
+ *
+ *    "Immediate" can't reuse the `:has(...:not(:has(...)))` guard pattern
+ *    from above as a single nested condition — the Selectors spec forbids
+ *    a `:has()` from appearing anywhere inside another `:has()`'s argument
+ *    (even wrapped in `:not()`), so a selector like
+ *    `:has(x:not(:has(y)))` is invalid and the whole rule is dropped
+ *    silently (no console error — it just never matches). Instead,
+ *    "immediate parent" is two separate, non-nested conditions chained
+ *    on the same candidate `P`:
+ *      - `:has([data-artboard-border]:focus-within)` — P contains a
+ *        focused Artboard *somewhere* inside it (at any depth).
+ *      - `:not(:has([data-artboard-border] [data-artboard-border]:focus-within))`
+ *        — P does NOT contain an Artboard-inside-an-Artboard chain where
+ *        the innermost one is focused, i.e. nothing focused is nested two
+ *        or more Artboard-levels deep inside P.
+ *    Together these hold only for the one Artboard immediately wrapping
+ *    the focused one: true ancestors further up always contain such a
+ *    chain (their own immediate-child Artboard wraps the deeper focused
+ *    one), so the second condition excludes them; the focused Artboard
+ *    itself contains no nested focused Artboard at all, so the first
+ *    condition excludes it. Both conditions use one `:has()` each — never
+ *    nested inside the other — so this stays valid. */
+[data-artboard-border]:hover:not(:has([data-artboard-border]:hover)) [data-artboard-border][data-artboard-variant='default']:not(:focus) {
+  outline-style: dashed;
+  outline-width: 1px;
+  outline-color: var(--color-selection-emerald);
+}
+[data-artboard-border]:hover:not(:has([data-artboard-border]:hover)) [data-artboard-border][data-artboard-variant='interactive']:not(:focus) {
+  outline-style: dashed;
+  outline-width: 1px;
+  outline-color: var(--color-selection-blue);
+}
+[data-artboard-border]:hover:not(:has([data-artboard-border]:hover)) [data-artboard-border][data-artboard-variant='external']:not(:focus) {
+  outline-style: dashed;
+  outline-width: 1px;
+  outline-color: var(--color-selection-purple);
+}
+
+[data-artboard-border]:focus-within:not(:has([data-artboard-border]:focus-within)) [data-artboard-border] {
+  outline-color: transparent !important;
+}
+
+[data-artboard-border][data-artboard-variant='default']:has([data-artboard-border]:focus-within):not(:has([data-artboard-border] [data-artboard-border]:focus-within)) {
+  outline-style: dashed !important;
+  outline-width: 1px !important;
+  outline-color: var(--color-selection-emerald) !important;
+}
+[data-artboard-border][data-artboard-variant='interactive']:has([data-artboard-border]:focus-within):not(:has([data-artboard-border] [data-artboard-border]:focus-within)) {
+  outline-style: dashed !important;
+  outline-width: 1px !important;
+  outline-color: var(--color-selection-blue) !important;
+}
+[data-artboard-border][data-artboard-variant='external']:has([data-artboard-border]:focus-within):not(:has([data-artboard-border] [data-artboard-border]:focus-within)) {
+  outline-style: dashed !important;
+  outline-width: 1px !important;
+  outline-color: var(--color-selection-purple) !important;
+}
+
 /* ─── Artboard corner selection handles (withHandles) ───────────────────── */
 /* Four corner squares layered on top of the outline, evoking a resizable
  * layer selection in a design tool. `background-color` is always the fixed
@@ -109,46 +240,53 @@ html[data-artboard-frame='off'] [data-artboard-border]:not([data-artboard-frame-
  * variant colour instead, so the handle still reads as "selected" the same
  * way the outline does.
  *
- * They mirror the outline's own transparent-at-rest, coloured-and-
- * thickening-on-hover/focus behaviour (1px focus, 2px hover, same as the
- * outline), using the same nesting guards, so a handle-bearing Artboard
- * reads as one consistent selection frame rather than two
- * independently-timed effects. */
+ * Unlike the outline, handles deliberately do NOT respond to `:hover` or to
+ * `:focus-within` — only this exact Artboard's own `:focus` (e.g. tabbing
+ * to it directly). Hovering it, or focusing something nested inside it,
+ * leaves its handles hidden. That's a real behavioural difference from the
+ * outline above, not an oversight: resize handles implying "this element is
+ * the one that would resize" should only appear when it's truly the focused
+ * target, not merely hovered or an ancestor of whatever has focus. Because
+ * `:focus` doesn't bubble the way `:focus-within` does, no nesting guard is
+ * needed here.
+ *
+ * `z-index: 1` plus `isolation: isolate` on `[data-artboard-border]` (below)
+ * is what keeps a handle from ever being painted over by an outline —
+ * without it, a nested Artboard's handle sitting flush against an ancestor's
+ * edge can end up UNDER that ancestor's own outline, because an outline is
+ * just a paint property (not a stacked box) and, absent an explicit
+ * stacking order, browsers are free to interleave an ancestor's outline
+ * paint with a descendant's own content in ways that don't guarantee the
+ * descendant wins. Each Artboard establishing its own stacking context
+ * (`isolation: isolate`) means a nested Artboard's `z-index` is only ever
+ * compared against its *own* siblings within that context — its handle
+ * (z-index 1) reliably beats plain content (z-index auto, i.e. 0) at any
+ * shared edge, including its own outline and any ancestor's. This only
+ * covers Artboards sharing a stacking-context lineage on the page (true for
+ * every real usage today — none are portaled elsewhere with an independently
+ * stacked ancestor); it can't reach across two *separately* stacked
+ * subtrees, which `z-index` fundamentally cannot do regardless of value. */
 [data-artboard-handle] {
+  z-index: 1;
   background-color: transparent;
   border: 1px solid transparent;
 }
 
-[data-artboard-border][data-artboard-variant='default']:focus-within:not(:has([data-artboard-border]:focus-within)) > [data-artboard-handle] {
+[data-artboard-border][data-artboard-variant='default']:focus > [data-artboard-handle] {
   background-color: var(--color-canvas-surface);
   border-width: 1px;
   border-color: var(--color-selection-emerald);
 }
-[data-artboard-border][data-artboard-variant='default']:hover:not(:has([data-artboard-border]:hover)) > [data-artboard-handle] {
-  background-color: var(--color-canvas-surface);
-  border-width: 2px;
-  border-color: var(--color-selection-emerald);
-}
 
-[data-artboard-border][data-artboard-variant='interactive']:focus-within:not(:has([data-artboard-border]:focus-within)) > [data-artboard-handle] {
+[data-artboard-border][data-artboard-variant='interactive']:focus > [data-artboard-handle] {
   background-color: var(--color-canvas-surface);
   border-width: 1px;
   border-color: var(--color-selection-blue);
 }
-[data-artboard-border][data-artboard-variant='interactive']:hover:not(:has([data-artboard-border]:hover)) > [data-artboard-handle] {
-  background-color: var(--color-canvas-surface);
-  border-width: 2px;
-  border-color: var(--color-selection-blue);
-}
 
-[data-artboard-border][data-artboard-variant='external']:focus-within:not(:has([data-artboard-border]:focus-within)) > [data-artboard-handle] {
+[data-artboard-border][data-artboard-variant='external']:focus > [data-artboard-handle] {
   background-color: var(--color-canvas-surface);
   border-width: 1px;
-  border-color: var(--color-selection-purple);
-}
-[data-artboard-border][data-artboard-variant='external']:hover:not(:has([data-artboard-border]:hover)) > [data-artboard-handle] {
-  background-color: var(--color-canvas-surface);
-  border-width: 2px;
   border-color: var(--color-selection-purple);
 }
 
