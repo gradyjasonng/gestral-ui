@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import type { MouseEventHandler, ReactNode } from 'react';
 import { Stack, Text, type IconName } from '@primitives';
 import { Rail } from '@components/Rail/Rail';
 import { Button } from '@components/Button/Button';
@@ -16,6 +16,14 @@ export interface SiteRailItem {
   href: string;
   icon?: IconName;
   active?: boolean | 'secondary';
+  /**
+   * Intercepts the click instead of (or in addition to) navigating — call
+   * `event.preventDefault()` inside to suppress the navigation entirely
+   * (e.g. to swap in some other content in place of it first, and only
+   * navigate once the user picks something more specific there). Omit for a
+   * plain link.
+   */
+  onClick?: MouseEventHandler<HTMLElement>;
 }
 
 export interface SiteRailExternalLink {
@@ -98,7 +106,7 @@ export function SiteRail({
         padding={expanded ? 'xs' : 'md'}
         className={'flex-1'}
       >
-        {items.map(({ label, href, icon, active }) => (
+        {items.map(({ label, href, icon, active, onClick }) => (
           expanded ? (
             <Button
               key={label}
@@ -108,6 +116,7 @@ export function SiteRail({
               icon={icon}
               href={href}
               active={active}
+              onClick={onClick}
               aria-label={label}
             >
               {label}
@@ -122,6 +131,7 @@ export function SiteRail({
               icon={icon as IconName}
               href={href}
               active={active}
+              onClick={onClick}
               aria-label={label}
               title={label}
             >
