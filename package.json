@@ -26,7 +26,8 @@
   },
   "scripts": {
     "build": "vite build",
-    "dev": "vite build --watch",
+    "dev": "concurrently -n build,storybook -c green,magenta \"vite build --watch\" \"storybook dev -p 6006\"",
+    "build:watch": "vite build --watch",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "test": "vitest run --project unit",
@@ -62,6 +63,7 @@
     "@vitest/browser-playwright": "^4.1.9",
     "@vitest/coverage-v8": "^4.1.9",
     "chromatic": "^18.0.1",
+    "concurrently": "^10.0.5",
     "culori": "^4.0.2",
     "husky": "^9.1.7",
     "playwright": "^1.61.0",
