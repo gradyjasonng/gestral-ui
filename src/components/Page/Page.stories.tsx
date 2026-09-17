@@ -4,7 +4,7 @@ import { Text } from '@primitives';
 import { Grid as CardGrid } from '@components/PreviewCard/PreviewCard.stories';
 
 const meta = {
-  title: 'Components/Page',
+  title: 'Shell/Page',
   component: Page,
   parameters: { layout: 'fullscreen' },
   tags: ['autodocs'],

@@ -3,7 +3,7 @@ import { LabelledIconButton } from './LabelledIconButton';
 import { Text } from '@primitives/Text/Text';
 
 const meta = {
-  title: 'Components/LabelledIconButton',
+  title: 'Forms/LabelledIconButton',
   component: LabelledIconButton,
   tags: ['autodocs'],
 } satisfies Meta<typeof LabelledIconButton>;

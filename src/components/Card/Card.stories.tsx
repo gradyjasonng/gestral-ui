@@ -3,7 +3,7 @@ import { Card } from './Card';
 import { Text } from '@primitives/Text/Text';
 
 const meta = {
-  title: 'Components/Card',
+  title: 'Content/Card',
   component: Card,
   tags: ['autodocs'],
 } satisfies Meta<typeof Card>;

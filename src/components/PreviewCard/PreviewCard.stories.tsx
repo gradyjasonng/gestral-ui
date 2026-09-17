@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { PreviewCard } from './PreviewCard';
 
 const meta = {
-  title: 'Components/PreviewCard',
+  title: 'Content/PreviewCard',
   component: PreviewCard,
   tags: ['autodocs'],
   decorators: [

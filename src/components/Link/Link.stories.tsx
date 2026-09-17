@@ -3,7 +3,7 @@ import { Link } from './Link';
 import { Text } from '@primitives';
 
 const meta = {
-  title: 'Components/Link',
+  title: 'Content/Link',
   component: Link,
   args: {
     children: 'Link text',

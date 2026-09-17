@@ -29,7 +29,7 @@ const externalLinksWithPreview: SiteRailExternalLink[] = [
 ];
 
 const meta = {
-  title: 'Components/Shell/SiteRail',
+  title: 'Shell/SiteRail',
   component: SiteRail,
   parameters: { layout: 'fullscreen' },
   tags: ['autodocs'],

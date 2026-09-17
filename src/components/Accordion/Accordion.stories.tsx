@@ -5,7 +5,7 @@ import { Accordion, type AccordionItem } from './Accordion';
 import { Text } from '@primitives/Text/Text';
 
 const meta = {
-  title: 'Components/Accordion',
+  title: 'Content/Accordion',
   component: Accordion,
   tags: ['autodocs'],
   decorators: [
