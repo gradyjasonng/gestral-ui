@@ -108,7 +108,7 @@ export function ButtonWithPreviewCard({ label, href, icon, customIcon, previewCa
               // (by design, for its in-flow rail usage) — floating this box
               // over arbitrary page content needs one regardless of what's
               // inside it.
-              'fixed z-50 w-62 rounded-lg bg-chrome-surface p-2 drop-shadow-2xl transition-opacity',
+              'fixed z-50 w-72 rounded-lg bg-chrome-surface p-2 drop-shadow-2xl transition-opacity',
               '[transform:translate(var(--edge-collision-shift-x,0px),var(--edge-collision-shift-y,0px))]',
               hovered ? 'opacity-100' : 'opacity-0 invisible pointer-events-none',
             )}

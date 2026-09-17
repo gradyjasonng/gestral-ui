@@ -34,9 +34,19 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   customIcon?: ReactNode;
   /** Which side of the label the icon renders on. Ignored by `iconOnly`. Defaults to `'before'`. */
   iconPosition?: 'before' | 'after';
+  /**
+   * When `false`, renders as a plain, non-interactive `<span>` — no
+   * link/button semantics, not focusable, no pointer cursor — while keeping
+   * the full visual treatment (fill, weight, sizing). For the current page
+   * in a nav list, where the row should read as "you are here" rather than
+   * a link. Intended for the text variants (`horizontal`/`vertical`).
+   * Defaults to `true`.
+   */
+  interactive?: boolean;
 }
 
-const base = 'rounded-sm cursor-pointer select-none flex';
+const base = 'rounded-sm select-none flex';
+const interactiveCursor = 'cursor-pointer';
 
 /** Renders `customIcon` (sized to match `icon`'s box) when given, falling back to the named `icon`. */
 function renderIcon(icon: IconName | undefined, customIcon: ReactNode | undefined, size: ButtonSize) {
@@ -83,7 +93,7 @@ export function IconFill({ icon, customIcon, size = 'md', iconSize, active = fal
       active={active}
       on={surface}
       border={false}
-      className={cn(base, 'aspect-square items-center justify-center', className)}
+      className={cn(base, interactiveCursor, 'aspect-square items-center justify-center', className)}
       style={{ height: buttonHeightMap[size], ...style }}
       {...props}
     >
@@ -106,13 +116,15 @@ export function Button({
   icon,
   customIcon,
   iconPosition = 'before',
+  interactive = true,
   className,
   style,
   children,
   disabled,
   ...props
 }: ButtonProps) {
-  const Tag = (href ? 'a' : 'button') as ElementType;
+  const Tag = (interactive ? (href ? 'a' : 'button') : 'span') as ElementType;
+  const tagProps = interactive ? { href, disabled } : {};
   const effectiveIconSize = iconSize ?? size;
   const iconEl = renderIcon(icon, customIcon, effectiveIconSize);
   const textVariant = textVariantMap[size];
@@ -120,7 +132,7 @@ export function Button({
   /* ── iconOnly: the height of the button is still fixed to what it would if it had text ── */
   if (variant === 'iconOnly') {
     return (
-      <Tag href={href} disabled={disabled} {...props}>
+      <Tag {...tagProps} {...props}>
         <IconFill icon={icon} customIcon={customIcon} size={size} iconSize={iconSize} active={active} palette={palette} surface={surface} className={cn(className, disabled && disabledClass)} style={style} />
       </Tag>
     );
@@ -129,7 +141,7 @@ export function Button({
   const isVertical = variant === 'vertical';
 
   return (
-    <Tag href={href} disabled={disabled} {...props}>
+    <Tag {...tagProps} {...props}>
       <Surface
         palette={palette}
         active={active}
@@ -137,6 +149,7 @@ export function Button({
         border={false}
         className={cn(
           base,
+          interactive && interactiveCursor,
           'w-full items-center gap-sp-sm p-sp-sm',
           isVertical ? 'flex-col' : 'flex-row',
           disabled && disabledClass,
@@ -146,7 +159,7 @@ export function Button({
       >
         {iconPosition === 'before' && iconEl}
         {children != null && (
-          <Text variant={textVariant} as="span" className={cn(!isVertical && 'flex-1 truncate')}>
+          <Text variant={textVariant} as="span" className={cn(!isVertical && 'flex-1 truncate', active === 'secondary' && 'font-semibold')}>
             {children}
           </Text>
         )}
