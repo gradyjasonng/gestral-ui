@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import { cn } from '@lib/cn';
 import { Text, Icon, type IconName, Stack } from '@primitives';
 import type { PreviewCardPalette } from '@components/PreviewCard/PreviewCard';
+import { ThumbnailChips } from '@components/PreviewCard/thumbnailChips';
 
 const paletteThumbnailClasses: Record<PreviewCardPalette, string> = {
   accent: 'bg-accent-subtle',
@@ -10,11 +11,13 @@ const paletteThumbnailClasses: Record<PreviewCardPalette, string> = {
 
 export interface AssetCardProps {
   title: string;
-  /** Secondary line below the title, e.g. a date or item count. */
-  meta?: string;
-  /** Rendered inline before the title. */
+  /** Pinned as a chrome chip to the thumbnail's top-right corner — typically the publish date. */
+  date?: string;
+  /** Rendered inline after the title. */
   icon?: IconName;
-  /** Rendered below `meta` as plain `#hashtag` text, not pills. */
+  /** Body line below the title, clamped to two lines. */
+  description?: string;
+  /** Pinned as chrome chips to the thumbnail's bottom-right corner. */
   tags?: string[];
   /**
    * Color scheme applied to the thumbnail background — matches `PreviewCard`'s
@@ -31,14 +34,13 @@ export interface AssetCardProps {
 
 /**
  * A bare-thumbnail link for a narrow rail — the card itself *is* the
- * thumbnail (no border/background around it besides its own edge), with
- * title/meta/tags text stacked underneath, outside the thumbnail. Tags
- * render as plain `#hashtag` text, not pills — there's no room for chips at
- * this size. A single hover fill spans both the thumbnail and the text,
- * evoking Figma's Assets panel rather than a bordered `PreviewCard` grid
- * tile.
+ * thumbnail (no border/background around it besides its own edge), with the
+ * `date` and `tags` pinned as chrome chips to its top-right and bottom-right
+ * corners and title/description stacked underneath, outside the thumbnail. A
+ * single hover fill spans both the thumbnail and the text, evoking Figma's
+ * Assets panel rather than a bordered `PreviewCard` grid tile.
  */
-export function AssetCard({ title, meta, icon, tags, palette, children, href, className }: AssetCardProps) {
+export function AssetCard({ title, date, icon, description, tags, palette, children, href, className }: AssetCardProps) {
   return (
     <a
       href={href}
@@ -49,11 +51,12 @@ export function AssetCard({ title, meta, icon, tags, palette, children, href, cl
     >
       <div
         className={cn(
-          'w-full aspect-video overflow-clip rounded-lg',
+          'relative w-full aspect-video overflow-clip rounded-lg',
           palette ? paletteThumbnailClasses[palette] : 'border border-chrome-border bg-chrome-muted',
         )}
       >
         {children}
+        <ThumbnailChips date={date} tags={tags} />
       </div>
 
       <Stack direction="col" gap="xs" className="mt-2">
@@ -61,18 +64,12 @@ export function AssetCard({ title, meta, icon, tags, palette, children, href, cl
           <Text variant="labelXSmall" as="h3" className="text-chrome-text-primary truncate">
             {title}
           </Text>
-           {icon && <Icon name={icon} size="xs" className="text-chrome-text-muted shrink-0" />}
+          {icon && <Icon name={icon} size="xs" className="text-chrome-text-muted shrink-0" />}
         </Stack>
 
-        {meta && (
-          <Text variant="caption" as="div" className="text-chrome-text-muted">
-            {meta}
-          </Text>
-        )}
-
-        {tags && tags.length > 0 && (
-          <Text variant="caption" as="div" className="text-chrome-text-muted truncate">
-            {tags.map((tag) => `#${tag.toLowerCase().replace(/\s+/g, '')}`).join(' ')}
+        {description && (
+          <Text variant="caption" as="div" className="text-chrome-text-muted line-clamp-2">
+            {description}
           </Text>
         )}
       </Stack>
