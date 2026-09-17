@@ -48,6 +48,7 @@ export function Card({ elevation = 'flat', surface = 'chrome', as = 'div', child
   return (
     <Surface
       as={Tag}
+      data-card=""
       palette={surface}
       elevation={elevation}
       className={cn(
