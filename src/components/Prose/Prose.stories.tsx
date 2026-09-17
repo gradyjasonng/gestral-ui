@@ -3,7 +3,7 @@ import { expect } from 'storybook/test';
 import { Prose } from './Prose';
 
 const meta = {
-  title: 'Components/Prose',
+  title: 'Content/Prose',
   component: Prose,
   parameters: { layout: 'padded' },
   tags: ['autodocs'],
