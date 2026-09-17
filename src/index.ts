@@ -9,8 +9,6 @@ export { slugify } from './lib/slugify';
 // Primitives
 export { Text } from './primitives/Text/Text';
 export type { TextProps, TextVariant } from './primitives/Text/Text';
-export { Chip } from './primitives/Chip/Chip';
-export type { ChipProps, ChipSize } from './primitives/Chip/Chip';
 export { Stack } from './primitives/Stack/Stack';
 export type { StackProps, StackDirection, StackAlign, StackJustify, StackGap, StackPadding } from './primitives/Stack/Stack';
 export { Grid } from './primitives/Grid/Grid';
@@ -25,6 +23,10 @@ export { Button } from './components/Button/Button';
 export type { ButtonProps, ButtonVariant, ButtonSize, ButtonSurface, ButtonPalette } from './components/Button/Button';
 export { LabelledIconButton } from './components/Button/LabelledIconButton';
 export type { LabelledIconButtonProps, LabelledIconButtonDirection } from './components/Button/LabelledIconButton';
+export { InputText } from './components/InputText/InputText';
+export type { InputTextProps } from './components/InputText/InputText';
+export { Tag } from './components/Tag/Tag';
+export type { TagProps, TagVariant } from './components/Tag/Tag';
 export { Rail } from './components/Rail/Rail';
 export type { RailProps } from './components/Rail/Rail';
 export { Popover } from './components/Popover/Popover';
@@ -34,11 +36,31 @@ export type { CardProps, CardElevation, CardSurface } from './components/Card/Ca
 export { Quote } from './components/Quote/Quote';
 export type { QuoteProps } from './components/Quote/Quote';
 export { Artboard } from './components/Artboard/Artboard';
-export type { ArtboardProps, ArtboardVariant } from './components/Artboard/Artboard';
+export type { ArtboardProps, ArtboardOwnProps, ArtboardTone } from './components/Artboard/Artboard';
 export { Canvas } from './components/Canvas/Canvas';
 export type { CanvasProps } from './components/Canvas/Canvas';
 export { Comment } from './components/Comment/Comment';
 export type { CommentProps } from './components/Comment/Comment';
+export { Connector } from './components/Connector/Connector';
+export type {
+  ConnectorProps,
+  ConnectorVariant,
+  ConnectorShape,
+  ConnectorCap,
+  ConnectorSide,
+  ConnectorAlign,
+  ConnectorEndpoint,
+  ConnectorPoint,
+  ConnectorAxis,
+  ConnectorAxisAnchor,
+  ConnectorAxisMatch,
+  ConnectorEdge,
+  ConnectorLength,
+  ConnectorCoordinate,
+  ConnectorCoordinatePoint,
+  ConnectorAnchorPoint,
+  ConnectorRefPoint,
+} from './components/Connector/Connector';
 export { ButtonWithPreviewCard } from './components/ButtonWithPreviewCard/ButtonWithPreviewCard';
 export type { ButtonWithPreviewCardProps } from './components/ButtonWithPreviewCard/ButtonWithPreviewCard';
 export { PreviewCard } from './components/PreviewCard/PreviewCard';
@@ -50,6 +72,7 @@ export type { CanvasRailProps } from './components/CanvasRail/CanvasRail';
 export { PageList } from './components/PageList/PageList';
 export type { PageListProps, PageListItem } from './components/PageList/PageList';
 export { LayerList } from './components/LayerList/LayerList';
+export { DEFAULT_ARTBOARD_ICON } from './lib/defaultArtboardIcon';
 export type { LayerListProps, TocItem, NodeIndent } from './components/LayerList/LayerList';
 export { MetaList } from './components/MetaList/MetaList';
 export type { MetaListProps, MetaEntry } from './components/MetaList/MetaList';
