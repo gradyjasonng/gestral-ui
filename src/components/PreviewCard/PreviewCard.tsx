@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import { cn } from '@lib/cn';
 import { Text, Stack, Icon, type IconName } from '@primitives';
 import { Card } from '@components/Card/Card';
+import { ThumbnailChips } from './thumbnailChips';
 
 export type PreviewCardPalette = 'accent' | 'secondary';
 
@@ -18,12 +19,13 @@ const paletteThumbnailClasses: Record<PreviewCardPalette, string> = {
 export interface PreviewCardProps {
   title: string;
   description?: string;
+  /** Pinned as a chrome chip to the thumbnail's top-right corner. */
   date?: string;
-  /** Color scheme applied to `icon`'s background and `categoryLabel` */
+  /** Color scheme applied to `icon`'s background. */
   palette?: PreviewCardPalette;
   /** Renders to the left of the title, with a background of `palette`'s color. */
   icon?: IconName;
-  /** Rendered as the first tag, styled with `palette`'s color to distinguish it from `tags` */
+  /** Rendered as the first chip in the thumbnail's bottom-right stack, ahead of `tags`. */
   categoryLabel?: string;
   tags?: string[];
   /** Thumbnail content — any children, clipped to the thumbnail wrapper */
@@ -33,12 +35,14 @@ export interface PreviewCardProps {
 }
 
 /**
- * The thumbnail + title/date/tags grid card used for blog/work index
- * listings — a bordered `Card` with the thumbnail filling most of it and a
- * title/date/tags meta block below. Pass a fixed-aspect-ratio `className`
- * (e.g. `aspect-4/3`) so the thumbnail sizes consistently — see `BlogCard`/
- * `WorkCard`. For a bare-thumbnail link in a narrow rail (no border around
- * the text, a hover fill spanning image+text), use `AssetCard` instead.
+ * The thumbnail + title/description grid card used for blog/work index
+ * listings — a bordered `Card` with the thumbnail filling most of it, the
+ * `date` and `categoryLabel`/`tags` pinned as chrome chips to its top-right
+ * and bottom-right corners, and a title/description block below. Pass a
+ * fixed-aspect-ratio `className` (e.g. `aspect-4/3`) so the thumbnail sizes
+ * consistently — see `BlogCard`/`WorkCard`. For a bare-thumbnail link in a
+ * narrow rail (no border around the text, a hover fill spanning image+text),
+ * use `AssetCard` instead.
  */
 export function PreviewCard({
   title,
@@ -53,49 +57,23 @@ export function PreviewCard({
   className,
 }: PreviewCardProps) {
   const paletteClassName = paletteClasses[palette];
-  const hasTags = Boolean(categoryLabel || (tags && tags.length > 0));
-
-  const tagList = hasTags && (
-    <Stack direction="row" gap="sm" wrap as="ul">
-      {categoryLabel && (
-        <Text
-          key="category"
-          variant="eyebrow"
-          as="li"
-          className={cn('px-1.5 py-0.5 rounded-sm', paletteClassName)}
-        >
-          {categoryLabel}
-        </Text>
-      )}
-      {tags?.map((tag) => (
-        <Text
-          key={tag}
-          variant="eyebrow"
-          as="li"
-          className="text-chrome-text-secondary bg-chrome-border px-1.5 py-0.5 rounded-sm"
-        >
-          {tag}
-        </Text>
-      ))}
-    </Stack>
-  );
+  const thumbnailTags = [categoryLabel, ...(tags ?? [])].filter(Boolean) as string[];
 
   return (
     <Card
       href={href}
-      className="group flex flex-col overflow-hidden no-underline"
+      className="group flex flex-col h-full overflow-hidden no-underline"
     >
-      {/* Thumbnail — className (e.g. aspect-video) sizes this, not the card as a whole, so the title/date/tags meta below sits outside the ratio instead of squeezing the image shorter than intended. */}
+      {/* Thumbnail — className (e.g. aspect-video) sizes this, not the card as a whole, so the title/description meta below sits outside the ratio instead of squeezing the image shorter than intended. */}
       <div className={cn('w-full relative min-h-0 overflow-clip', paletteThumbnailClasses[palette], className)}>
         {children}
-
-        {hasTags && (
-          <div className="absolute bottom-0 left-0 px-4 py-3">{tagList}</div>
-        )}
+        <ThumbnailChips date={date} tags={thumbnailTags} />
       </div>
 
-      {/* Meta */}
-      <Stack direction="row" gap="md" className="p-4">
+      {/* Meta — flex-1 so it (not the aspect-ratio-locked thumbnail above)
+          absorbs any extra height the grid stretches this card to, keeping
+          cards in the same row bottom-aligned regardless of description length. */}
+      <Stack direction="row" gap="md" className="p-4 flex-1">
         {icon && (
           <div className={cn('shrink-0 flex items-center justify-center h-7 aspect-square rounded-sm', paletteClassName)}>
             <Icon name={icon} size="sm" />
@@ -106,12 +84,6 @@ export function PreviewCard({
           <Text variant="body" as="h3" className="font-bold text-chrome-text-primary leading-snug">
             {title}
           </Text>
-
-          {date && (
-            <Text variant="caption" className="text-chrome-text-secondary">
-              {date}
-            </Text>
-          )}
 
           {description && (
             <Text variant="caption" className="text-chrome-text-secondary leading-relaxed">

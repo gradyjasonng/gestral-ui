@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { AssetCard } from './AssetCard';
 
 const meta = {
-  title: 'Components/AssetCard',
+  title: 'Content/AssetCard',
   component: AssetCard,
   tags: ['autodocs'],
   decorators: [
@@ -18,15 +18,17 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 /**
- * A single AssetCard — the thumbnail is the bordered element, title/meta/
- * tags sit underneath it with no border of their own. `tags` render as
- * plain `#hashtag` text rather than pills.
+ * A single AssetCard — the thumbnail is the bordered element, with the
+ * `date` and `tags` pinned as chrome chips to its top-right and
+ * bottom-right corners and title/description stacked underneath with no
+ * border of their own. `description` is clamped to two lines.
  */
 export const Default: Story = {
   args: {
     title: 'Bridging Figma and Code With AI Agents, Alone',
-    meta: '24 Aug 2026',
+    date: '24 Aug 2026',
     icon: 'code',
+    description: 'Shipping a design system end to end with agentic tooling, no team, and a lot of guardrails.',
     tags: ['Agentic workflows', 'Design systems', 'Figma'],
     href: '#',
     children: (
@@ -44,12 +46,26 @@ export const Default: Story = {
 export const Stack: Story = {
   render: () => (
     <div className="flex flex-col gap-3">
-      <AssetCard title="Squaring a Circle Line" meta="2 Jun 2026" icon="palette" tags={['UX', 'Public transit']} href="#">
+      <AssetCard
+        title="Squaring a Circle Line"
+        date="2 Jun 2026"
+        icon="palette"
+        description="Redrawing a transit map's terminus loop so it reads as one continuous line."
+        tags={['UX', 'Public transit']}
+        href="#"
+      >
         <div className="w-full h-full flex items-center justify-center bg-accent-subtle">
           <span className="text-2xl font-bold text-chrome-text-muted">UX</span>
         </div>
       </AssetCard>
-      <AssetCard title="Building a Data Explorer Micro Frontend" meta="2 Mar 2026" icon="code" tags={['Web dev', 'Data viz']} href="#">
+      <AssetCard
+        title="Building a Data Explorer Micro Frontend"
+        date="2 Mar 2026"
+        icon="code"
+        description="Carving a standalone, independently deployable explorer out of a monolithic analytics app."
+        tags={['Web dev', 'Data viz']}
+        href="#"
+      >
         <div className="w-full h-full flex items-center justify-center bg-secondary-subtle">
           <span className="text-2xl font-bold text-chrome-text-muted">WD</span>
         </div>
