@@ -1,0 +1,20 @@
+/*
+ * The connector line thickens (~1px, like an `Artboard`'s outline) when the
+ * generous transparent hit-path is hovered, or when a labelled connector has
+ * keyboard focus. The resting width is a Tailwind class on the line (see
+ * `variantSpec.weightClass`); only the hover/focus width lives here, keyed
+ * off the per-`variant` `--connector-w-hover` custom property the component
+ * sets on the `<svg>`.
+ *
+ * DOM inside `<svg data-connector>` when drawn: `<defs>`, then the
+ * transparent `pointer-events: stroke` hit `<path>`, then the visible
+ * `pointer-events: none` line `<path>` — so `path:hover` only ever matches
+ * the hit-path, and `path:hover + path` is the line.
+ *
+ * No transition — the width snaps between resting and hover/focus.
+ */
+
+svg[data-connector] > path:hover + path,
+svg[data-connector]:focus-visible > path + path {
+  stroke-width: var(--connector-w-hover);
+}
