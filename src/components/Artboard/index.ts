@@ -1,2 +1,2 @@
 export { Artboard } from './Artboard';
-export type { ArtboardProps, ArtboardVariant } from './Artboard';
+export type { ArtboardProps, ArtboardOwnProps, ArtboardTone } from './Artboard';
