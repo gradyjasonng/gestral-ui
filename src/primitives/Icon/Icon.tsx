@@ -24,13 +24,16 @@ import {
   BiShow,
   BiHide,
   BiSolidCog,
-  BiLock
+  BiLock,
+  BiSolidPin
 } from 'react-icons/bi';
 import {
   LuRotateCw,
   LuRotateCcw,
   LuRefreshCw,
   LuRefreshCcw,
+  LuFrame,
+  LuType,
 } from 'react-icons/lu';
 import { cn } from '@lib/cn';
 
@@ -61,6 +64,9 @@ const icons = {
   'eye-off':    BiHide,
   'wrench':     BiSolidCog,
   'lock':       BiLock,
+  'pin':        BiSolidPin,
+  'frame':      LuFrame,
+  'text':       LuType,
   'rotate-cw':    LuRotateCw,
   'rotate-ccw':   LuRotateCcw,
   'refresh-cw':   LuRefreshCw,

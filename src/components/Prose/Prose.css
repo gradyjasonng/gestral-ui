@@ -15,39 +15,54 @@
   & > :first-child:not(:where(.not-prose, .not-prose *)) { margin-top: 0; }
   & > :last-child:not(:where(.not-prose, .not-prose *))  { margin-bottom: 0; }
 
-  /* Paragraphs */
-  & p:not(:where(.not-prose, .not-prose *)) {
-    margin-top: 1.25em;
-    margin-bottom: 1.25em;
-  }
+  /* Paragraphs
+   * `p` has no rule of its own left to state: its only prior rule was
+   * margin, removed below (see the note above headings). Base `.prose`
+   * color/font/line-height above already covers it, self-referential or
+   * as a descendant either way. */
 
-  /* Headings */
+  /* Headings
+   * Self-referential (`&:is(h1, ...)`, not just `& h1`): `p`/`h1`–`h6`/
+   * `strong`/`em`/`blockquote`/`ul`/`ol`/`li` are always auto-wrapped by
+   * gradaigh-astro's `ProseP`/`ProseH1`/etc (see its `components` map
+   * override), which merges the `prose` class directly onto the real tag —
+   * so these never need a `.prose`-classed ancestor to match; `.prose` on
+   * the element itself is enough. No vertical margin on any of these on
+   * purpose: spacing between artboarded blocks is the artboard's own
+   * margin utility to set, not something baked into Prose — a
+   * `.prose h2 { margin-top: ... }` descendant rule would outrank a plain
+   * `.mt-*` utility on specificity and silently eat it.
+   * `img`/`figure`/`figcaption`/`table`/`pre`/`code`/`hr` below stay
+   * descendant-only and keep their margin: those aren't auto-wrapped, so
+   * they still rely on a real `<Prose>` ancestor (e.g. a hand-authored
+   * `<figure>` inside a manually-wrapped section). */
   & h1:not(:where(.not-prose, .not-prose *)),
   & h2:not(:where(.not-prose, .not-prose *)),
   & h3:not(:where(.not-prose, .not-prose *)),
   & h4:not(:where(.not-prose, .not-prose *)),
   & h5:not(:where(.not-prose, .not-prose *)),
-  & h6:not(:where(.not-prose, .not-prose *)) {
+  & h6:not(:where(.not-prose, .not-prose *)),
+  &:is(h1, h2, h3, h4, h5, h6):not(:where(.not-prose, .not-prose *)) {
     font-family: var(--font-display);
     text-transform: uppercase;
     font-weight: normal;
     color: var(--color-canvas-text-primary);
     line-height: 1.15;
-    margin-bottom: 0.5em;
   }
-  & h1:not(:where(.not-prose, .not-prose *)) { font-size: 2.5rem;  margin-top: 2.5em; }
-  & h2:not(:where(.not-prose, .not-prose *)) { font-size: 2rem;    margin-top: 2em; }
-  & h3:not(:where(.not-prose, .not-prose *)) { font-size: 1.5rem;  margin-top: 1.75em; }
-  & h4:not(:where(.not-prose, .not-prose *)) { font-size: 1.25rem; margin-top: 1.5em; }
-  & h5:not(:where(.not-prose, .not-prose *)) { font-size: 1rem;    margin-top: 1.25em; }
-  & h6:not(:where(.not-prose, .not-prose *)) { font-size: 0.875rem; margin-top: 1.25em; }
+  & h1:not(:where(.not-prose, .not-prose *)), &:is(h1):not(:where(.not-prose, .not-prose *)) { font-size: 2.5rem; }
+  & h2:not(:where(.not-prose, .not-prose *)), &:is(h2):not(:where(.not-prose, .not-prose *)) { font-size: 2rem; }
+  & h3:not(:where(.not-prose, .not-prose *)), &:is(h3):not(:where(.not-prose, .not-prose *)) { font-size: 1.5rem; }
+  & h4:not(:where(.not-prose, .not-prose *)), &:is(h4):not(:where(.not-prose, .not-prose *)) { font-size: 1.25rem; }
+  & h5:not(:where(.not-prose, .not-prose *)), &:is(h5):not(:where(.not-prose, .not-prose *)) { font-size: 1rem; }
+  & h6:not(:where(.not-prose, .not-prose *)), &:is(h6):not(:where(.not-prose, .not-prose *)) { font-size: 0.875rem; }
 
   /* Emphasis */
-  & strong:not(:where(.not-prose, .not-prose *)) { font-weight: 700; color: currentColor; }
-  & em:not(:where(.not-prose, .not-prose *))     { font-style: italic; }
+  & strong:not(:where(.not-prose, .not-prose *)), &:is(strong):not(:where(.not-prose, .not-prose *)) { font-weight: 700; color: currentColor; }
+  & em:not(:where(.not-prose, .not-prose *)), &:is(em):not(:where(.not-prose, .not-prose *))     { font-style: italic; }
 
   /* Blockquote */
-  & blockquote:not(:where(.not-prose, .not-prose *)) {
+  & blockquote:not(:where(.not-prose, .not-prose *)),
+  &:is(blockquote):not(:where(.not-prose, .not-prose *)) {
     border-left: 3px solid var(--color-accent-border);
     padding-left: 1.5rem;
     margin-left: 0;
@@ -58,11 +73,9 @@
   }
 
   /* Lists */
-  & ul:not(:where(.not-prose, .not-prose *)) { list-style-type: disc;    padding-left: 1.5rem; margin: 1.25em 0; }
-  & ol:not(:where(.not-prose, .not-prose *)) { list-style-type: decimal; padding-left: 1.5rem; margin: 1.25em 0; }
-  & li:not(:where(.not-prose, .not-prose *)) {
-    margin-top: 0.4em;
-    margin-bottom: 0.4em;
+  & ul:not(:where(.not-prose, .not-prose *)), &:is(ul):not(:where(.not-prose, .not-prose *)) { list-style-type: disc;    padding-left: 1.5rem; }
+  & ol:not(:where(.not-prose, .not-prose *)), &:is(ol):not(:where(.not-prose, .not-prose *)) { list-style-type: decimal; padding-left: 1.5rem; }
+  & li:not(:where(.not-prose, .not-prose *)), &:is(li):not(:where(.not-prose, .not-prose *)) {
     & > p:not(:where(.not-prose, .not-prose *)) { margin-top: 0.25em; margin-bottom: 0.25em; }
   }
 
