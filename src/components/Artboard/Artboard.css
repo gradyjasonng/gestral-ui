@@ -60,47 +60,81 @@ html[data-artboard-frame='off'] [data-artboard-border]:not([data-artboard-frame-
    * a shared edge — rather than leaking into some unrelated ancestor's
    * stacking order. */
   isolation: isolate;
+  /* A labelled Artboard's `id` (see Artboard.tsx) makes it a same-page
+   * anchor target — e.g. a TOC/LayerList link. Native fragment scrolling
+   * aligns the target's own top border edge with the viewport top, which
+   * sits *below* the label: the label is absolutely positioned at `-top-6`,
+   * inside the `mt-6` reserved above the border edge for exactly this
+   * reason (see Artboard.tsx), so without this it scrolls up out of view
+   * right as you land on the link. `5rem` covers that reserved space plus
+   * MobileNav's fixed `h-14` bar on narrow viewports (this rule applies at
+   * every width; the extra headroom is harmless on desktop, which has no
+   * fixed top bar). Harmless on an Artboard with no `id` too —
+   * `scroll-margin-top` only ever matters if something scrolls to it. */
+  scroll-margin-top: 5rem;
 }
 
-[data-artboard-border][data-artboard-variant='default']:is(
+/* The label sits inside `[data-artboard-border]` alongside whatever content
+ * that root renders as (see the polymorphic `as` prop) — including, e.g., a
+ * heading merged directly onto the root via `as="h2"` plus a `"prose"`
+ * className. Prose's heading rule sets `text-transform: uppercase`, an
+ * inherited property, which would otherwise bleed from that heading down
+ * onto the label's own caption text. Reset it here unconditionally so the
+ * label always renders in its own controlled caption style regardless of
+ * whatever styling the root's actual content carries. */
+[data-artboard-label] {
+  text-transform: none;
+}
+
+[data-artboard-border][data-artboard-tone='default']:is(
   :focus-within:not(:has([data-artboard-border]:focus-within))
-) > [data-artboard-label] > span {
+) > [data-artboard-label] > span,
+[data-artboard-border][data-artboard-tone='default']:is(
+  :focus-within:not(:has([data-artboard-border]:focus-within))
+) > [data-artboard-label] > svg {
   color: var(--color-selection-emerald-text);
 }
-[data-artboard-border][data-artboard-variant='default']:focus-within:not(:has([data-artboard-border]:focus-within)) {
+[data-artboard-border][data-artboard-tone='default']:focus-within:not(:has([data-artboard-border]:focus-within)) {
   outline-width: 1px;
   outline-color: var(--color-selection-emerald);
 }
-[data-artboard-border][data-artboard-variant='default']:hover:not(:has([data-artboard-border]:hover)) {
+[data-artboard-border][data-artboard-tone='default']:hover:not(:has([data-artboard-border]:hover)) {
   outline-width: 2px;
   outline-color: var(--color-selection-emerald);
 }
 
-[data-artboard-border][data-artboard-variant='interactive']:is(
+[data-artboard-border][data-artboard-tone='interactive']:is(
   :focus-within:not(:has([data-artboard-border]:focus-within))
-) > [data-artboard-label] > span {
+) > [data-artboard-label] > span,
+[data-artboard-border][data-artboard-tone='interactive']:is(
+  :focus-within:not(:has([data-artboard-border]:focus-within))
+) > [data-artboard-label] > svg {
   color: var(--color-selection-blue-text);
 }
-[data-artboard-border][data-artboard-variant='interactive']:focus-within:not(:has([data-artboard-border]:focus-within)) {
+[data-artboard-border][data-artboard-tone='interactive']:focus-within:not(:has([data-artboard-border]:focus-within)) {
   outline-width: 1px;
   outline-color: var(--color-selection-blue);
 }
-[data-artboard-border][data-artboard-variant='interactive']:hover:not(:has([data-artboard-border]:hover)) {
+[data-artboard-border][data-artboard-tone='interactive']:hover:not(:has([data-artboard-border]:hover)) {
   outline-width: 2px;
   outline-color: var(--color-selection-blue);
 }
 
-[data-artboard-border][data-artboard-variant='external']:is(
+[data-artboard-border][data-artboard-tone='external']:is(
   :hover:not(:has([data-artboard-border]:hover)),
   :focus-within:not(:has([data-artboard-border]:focus-within))
-) > [data-artboard-label] > span {
+) > [data-artboard-label] > span,
+[data-artboard-border][data-artboard-tone='external']:is(
+  :hover:not(:has([data-artboard-border]:hover)),
+  :focus-within:not(:has([data-artboard-border]:focus-within))
+) > [data-artboard-label] > svg {
   color: var(--color-selection-purple-text);
 }
-[data-artboard-border][data-artboard-variant='external']:focus-within:not(:has([data-artboard-border]:focus-within)) {
+[data-artboard-border][data-artboard-tone='external']:focus-within:not(:has([data-artboard-border]:focus-within)) {
   outline-width: 1px;
   outline-color: var(--color-selection-purple);
 }
-[data-artboard-border][data-artboard-variant='external']:hover:not(:has([data-artboard-border]:hover)) {
+[data-artboard-border][data-artboard-tone='external']:hover:not(:has([data-artboard-border]:hover)) {
   outline-width: 2px;
   outline-color: var(--color-selection-purple);
 }
@@ -108,7 +142,7 @@ html[data-artboard-frame='off'] [data-artboard-border]:not([data-artboard-frame-
 /* ─── Artboard text-frame underline (Text as an immediate child) ─────────── */
 /* Evokes a Figma text frame: a `Text` that's this Artboard's own immediate
  * child (not one nested inside some other wrapper passed as children, hence
- * the direct-child combinator) underlines in the variant colour on the same
+ * the direct-child combinator) underlines in the tone colour on the same
  * genuinely-hovered/focused triggers as the outline above — including hover,
  * unlike the handles' focus-only behaviour, since this is meant to read as
  * part of the same selection frame rather than a separate resize affordance.
@@ -118,7 +152,7 @@ html[data-artboard-frame='off'] [data-artboard-border]:not([data-artboard-frame-
  * noticeably thicker underline than a small caption, when this is meant to
  * read as one consistent-weight selection mark regardless of what it's
  * underlining. */
-[data-artboard-border][data-artboard-variant='default']:is(
+[data-artboard-border][data-artboard-tone='default']:is(
   :hover:not(:has([data-artboard-border]:hover)),
   :focus-within:not(:has([data-artboard-border]:focus-within))
 ) > [data-text] {
@@ -127,7 +161,7 @@ html[data-artboard-frame='off'] [data-artboard-border]:not([data-artboard-frame-
   text-decoration-color: var(--color-selection-emerald);
 }
 
-[data-artboard-border][data-artboard-variant='interactive']:is(
+[data-artboard-border][data-artboard-tone='interactive']:is(
   :hover:not(:has([data-artboard-border]:hover)),
   :focus-within:not(:has([data-artboard-border]:focus-within))
 ) > [data-text] {
@@ -136,7 +170,7 @@ html[data-artboard-frame='off'] [data-artboard-border]:not([data-artboard-frame-
   text-decoration-color: var(--color-selection-blue);
 }
 
-[data-artboard-border][data-artboard-variant='external']:is(
+[data-artboard-border][data-artboard-tone='external']:is(
   :hover:not(:has([data-artboard-border]:hover)),
   :focus-within:not(:has([data-artboard-border]:focus-within))
 ) > [data-text] {
@@ -152,7 +186,7 @@ html[data-artboard-frame='off'] [data-artboard-border]:not([data-artboard-frame-
  * here since plain CSS has no way to name/reuse a selector fragment.
  *
  * 1. Hovering an Artboard dashes the outline of every Artboard nested inside
- *    it (any depth), in each nested Artboard's own variant colour — a
+ *    it (any depth), in each nested Artboard's own tone colour — a
  *    lighter "this is inside what you're hovering" hint alongside the
  *    genuinely-hovered Artboard's own solid outline. A plain descendant
  *    combinator is enough here (no `:has()` needed): CSS `:hover` already
@@ -194,17 +228,17 @@ html[data-artboard-frame='off'] [data-artboard-border]:not([data-artboard-frame-
  *    itself contains no nested focused Artboard at all, so the first
  *    condition excludes it. Both conditions use one `:has()` each — never
  *    nested inside the other — so this stays valid. */
-[data-artboard-border]:hover:not(:has([data-artboard-border]:hover)) [data-artboard-border][data-artboard-variant='default']:not(:focus) {
+[data-artboard-border]:hover:not(:has([data-artboard-border]:hover)) [data-artboard-border][data-artboard-tone='default']:not(:focus) {
   outline-style: dashed;
   outline-width: 1px;
   outline-color: var(--color-selection-emerald);
 }
-[data-artboard-border]:hover:not(:has([data-artboard-border]:hover)) [data-artboard-border][data-artboard-variant='interactive']:not(:focus) {
+[data-artboard-border]:hover:not(:has([data-artboard-border]:hover)) [data-artboard-border][data-artboard-tone='interactive']:not(:focus) {
   outline-style: dashed;
   outline-width: 1px;
   outline-color: var(--color-selection-blue);
 }
-[data-artboard-border]:hover:not(:has([data-artboard-border]:hover)) [data-artboard-border][data-artboard-variant='external']:not(:focus) {
+[data-artboard-border]:hover:not(:has([data-artboard-border]:hover)) [data-artboard-border][data-artboard-tone='external']:not(:focus) {
   outline-style: dashed;
   outline-width: 1px;
   outline-color: var(--color-selection-purple);
@@ -214,30 +248,44 @@ html[data-artboard-frame='off'] [data-artboard-border]:not([data-artboard-frame-
   outline-color: transparent !important;
 }
 
-[data-artboard-border][data-artboard-variant='default']:has([data-artboard-border]:focus-within):not(:has([data-artboard-border] [data-artboard-border]:focus-within)) {
+[data-artboard-border][data-artboard-tone='default']:has([data-artboard-border]:focus-within):not(:has([data-artboard-border] [data-artboard-border]:focus-within)) {
   outline-style: dashed !important;
   outline-width: 1px !important;
   outline-color: var(--color-selection-emerald) !important;
 }
-[data-artboard-border][data-artboard-variant='interactive']:has([data-artboard-border]:focus-within):not(:has([data-artboard-border] [data-artboard-border]:focus-within)) {
+[data-artboard-border][data-artboard-tone='interactive']:has([data-artboard-border]:focus-within):not(:has([data-artboard-border] [data-artboard-border]:focus-within)) {
   outline-style: dashed !important;
   outline-width: 1px !important;
   outline-color: var(--color-selection-blue) !important;
 }
-[data-artboard-border][data-artboard-variant='external']:has([data-artboard-border]:focus-within):not(:has([data-artboard-border] [data-artboard-border]:focus-within)) {
+[data-artboard-border][data-artboard-tone='external']:has([data-artboard-border]:focus-within):not(:has([data-artboard-border] [data-artboard-border]:focus-within)) {
   outline-style: dashed !important;
   outline-width: 1px !important;
   outline-color: var(--color-selection-purple) !important;
 }
 
+/* ─── Card selection frame delegated to a wrapping Artboard ─────────────── */
+/* A `Card` (e.g. a `PreviewCard`) rendered inside an Artboard drops its own
+ * hover/focus outline — the Artboard around it is the selection frame now,
+ * and the nested-Artboard hover/focus system above handles the "you're
+ * inside this frame" hint. Standalone Cards (e.g. the mobile nav drawer's
+ * page list) are unaffected and keep their own `selection-blue` outline.
+ * Higher specificity than Card's own `hover:`/`focus:` outline utilities, so
+ * no `!important` needed. */
+[data-artboard-border] [data-card]:hover,
+[data-artboard-border] [data-card]:focus,
+[data-artboard-border] [data-card]:focus-visible {
+  outline-color: transparent;
+}
+
 /* ─── Artboard corner selection handles (withHandles) ───────────────────── */
 /* Four corner squares layered on top of the outline, evoking a resizable
  * layer selection in a design tool. `background-color` is always the fixed
- * `--color-canvas-surface`, not the variant colour: it's what occludes the
+ * `--color-canvas-surface`, not the tone colour: it's what occludes the
  * outline directly underneath the handle (a transparent centre would let
  * the outline show through, reading as a broken/interrupted line rather
  * than a clean handle sitting on top of it). `border-color` carries the
- * variant colour instead, so the handle still reads as "selected" the same
+ * tone colour instead, so the handle still reads as "selected" the same
  * way the outline does.
  *
  * Unlike the outline, handles deliberately do NOT respond to `:hover` or to
@@ -272,51 +320,51 @@ html[data-artboard-frame='off'] [data-artboard-border]:not([data-artboard-frame-
   border: 1px solid transparent;
 }
 
-[data-artboard-border][data-artboard-variant='default']:focus > [data-artboard-handle] {
+[data-artboard-border][data-artboard-tone='default']:focus > [data-artboard-handle] {
   background-color: var(--color-canvas-surface);
   border-width: 1px;
   border-color: var(--color-selection-emerald);
 }
 
-[data-artboard-border][data-artboard-variant='interactive']:focus > [data-artboard-handle] {
+[data-artboard-border][data-artboard-tone='interactive']:focus > [data-artboard-handle] {
   background-color: var(--color-canvas-surface);
   border-width: 1px;
   border-color: var(--color-selection-blue);
 }
 
-[data-artboard-border][data-artboard-variant='external']:focus > [data-artboard-handle] {
+[data-artboard-border][data-artboard-tone='external']:focus > [data-artboard-handle] {
   background-color: var(--color-canvas-surface);
   border-width: 1px;
   border-color: var(--color-selection-purple);
 }
 
 /* ─── Artboard always-visible outline (isAlwaysOutlined) ─────────────────── */
-/* Shows the outline (and handles) in their variant colour at rest, instead
+/* Shows the outline (and handles) in their tone colour at rest, instead
  * of only on hover/focus-within — for purely decorative Artboards that
  * should read as permanently "selected". This only sets the idle-state
  * colour; the hover/focus rules above still apply on top and take over the
  * outline-width thickening, since they're more specific (they additionally
  * match `:hover`/`:focus-within`). */
-[data-artboard-border][data-artboard-always-outlined][data-artboard-variant='default'] {
+[data-artboard-border][data-artboard-always-outlined][data-artboard-tone='default'] {
   outline-color: var(--color-selection-emerald);
 }
-[data-artboard-border][data-artboard-always-outlined][data-artboard-variant='default'] > [data-artboard-handle] {
+[data-artboard-border][data-artboard-always-outlined][data-artboard-tone='default'] > [data-artboard-handle] {
   background-color: var(--color-canvas-surface);
   border-color: var(--color-selection-emerald);
 }
 
-[data-artboard-border][data-artboard-always-outlined][data-artboard-variant='interactive'] {
+[data-artboard-border][data-artboard-always-outlined][data-artboard-tone='interactive'] {
   outline-color: var(--color-selection-blue);
 }
-[data-artboard-border][data-artboard-always-outlined][data-artboard-variant='interactive'] > [data-artboard-handle] {
+[data-artboard-border][data-artboard-always-outlined][data-artboard-tone='interactive'] > [data-artboard-handle] {
   background-color: var(--color-canvas-surface);
   border-color: var(--color-selection-blue);
 }
 
-[data-artboard-border][data-artboard-always-outlined][data-artboard-variant='external'] {
+[data-artboard-border][data-artboard-always-outlined][data-artboard-tone='external'] {
   outline-color: var(--color-selection-purple);
 }
-[data-artboard-border][data-artboard-always-outlined][data-artboard-variant='external'] > [data-artboard-handle] {
+[data-artboard-border][data-artboard-always-outlined][data-artboard-tone='external'] > [data-artboard-handle] {
   background-color: var(--color-canvas-surface);
   border-color: var(--color-selection-purple);
 }

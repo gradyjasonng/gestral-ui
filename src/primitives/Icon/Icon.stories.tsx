@@ -18,7 +18,7 @@ type Story = StoryObj<typeof meta>;
  * Baseline Icon at its default size (`md`) with no `label`, meaning it's
  * `aria-hidden` by default. Use this for decorative icons that always
  * appear alongside visible text conveying the same meaning (e.g. inside a
- * Button or Chip that already has a label).
+ * Button that already has a label).
  */
 export const Default: Story = {};
 
@@ -91,7 +91,7 @@ export const ColorInheritance: Story = {
 export const Showcase: Story = {
   render: () => (
     <div className="flex flex-wrap gap-4 text-chrome-text-primary">
-      {(['home', 'search', 'cog', 'user', 'folder', 'file', 'arrow-back', 'check', 'x', 'plus', 'rotate-cw', 'rotate-ccw', 'refresh-cw', 'refresh-ccw', 'lock'] as const).map((name) => (
+      {(['home', 'search', 'cog', 'user', 'folder', 'file', 'frame', 'text', 'arrow-back', 'check', 'x', 'plus', 'rotate-cw', 'rotate-ccw', 'refresh-cw', 'refresh-ccw', 'lock', 'pin'] as const).map((name) => (
         <div key={name} className="flex flex-col items-center gap-1.5">
           <Icon name={name} size="lg" />
           <Text variant="caption" as="span" className="font-mono text-chrome-text-muted">{name}</Text>
