@@ -4,7 +4,7 @@ import { ButtonWithPreviewCard } from './ButtonWithPreviewCard';
 import { PreviewCard } from '@components/PreviewCard/PreviewCard';
 
 const meta = {
-  title: 'Components/ButtonWithPreviewCard',
+  title: 'Overlays/ButtonWithPreviewCard',
   component: ButtonWithPreviewCard,
   tags: ['autodocs'],
   args: {

@@ -17,7 +17,7 @@ import {
 import { Default as PageDefault } from '@components/Page/Page.stories';
 
 const meta = {
-  title: 'Components/Shell',
+  title: 'Shell/Shell',
   component: Shell,
   parameters: { layout: 'fullscreen' },
   tags: ['autodocs'],
@@ -88,7 +88,7 @@ export const MobileLayout: Story = {
   parameters: { viewport: { defaultViewport: 'mobile1' } },
   render: () => (
     <Shell
-      overline={<MobileNav items={navItems} externalLinks={externalLinks} siteName="Gestral UI" />}
+      overline={<MobileNav items={navItems} siteName="Gestral UI" subtitle="Blog" />}
       rails={<SiteRail items={navItems} externalLinks={externalLinks} siteName="Gestral UI" />}
       canvas={<VerticalCanvasContent />}
     />

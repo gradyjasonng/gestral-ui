@@ -3,7 +3,7 @@ import { Canvas } from './Canvas';
 import { Text } from '@primitives';
 
 const meta = {
-  title: 'Components/Canvas',
+  title: 'Shell/Canvas',
   component: Canvas,
   parameters: { layout: 'fullscreen' },
   tags: ['autodocs'],

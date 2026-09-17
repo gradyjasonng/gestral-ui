@@ -3,7 +3,7 @@ import { expect, fireEvent, waitFor } from 'storybook/test';
 import { Comment } from './Comment';
 
 const meta = {
-  title: 'Components/Comment',
+  title: 'Overlays/Comment',
   component: Comment,
   tags: ['autodocs'],
   decorators: [

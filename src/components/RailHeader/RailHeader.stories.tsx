@@ -6,7 +6,7 @@ const LogoPlaceholder = () => (
 );
 
 const meta = {
-  title: 'Components/Shell/RailHeader',
+  title: 'Shell/RailHeader',
   component: RailHeader,
   tags: ['autodocs'],
   decorators: [

@@ -4,7 +4,7 @@ import { Stack } from '@primitives';
 import { Button } from '@components/Button/Button';
 
 const meta = {
-  title: 'Components/Shell/RailSection',
+  title: 'Shell/RailSection',
   component: RailSection,
   tags: ['autodocs'],
   decorators: [

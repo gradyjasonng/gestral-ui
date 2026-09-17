@@ -3,7 +3,7 @@ import { expect, fn } from 'storybook/test';
 import { SegmentedControl } from './SegmentedControl';
 
 const meta = {
-  title: 'Components/SegmentedControl',
+  title: 'Forms/SegmentedControl',
   component: SegmentedControl,
   tags: ['autodocs'],
   decorators: [
@@ -61,7 +61,7 @@ export const Secondary: Story = {
 };
 
 /**
- * All three `size`s (forwarded to the underlying `Chip`) side by side.
+ * All three `size`s (forwarded to the underlying `Button`) side by side.
  */
 export const Sizes: Story = {
   render: () => (
