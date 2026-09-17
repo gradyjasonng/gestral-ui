@@ -1,7 +1,8 @@
-import type { ElementType, ReactNode } from 'react';
+import type { ComponentPropsWithoutRef, ElementType, ReactNode } from 'react';
 import { cn } from '@lib/cn';
 import { slugify } from '@lib/slugify';
-import { Text } from '@primitives';
+import { DEFAULT_ARTBOARD_ICON } from '@lib/defaultArtboardIcon';
+import { Text, Icon, type IconName } from '@primitives';
 import './Artboard.css';
 
 /**
@@ -10,9 +11,9 @@ import './Artboard.css';
  * - `interactive` (blue) — embedded mini-apps or other live/interactive content.
  * - `external` (purple) — embedded third-party content, e.g. a Figma iframe.
  */
-export type ArtboardVariant = 'default' | 'interactive' | 'external';
+export type ArtboardTone = 'default' | 'interactive' | 'external';
 
-export interface ArtboardProps {
+export interface ArtboardOwnProps {
   /**
    * Frame label shown above the content, evoking a Figma layer/artboard name.
    * Also becomes this Artboard's `id` (slugified), so omit it for content
@@ -20,8 +21,15 @@ export interface ArtboardProps {
    * plain prose continuation between labelled Artboards).
    */
   label?: string;
+  /**
+   * Leading icon shown before the label, echoing the Figma layers metaphor
+   * `LayerList` already uses for the same Artboards mirrored into a rail
+   * TOC. Defaults to `DEFAULT_ARTBOARD_ICON` (a frame) whenever `label` is
+   * set; has no effect without one.
+   */
+  icon?: IconName;
   /** Colour hint for the kind of content held. Defaults to `default`. */
-  variant?: ArtboardVariant;
+  tone?: ArtboardTone;
   /**
    * Shows the label and hover/focus outline. Defaults to `true`.
    *
@@ -35,7 +43,7 @@ export interface ArtboardProps {
    * Adds four solid corner selection-handle squares at the outline's
    * corners, evoking a resizable layer selection in a design tool. Defaults
    * to `false`. Handles are filled (not hollow) so the outline doesn't show
-   * through them, and pick up the same `variant` colour as the outline —
+   * through them, and pick up the same `tone` colour as the outline —
    * but unlike the outline, they only appear on this exact Artboard's own
    * `:focus` (not hover, and not `focus-within` from a nested element) — see
    * `Artboard.css`.
@@ -50,24 +58,63 @@ export interface ArtboardProps {
    */
   exemptFromFrameToggle?: boolean;
   /**
-   * Shows the outline (and handles, if `withHandles`) in their variant colour
+   * Shows the outline (and handles, if `withHandles`) in their tone colour
    * at rest, instead of only on hover/focus-within. Defaults to `false`.
    * Hover/focus still thickens the outline as usual on top of this. Intended
    * for purely decorative Artboards that should read as permanently
    * "selected" rather than only on interaction — see `Artboard.css`.
    */
   isAlwaysOutlined?: boolean;
+  /**
+   * Includes this Artboard as an entry in the page's table of contents
+   * (built by `gradaigh-astro`'s remark plugin from the MDX source — this
+   * prop does nothing at render time, it's a compile-time marker read
+   * straight off the JSX attribute). Omit it (the default) to keep an
+   * Artboard out of the TOC entirely — most Artboards, e.g. one wrapping a
+   * single paragraph or figure, shouldn't clutter it. Pass `true` to include
+   * it at its natural nesting depth, or an integer to additionally indent it
+   * that many extra levels beyond that (e.g. `1` to nest it one level deeper
+   * than its actual DOM position would imply) — 0 by itself is equivalent to
+   * `true`.
+   */
+  includeInToc?: boolean | number;
   /** The wrapped content — prose, an image, a mini-app, an iframe, etc. */
   children: ReactNode;
   className?: string;
-  /** Root element tag. Defaults to `div` — override to `li` when the Artboard is itself an item in a `Stack as="ul"`/`as="ol"` list. */
-  as?: ElementType;
 }
+
+/**
+ * `ArtboardProps<C>` — polymorphic over `as`: pass any HTML tag name (the
+ * default is `'div'`) or a gestral-ui component like `Text` to merge
+ * Artboard's own outline/label/handle behaviour directly onto that
+ * component's root element instead of wrapping it in an extra `<div>`. Extra
+ * props not part of `ArtboardOwnProps` are typed against whatever `as`
+ * resolves to and forwarded straight through — e.g. `as={Text} variant="h3"`
+ * both renders as an `h3`-styled `Text` *and* is the Artboard's own outlined
+ * root, in one element.
+ *
+ * Caution: only reach for this with a target whose default rendered element
+ * doesn't itself get re-wrapped by something else expecting to own that
+ * slot — e.g. `as={Text}` on a single JS-expression child (a heading, a
+ * caption) collapses cleanly, but merging it onto a raw MDX-authored
+ * paragraph of markdown text does not: markdown always parses that content
+ * as its own `paragraph` node (a literal nested `<p>`) regardless of the
+ * element it's placed inside, so a `Text`-as-`<p>` target would double up
+ * into invalid `<p><p>...</p></p>` markup. Wrap markdown prose in a plain
+ * (non-`Text`) Artboard instead — the underline effect below only ever
+ * triggers off a `Text` that's Artboard's own immediate child, so a plain
+ * `<div>`/`<p>`-free wrap never picks it up anyway.
+ */
+export type ArtboardProps<C extends ElementType = 'div'> = ArtboardOwnProps &
+  Omit<ComponentPropsWithoutRef<C>, keyof ArtboardOwnProps | 'as'> & {
+    /** Root element tag, or a gestral-ui component to merge Artboard's behaviour onto — see `ArtboardProps` above. Defaults to `div`. */
+    as?: C;
+  };
 
 /**
  * The main wrapper for content living on the Canvas — prose, images, mini-apps,
  * embedded iframes. Pure decoration: a neutral label and outline that pick up a
- * colour variant on hover/focus-within, evoking a selected element in a design
+ * colour tone on hover/focus-within, evoking a selected element in a design
  * tool rather than a traditional content container.
  *
  * Hover/focus colouring is done in plain CSS (`Artboard.css`), not Tailwind's
@@ -97,23 +144,40 @@ export interface ArtboardProps {
  * frame is hidden (site-wide toggle or narrow viewport, see `Artboard.css`)
  * — only the label's `display` and the outline's colour change, so toggling
  * frames never reflows the page.
+ *
+ * `as` is polymorphic — see `ArtboardProps` above for how it merges onto
+ * another component's root instead of wrapping it.
  */
-export function Artboard({
+export function Artboard<C extends ElementType = 'div'>({
   label,
-  variant = 'default',
+  icon,
+  tone = 'default',
   frame = true,
   withHandles = false,
   exemptFromFrameToggle = false,
   isAlwaysOutlined = false,
+  includeInToc: _includeInToc,
   children,
   className,
-  as: Tag = 'div',
-}: ArtboardProps) {
+  as,
+  ...rest
+}: ArtboardProps<C>) {
+  const Tag = (as ?? 'div') as ElementType;
   return (
     <Tag
+      // Internal DOM plumbing (data-artboard-*, tabIndex, id) comes after
+      // `rest` deliberately: it's not part of `ArtboardOwnProps`, so a
+      // consumer's own extra props (meant for a polymorphic `as` target,
+      // e.g. Text's `variant`) never get a chance to clobber it. Those
+      // internal attributes aren't part of the polymorphic target's own
+      // typed props either (e.g. Text has no `data-artboard-border` prop) —
+      // this is the one place that's a deliberate, narrow type escape,
+      // rather than something a caller of Artboard itself needs to reason
+      // about.
+      {...(rest as ComponentPropsWithoutRef<'div'>)}
       tabIndex={0}
       data-artboard-border=""
-      data-artboard-variant={frame ? variant : undefined}
+      data-artboard-tone={frame ? tone : undefined}
       data-artboard-frame-exempt={exemptFromFrameToggle ? '' : undefined}
       data-artboard-always-outlined={frame && isAlwaysOutlined ? '' : undefined}
       id={label ? slugify(label) : undefined}
@@ -124,7 +188,8 @@ export function Artboard({
       )}
     >
       {frame && label && (
-        <span data-artboard-label="" className="absolute -top-6 left-0 select-none">
+        <span data-artboard-label="" className="absolute -top-6 left-0 flex items-center gap-1 select-none">
+          <Icon name={icon ?? DEFAULT_ARTBOARD_ICON} size="xs" className="text-canvas-text-muted" />
           <Text variant="caption" as="span" className="text-canvas-text-muted">
             {label}
           </Text>

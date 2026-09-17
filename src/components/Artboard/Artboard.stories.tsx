@@ -4,7 +4,7 @@ import { Artboard } from './Artboard';
 import { Text } from '@primitives';
 
 const meta = {
-  title: 'Components/Artboard',
+  title: 'Shell/Artboard',
   component: Artboard,
   tags: ['autodocs'],
   decorators: [
@@ -26,41 +26,41 @@ const placeholder = (
 );
 
 /**
- * `default` variant (emerald accent on hover/focus) — use for static content:
- * prose blocks, images, layout sections. This is the fallback variant, and
+ * `default` tone (emerald accent on hover/focus) — use for static content:
+ * prose blocks, images, layout sections. This is the fallback tone, and
  * the one to reach for whenever the wrapped content isn't interactive or a
  * third-party embed.
  */
 export const Default: Story = {
   args: {
     label: 'case-study-alpha',
-    variant: 'default',
+    tone: 'default',
     children: placeholder,
   },
 };
 
 /**
- * `interactive` variant (blue accent) — use when the Artboard wraps an
+ * `interactive` tone (blue accent) — use when the Artboard wraps an
  * embedded mini-app, prototype, or other live/interactive content, so it
  * reads visually distinct from static prose.
  */
 export const Interactive: Story = {
   args: {
     label: 'prototype-v2',
-    variant: 'interactive',
+    tone: 'interactive',
     children: placeholder,
   },
 };
 
 /**
- * `external` variant (purple accent) — use when the Artboard wraps embedded
+ * `external` tone (purple accent) — use when the Artboard wraps embedded
  * third-party content, e.g. a Figma iframe or other externally-hosted embed,
  * so viewers can tell at a glance that the content isn't authored inline.
  */
 export const External: Story = {
   args: {
     label: 'case-study-hero',
-    variant: 'external',
+    tone: 'external',
     children: placeholder,
   },
 };
@@ -75,7 +75,7 @@ export const External: Story = {
 export const NoFrame: Story = {
   args: {
     label: 'case-study-alpha',
-    variant: 'default',
+    tone: 'default',
     frame: false,
     children: placeholder,
   },
@@ -92,7 +92,7 @@ export const NoFrame: Story = {
 export const AsListItem: Story = {
   render: () => (
     <ul className="flex gap-4 list-none p-0 m-0">
-      <Artboard as="li" label="item-one" variant="default">
+      <Artboard as="li" label="item-one" tone="default">
         {placeholder}
       </Artboard>
     </ul>
@@ -126,7 +126,7 @@ export const FrameHiddenGlobally: Story = {
   tags: ['!autodocs'],
   args: {
     label: 'case-study-alpha',
-    variant: 'default',
+    tone: 'default',
     children: placeholder,
   },
   beforeEach: () => {
@@ -164,9 +164,9 @@ export const FrameHiddenGlobally: Story = {
  */
 export const Nested: Story = {
   render: () => (
-    <Artboard label="Outer" variant="default">
+    <Artboard label="Outer" tone="default">
       <div className="p-6">
-        <Artboard label="Inner" variant="interactive">
+        <Artboard label="Inner" tone="interactive">
           {placeholder}
         </Artboard>
       </div>
@@ -203,7 +203,7 @@ export const Nested: Story = {
  *
  * - **Hover** dashes the outline of every Artboard nested inside whichever
  *   one is genuinely hovered (any depth), in each nested Artboard's own
- *   variant colour — a lighter "this is inside what you're hovering" hint
+ *   tone colour — a lighter "this is inside what you're hovering" hint
  *   alongside the genuinely-hovered one's own solid outline. `:hover` can't
  *   be driven from a `play` function (see `Nested`'s doc comment), so this
  *   half isn't asserted here — open this story's Canvas tab and hover
@@ -218,11 +218,11 @@ export const Nested: Story = {
  */
 export const FocusBreadcrumb: Story = {
   render: () => (
-    <Artboard label="Outer" variant="default">
+    <Artboard label="Outer" tone="default">
       <div className="p-6">
-        <Artboard label="Middle" variant="interactive">
+        <Artboard label="Middle" tone="interactive">
           <div className="p-6">
-            <Artboard label="Inner" variant="external">
+            <Artboard label="Inner" tone="external">
               {placeholder}
             </Artboard>
           </div>
@@ -255,7 +255,7 @@ export const FocusBreadcrumb: Story = {
 
 /**
  * A `Text` that's an Artboard's own *immediate* child (not nested inside
- * some other wrapper passed as children) underlines in the variant colour on
+ * some other wrapper passed as children) underlines in the tone colour on
  * the same genuinely-hovered/focused triggers as the outline — including
  * hover, unlike the handles' focus-only behaviour — evoking a Figma text
  * frame. The underline is a fixed `2px` regardless of the `Text` variant's
@@ -268,7 +268,7 @@ export const FocusBreadcrumb: Story = {
  */
 export const TextFrame: Story = {
   render: () => (
-    <Artboard label="case-study-alpha" variant="default">
+    <Artboard label="case-study-alpha" tone="default">
       <Text variant="h3">Sample headline</Text>
     </Artboard>
   ),
@@ -288,7 +288,7 @@ export const TextFrame: Story = {
  * `withHandles` adds four solid corner selection-handle squares to the
  * outline, evoking a resizable layer selection in a design tool. They're
  * filled (`background-color`), not hollow, so the outline underneath
- * doesn't show through the handle, and pick up the same variant colour as
+ * doesn't show through the handle, and pick up the same tone colour as
  * the outline.
  *
  * Unlike the outline, handles deliberately do **not** react to `:hover` or
@@ -296,7 +296,7 @@ export const TextFrame: Story = {
  * Artboard's own `:focus` (e.g. tabbing directly to it, or `isAlwaysOutlined`
  * for a permanently-selected decorative Artboard, see `AlwaysOutlined`
  * below). This story drives that focus and checks a handle actually picks
- * up the variant colour.
+ * up the tone colour.
  *
  * Handles also always render on top of any outline they overlap, including
  * a *different* Artboard's — each `[data-artboard-border]` isolates its own
@@ -313,7 +313,7 @@ export const TextFrame: Story = {
 export const WithHandles: Story = {
   args: {
     label: 'case-study-alpha',
-    variant: 'interactive',
+    tone: 'interactive',
     withHandles: true,
     children: placeholder,
   },
@@ -330,14 +330,14 @@ export const WithHandles: Story = {
 
 /**
  * `isAlwaysOutlined` shows the outline (and handles, with `withHandles`) in
- * their variant colour at rest, instead of only on hover/focus-within —
+ * their tone colour at rest, instead of only on hover/focus-within —
  * for purely decorative Artboards that should read as permanently
  * "selected". This story checks both are already coloured before any
  * interaction, unlike `Default`/`WithHandles` above.
  */
 export const AlwaysOutlined: Story = {
   args: {
-    variant: 'interactive',
+    tone: 'interactive',
     withHandles: true,
     isAlwaysOutlined: true,
     children: placeholder,
@@ -366,7 +366,7 @@ export const ExemptFromFrameToggle: Story = {
   tags: ['!autodocs'],
   args: {
     label: 'case-study-alpha',
-    variant: 'default',
+    tone: 'default',
     withHandles: true,
     exemptFromFrameToggle: true,
     children: placeholder,
@@ -397,7 +397,7 @@ export const ExemptFromFrameToggle: Story = {
 export const Focused: Story = {
   args: {
     label: 'case-study-alpha',
-    variant: 'default',
+    tone: 'default',
     children: placeholder,
   },
   play: async ({ canvas }) => {
