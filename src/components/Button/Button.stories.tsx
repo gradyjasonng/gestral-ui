@@ -3,7 +3,7 @@ import { Button } from './Button';
 import { Text } from '@primitives/Text/Text';
 
 const meta = {
-  title: 'Components/Button',
+  title: 'Forms/Button',
   component: Button,
   tags: ['autodocs'],
 } satisfies Meta<typeof Button>;
@@ -99,6 +99,22 @@ export const Palette: Story = {
         <Button variant="horizontal" icon="star" active surface="muted" palette="secondary">Secondary</Button>
         <Button variant="horizontal" icon="star" active surface="muted" palette="input">Input</Button>
       </div>
+    </div>
+  ),
+};
+
+/**
+ * `interactive={false}` keeps the full visual treatment but renders a plain
+ * `<span>` — no link/button semantics, not focusable, no pointer cursor.
+ * Unlike `disabled` (which dims), this reads as a normal resting label; use
+ * it for the current page in a nav list, where the row has nowhere to go.
+ */
+export const NonInteractive: Story = {
+  name: 'Non-interactive',
+  render: () => (
+    <div className="w-48 flex flex-col gap-1">
+      <Button variant="horizontal" icon="star" active="secondary" interactive={false}>Current page</Button>
+      <Button variant="horizontal" icon="star">Sibling page</Button>
     </div>
   ),
 };
