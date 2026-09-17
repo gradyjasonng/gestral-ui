@@ -5,7 +5,7 @@ import { LayerList } from '@components/LayerList/LayerList';
 import { MetaList } from '@components/MetaList/MetaList';
 
 const meta = {
-  title: 'Components/Shell/CanvasRail',
+  title: 'Shell/CanvasRail',
   component: CanvasRail,
   parameters: { layout: 'fullscreen' },
   tags: ['autodocs'],
@@ -47,7 +47,7 @@ export const Default: Story = {
             ]}
           />
         </RailSection>
-        <hr className="border-chrome-border mx-0" />
+        <hr className="border-chrome-border" />
         <RailSection label="Info">
           <MetaList
             meta={[

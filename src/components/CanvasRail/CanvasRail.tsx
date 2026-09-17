@@ -17,10 +17,16 @@ export interface CanvasRailProps {
 export function CanvasRail({ title, subtitle, children, className }: CanvasRailProps) {
   return (
     <Rail width="w-[min(25vw,16rem)]" aria-label="Section navigation" className={cn(className)}>
-      <RailHeader title={title} subtitle={subtitle} />
-      <hr className="border-chrome-border" />
+      {/* Header pins to the top of the rail's own scroll, staying visible
+          while a long "Pages"/"Layers" list scrolls under it. */}
+      <div className="sticky top-0 z-20 shrink-0 bg-chrome-surface">
+        <RailHeader title={title} subtitle={subtitle} />
+        <hr className="border-chrome-border" />
+      </div>
 
-      <Stack direction="col" gap="xs" padding="xs">
+      {/* `[&>hr]:-mx-sp-sm` cancels this Stack's own `p-sp-sm` for any divider
+          a caller drops between sections, so it bleeds to the rail's edges. */}
+      <Stack direction="col" gap="sm" padding="sm" className="[&>hr]:-mx-sp-sm">
         {children}
       </Stack>
 
