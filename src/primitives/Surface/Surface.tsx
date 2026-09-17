@@ -41,9 +41,9 @@ export function activeFillClass(palette: SurfaceActivePalette, on: SurfaceOn): s
   return on === 'muted' ? `bg-chrome-surface ${paletteTextClass[palette]}` : paletteActiveClass[palette];
 }
 
-/** Styling for a `SurfaceActivePalette`'s nav-active (`active="secondary"`) state — a muted chrome fill with the given palette's text color. */
+/** Styling for a `SurfaceActivePalette`'s nav-active (`active="secondary"`) state — a muted chrome fill with the chrome text palette. */
 export function activeSecondaryClass(palette: SurfaceActivePalette): string {
-  return `bg-chrome-active ${paletteTextClass[palette]}`;
+  return `bg-chrome-active text-chrome-text-primary`;
 }
 
 function isActivePalette(palette: SurfacePalette): palette is SurfaceActivePalette {
