@@ -380,19 +380,24 @@ export const WithAccessibleName: Story = {
 
 /**
  * The line thickens (~1px, like an `Artboard`'s outline) while its generous
- * transparent hit-path is hovered. The play test hovers the straight line's
- * midpoint and asserts the visible stroke width grew, then shrank back.
+ * transparent hit-path is hovered, and while a labelled connector has
+ * keyboard focus. Hover is plain CSS `:hover`, which a synthetic
+ * `userEvent.hover` never triggers (it only dispatches events), so the play
+ * test drives the focus half instead — focus the labelled `<svg>`, assert
+ * the visible stroke width grew, then blur and assert it shrank back. Hover
+ * the line in the Canvas tab to see the other half.
  */
-export const HoverThickens: Story = {
+export const FocusThickens: Story = {
   decorators: [inFrame],
-  args: { variant: 'flow', shape: 'straight' },
+  args: { variant: 'flow', shape: 'straight', 'aria-label': 'Step one leads to step two' },
   play: async ({ canvasElement }) => {
-    const svg = canvasElement.querySelector('svg[data-connector]')!;
-    const [hit, line] = svg.querySelectorAll<SVGPathElement>(':scope > path');
+    const svg = canvasElement.querySelector<SVGSVGElement>('svg[data-connector]')!;
+    const line = svg.querySelectorAll<SVGPathElement>(':scope > path')[1];
     const rest = getComputedStyle(line).strokeWidth;
-    await userEvent.hover(hit);
+    svg.focus();
+    await expect(svg).toHaveFocus();
     await waitFor(() => expect(getComputedStyle(line).strokeWidth).not.toEqual(rest));
-    await userEvent.unhover(hit);
+    svg.blur();
     await waitFor(() => expect(getComputedStyle(line).strokeWidth).toEqual(rest));
   },
 };

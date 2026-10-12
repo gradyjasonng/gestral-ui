@@ -274,7 +274,9 @@ export const TextFrame: Story = {
   ),
   play: async ({ canvasElement }) => {
     const region = canvasElement.querySelector<HTMLElement>('[data-artboard-border]')!;
-    const text = canvasElement.querySelector<HTMLElement>('[data-text]')!;
+    // Direct child only: the label's own caption `Text` also carries
+    // `data-text`, comes first in the DOM, and is not underlined.
+    const text = canvasElement.querySelector<HTMLElement>('[data-artboard-border] > [data-text]')!;
 
     await expect(getComputedStyle(text).textDecorationLine).toBe('none');
     region.focus();
