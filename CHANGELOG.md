@@ -1,3 +1,33 @@
+# [0.5.0](https://github.com/gradyjasonng/gestral-ui/compare/v0.4.0...v0.5.0) (2026-10-12)
+
+
+### Bug Fixes
+
+* generate a Docs page for Grid ([9ebe69f](https://github.com/gradyjasonng/gestral-ui/commit/9ebe69f9af2f62397ea25b027506f9e60c3f2042))
+* let Grid's columns accept a responsive Tailwind class string ([e3815e0](https://github.com/gradyjasonng/gestral-ui/commit/e3815e0fcb47356fbbd0f9889ca6eab81947daff))
+* mark Card's own root with data-card ([2f0baaa](https://github.com/gradyjasonng/gestral-ui/commit/2f0baaa51d16d0f203dfe84dfd32828346e0e968))
+* scope PreviewCard's aspect-ratio className to the thumbnail ([bc1094b](https://github.com/gradyjasonng/gestral-ui/commit/bc1094b6d0b9a3c5d3bccd209526e718cf29a333))
+* sticky CanvasRail header, dividers bleed to rail edges ([16b5311](https://github.com/gradyjasonng/gestral-ui/commit/16b5311ac19681310a555bc8149299872e5e8aa1))
+* strengthen canvas-dot-grid contrast ([e582ebb](https://github.com/gradyjasonng/gestral-ui/commit/e582ebb929e54bed739aec8511c09a1a93989def))
+* use one consistent text colour for Surface's active=secondary state ([39d0225](https://github.com/gradyjasonng/gestral-ui/commit/39d0225db63a5811c4d6fc86c3b95befb3bd37c3))
+
+
+### Features
+
+* add build-component-snapshot script for embedding frozen previews ([7c02d80](https://github.com/gradyjasonng/gestral-ui/commit/7c02d80c116cff5f4775b3c9abed5288bdc9f635)), closes [gradai#astro](https://github.com/gradai/issues/astro)
+* add Connector, an SVG line annotating a relationship between two elements ([17ade33](https://github.com/gradyjasonng/gestral-ui/commit/17ade3334a050c1d313c3d2f8c3996d9aee97efa))
+* add Grid primitive ([6da1b71](https://github.com/gradyjasonng/gestral-ui/commit/6da1b71d8d5c9fb6ccd8f5249f3fbed221001994))
+* add Tag and InputText primitives, rework metadata display ([93992b4](https://github.com/gradyjasonng/gestral-ui/commit/93992b49bad8facbc4e60451506012a789192f9c))
+* inert current-page row + fixed-height PageList ([02d4bec](https://github.com/gradyjasonng/gestral-ui/commit/02d4becd4722f5668acdc9258f8c57b0368f5c7e))
+* layer nesting hints, handle stacking, and a text-frame underline onto Artboard ([3b4eb28](https://github.com/gradyjasonng/gestral-ui/commit/3b4eb2879aa1df213e9acfe079afd451315a0120))
+* lead every LayerList row with a frame icon ([c0def7a](https://github.com/gradyjasonng/gestral-ui/commit/c0def7a62f61d2048c0fc0aa03653990e8ceab8e))
+* let MobileNav render a secondary rail alongside SiteRail ([5a4e9d5](https://github.com/gradyjasonng/gestral-ui/commit/5a4e9d50bfff2da4a48284a289ff645d5921eacc))
+* let SiteRailItem intercept its own click, collapse MobileNav's drawer rail ([08c5f06](https://github.com/gradyjasonng/gestral-ui/commit/08c5f0631d5e4a537c38313e65632d21b8a2b0c3))
+* make Artboard polymorphic, rename variant to tone, add icon/includeInToc ([a73e31e](https://github.com/gradyjasonng/gestral-ui/commit/a73e31e3e3a4644e3dc7b290636e344117d1f8a4))
+* make Artboard/Prose composable onto a single element ([b9b5e18](https://github.com/gradyjasonng/gestral-ui/commit/b9b5e1811a09f0ba3913ba1550bb535cc6fbd11d))
+* make CanvasRail a pure layout component ([8c954e4](https://github.com/gradyjasonng/gestral-ui/commit/8c954e4b3d3e5a5fd49d656fad5094555f5d2e99))
+* rework MobileNav into a fixed bar with inline section buttons ([4e3bd19](https://github.com/gradyjasonng/gestral-ui/commit/4e3bd19cc9c528edf21f855faa78960cde296aea))
+
 ## [0.3.1](https://github.com/gradyjasonng/gestral-ui/compare/v0.3.0...v0.3.1) (2026-07-20)
 
 
