@@ -1,3 +1,10 @@
+# [0.6.0](https://github.com/gradyjasonng/gestral-ui/compare/v0.5.0...v0.6.0) (2026-11-17)
+
+
+### Features
+
+* **Artboard:** default padding to p-0 ([bec3c1e](https://github.com/gradyjasonng/gestral-ui/commit/bec3c1ef8deeeb25ed7f3fc48975125fac22a5db))
+
 # [0.5.0](https://github.com/gradyjasonng/gestral-ui/compare/v0.4.0...v0.5.0) (2026-10-12)
 
 
