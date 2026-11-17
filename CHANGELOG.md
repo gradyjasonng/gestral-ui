@@ -1,3 +1,10 @@
+# [0.7.0](https://github.com/gradyjasonng/gestral-ui/compare/v0.6.0...v0.7.0) (2026-11-17)
+
+
+### Features
+
+* **Icon:** add inspect-element, npm, ko-fi, instagram, youtube icons ([ed983f0](https://github.com/gradyjasonng/gestral-ui/commit/ed983f0702a518403043ee3a3447d6255f6a95b5))
+
 # [0.6.0](https://github.com/gradyjasonng/gestral-ui/compare/v0.5.0...v0.6.0) (2026-11-17)
 
 
