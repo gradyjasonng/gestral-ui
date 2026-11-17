@@ -1,3 +1,10 @@
+# [0.8.0](https://github.com/gradyjasonng/gestral-ui/compare/v0.7.0...v0.8.0) (2026-11-17)
+
+
+### Features
+
+* **Icon:** add map-pin ([af50882](https://github.com/gradyjasonng/gestral-ui/commit/af50882168f18c7d44ae7a4c3eb0f5a4ea7a145e))
+
 # [0.7.0](https://github.com/gradyjasonng/gestral-ui/compare/v0.6.0...v0.7.0) (2026-11-17)
 
 
