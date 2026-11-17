@@ -25,7 +25,8 @@ import {
   BiHide,
   BiSolidCog,
   BiLock,
-  BiSolidPin
+  BiSolidPin,
+  BiMapPin
 } from 'react-icons/bi';
 import { SiNpm, SiKofi, SiInstagram, SiYoutube } from 'react-icons/si';
 import {
@@ -77,6 +78,7 @@ const icons = {
   'wrench':     BiSolidCog,
   'lock':       BiLock,
   'pin':        BiSolidPin,
+  'map-pin':    BiMapPin,
   'inspect-element': InspectElementGlyph,
   'npm':        SiNpm,
   'ko-fi':      SiKofi,
