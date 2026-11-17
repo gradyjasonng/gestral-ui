@@ -182,7 +182,7 @@ export function Artboard<C extends ElementType = 'div'>({
       data-artboard-always-outlined={frame && isAlwaysOutlined ? '' : undefined}
       id={label ? slugify(label) : undefined}
       className={cn(
-        'relative outline-none bg-transparent overflow-visible w-full px-sp-sm py-sp-sm',
+        'relative outline-none bg-transparent overflow-visible w-full p-0',
         frame && label && 'mt-6',
         className,
       )}
