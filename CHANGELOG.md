@@ -1,3 +1,10 @@
+# [0.9.0](https://github.com/gradyjasonng/gestral-ui/compare/v0.8.0...v0.9.0) (2026-11-17)
+
+
+### Features
+
+* **Icon:** add mail ([77730bb](https://github.com/gradyjasonng/gestral-ui/commit/77730bb7f1951dbc0d7573bb53e20d5c281d6600))
+
 # [0.8.0](https://github.com/gradyjasonng/gestral-ui/compare/v0.7.0...v0.8.0) (2026-11-17)
 
 
