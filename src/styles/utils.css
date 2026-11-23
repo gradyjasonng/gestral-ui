@@ -18,11 +18,13 @@
 /* Faint dot grid — a hint of a design-tool canvas, not a texture that
  * competes with content. Colour mixes the canvas-border token toward
  * canvas-text-primary so it reads a bit stronger than a plain border while
- * still following light/dark automatically instead of a hand-tuned opacity. */
+ * still following light/dark automatically instead of a hand-tuned opacity.
+ * The whole mix is then halved (50% toward transparent) to keep the dots very
+ * faint. */
 @utility canvas-dot-grid {
   background-image: radial-gradient(
     circle,
-    color-mix(in srgb, var(--color-canvas-border) 60%, var(--color-canvas-text-primary) 40%) 1px,
+    color-mix(in srgb, color-mix(in srgb, var(--color-canvas-border) 60%, var(--color-canvas-text-primary) 40%) 50%, transparent) 1px,
     transparent 1px
   );
   background-size: 24px 24px;
