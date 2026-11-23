@@ -1,3 +1,11 @@
+## [0.9.1](https://github.com/gradyjasonng/gestral-ui/compare/v0.9.0...v0.9.1) (2026-11-23)
+
+
+### Bug Fixes
+
+* halve canvas-dot-grid dot strength ([3a5a18b](https://github.com/gradyjasonng/gestral-ui/commit/3a5a18b42eb819c4d0843dabf1ba6e1ea93ca3d0))
+* use canvas-text-primary at 15% for canvas-dot-grid dots ([f1fd732](https://github.com/gradyjasonng/gestral-ui/commit/f1fd7320c61d512460c5c3254e8bf1bcdfdba5f4))
+
 # [0.9.0](https://github.com/gradyjasonng/gestral-ui/compare/v0.8.0...v0.9.0) (2026-11-17)
 
 
